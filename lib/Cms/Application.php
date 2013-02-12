@@ -80,7 +80,7 @@ class Cms_Application {
         require_once ROOT_PATH . '/Twig/MyExtensions/General.php';
         $this->twig->addExtension(new Twig_Extensions_Extension_Text());
         $this->twig->addExtension(new Twig_MyExtensions_General());
-        require_once 'Cms/Helper/help.php';
+        require_once('Cms/Helper/help.php');
         $this->twig->addGlobal('helpObj', new HelpObj());
         
         return $this;
