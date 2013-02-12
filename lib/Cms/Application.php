@@ -51,7 +51,7 @@ class Cms_Application {
         $manager = Doctrine_Manager::getInstance();
         //$conn = Doctrine_Manager::connection('mysql://root:12345@localhost/winmaweb2');
 //        $conn = Doctrine_Manager::connection('mysql://db_user:Yj7CWLC567KtL2o@localhost/city');
-				$conn = Doctrine_Manager::connection('mysql://root:@localhost/winmaweb');
+				$conn = Doctrine_Manager::connection('mysql://root:123dddxyz11@localhost/wmw');
         $this->doctrineProfiler = new Doctrine_Connection_Profiler();
         $conn->setListener($this->doctrineProfiler);
 
