@@ -1,0 +1,151 @@
+Category:
+  Category_1:
+    name: Category
+    lft: '1'
+    rgt: '50'
+    level: '0'
+    slug: category
+  Category_2:
+    name: 'Categorie 4'
+    lft: '38'
+    rgt: '49'
+    level: '1'
+    slug: categorie-4
+  Category_3:
+    name: 'Subcategorie 4-5'
+    lft: '47'
+    rgt: '48'
+    level: '2'
+    slug: subcategorie-4-5
+  Category_4:
+    name: 'Subcategorie 4-4'
+    lft: '45'
+    rgt: '46'
+    level: '2'
+    slug: subcategorie-4-4
+  Category_5:
+    name: 'Subcategorie 4-3'
+    lft: '43'
+    rgt: '44'
+    level: '2'
+    slug: subcategorie-4-3
+  Category_6:
+    name: 'Subcategorie 4-2'
+    lft: '41'
+    rgt: '42'
+    level: '2'
+    slug: subcategorie-4-2
+  Category_7:
+    name: 'Subcategorie 4-1'
+    lft: '39'
+    rgt: '40'
+    level: '2'
+    slug: subcategorie-4-1
+  Category_8:
+    name: 'Categorie 3'
+    lft: '26'
+    rgt: '37'
+    level: '1'
+    slug: categorie-3
+  Category_9:
+    name: 'Subcategorie 3-5'
+    lft: '35'
+    rgt: '36'
+    level: '2'
+    slug: subcategorie-3-5
+  Category_10:
+    name: 'Subcategorie 3-4'
+    lft: '33'
+    rgt: '34'
+    level: '2'
+    slug: subcategorie-3-4
+  Category_11:
+    name: 'Subcategorie 3-3'
+    lft: '31'
+    rgt: '32'
+    level: '2'
+    slug: subcategorie-3-3
+  Category_12:
+    name: 'Subcategorie 3-2'
+    lft: '29'
+    rgt: '30'
+    level: '2'
+    slug: subcategorie-3-2
+  Category_13:
+    name: 'Subcategorie 3-1'
+    lft: '27'
+    rgt: '28'
+    level: '2'
+    slug: subcategorie-3-1
+  Category_14:
+    name: 'Categorie 2'
+    lft: '14'
+    rgt: '25'
+    level: '1'
+    slug: categorie-2
+  Category_15:
+    name: 'Subcategorie 2-5'
+    lft: '23'
+    rgt: '24'
+    level: '2'
+    slug: subcategorie-2-5
+  Category_16:
+    name: 'Subcategorie 2-4'
+    lft: '21'
+    rgt: '22'
+    level: '2'
+    slug: subcategorie-2-4
+  Category_17:
+    name: 'Subcategorie 2-3'
+    lft: '19'
+    rgt: '20'
+    level: '2'
+    slug: subcategorie-2-3
+  Category_18:
+    name: 'Subcategorie 2-2'
+    lft: '17'
+    rgt: '18'
+    level: '2'
+    slug: subcategorie-2-2
+  Category_19:
+    name: 'Subcategorie 2-1'
+    lft: '15'
+    rgt: '16'
+    level: '2'
+    slug: subcategorie-2-1
+  Category_20:
+    name: 'Categorie 1'
+    lft: '2'
+    rgt: '13'
+    level: '1'
+    slug: categorie-1
+  Category_21:
+    name: 'Subcategorie 1-5'
+    lft: '11'
+    rgt: '12'
+    level: '2'
+    slug: subcategorie-1-5
+  Category_22:
+    name: 'Subcategorie 1-4'
+    lft: '9'
+    rgt: '10'
+    level: '2'
+    slug: subcategorie-1-4
+  Category_23:
+    name: 'Subcategorie 1-3'
+    lft: '7'
+    rgt: '8'
+    level: '2'
+    slug: subcategorie-1-3
+  Category_24:
+    name: 'Subcategorie 1-2'
+    lft: '5'
+    rgt: '6'
+    level: '2'
+    slug: subcategorie-1-2
+  Category_25:
+    name: 'Subcategorie 1-1'
+    lft: '3'
+    rgt: '4'
+    level: '2'
+    slug: subcategorie-1-1

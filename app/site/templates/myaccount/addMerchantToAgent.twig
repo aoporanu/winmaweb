@@ -1,0 +1,92 @@
+{% extends imgajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block css %}
+    {% if not imgajax %}
+        {% include "myaccount/css.twig" %}
+    {% endif %}
+{% endblock css %}
+{% block js %}
+    {% if not imgajax %}
+        {% include "myaccount/js.twig" %}
+    {% endif %}
+{% endblock js %}
+
+{% block content_page %}
+<h1>Add Merchant</h1>
+<div class="ma_top"></div>
+<div class="ma_content">
+	<div class="clearfix">
+		<form id="removeMerchant" action="{{router.url_for('@addMerchantToAgent')}}" method="post">
+			{{ forms.input('id', '', 'hidden') }}
+			{{ forms.input('isDelete', '1', 'hidden') }}
+		</form>
+		<script>
+			function confirmDelete(_id) {
+				//alert(_id);
+				var c = confirm('Are you sure you want to remove this merchant from your list ?');
+				if (c) {
+					$('#id').val(_id);
+					//$('#ref_id').val('delete');
+					$('#removeMerchant').submit();
+				}
+			}
+		</script>
+		{% if users_count > 0 %}
+			Added Merchants:
+			<table>
+				<tr>
+					<th style="padding: 3px; border: 1px solid black; font-weight: bold;">Username</th>
+					<th style="padding: 3px; border: 1px solid black; font-weight: bold;">Referral ID</th>
+					<th style="padding: 3px; border: 1px solid black; font-weight: bold;">First Name</th>
+					<th style="padding: 3px; border: 1px solid black; font-weight: bold;">Last Name</th>
+					<th style="padding: 3px; border: 1px solid black; font-weight: bold;">Remove</th>
+				</tr>
+			{% for user in users %}
+					<tr>
+						<td style="padding: 3px; border: 1px solid black;">{{ user.username }}</td>
+						<td style="padding: 3px; border: 1px solid black;">{{ user.ref_id }}</td>
+						<td style="padding: 3px; border: 1px solid black;">{{ user.first_name }}</td>
+						<td style="padding: 3px; border: 1px solid black;">{{ user.last_name }}</td>
+						<td style="padding: 3px 0px 0px 0px; border: 1px solid black; text-align: center;"><img src="/images/delete.png" width="20" height="20" style="cursor: pointer;" onclick="javascript: confirmDelete({{user.id}});" /></td>
+					</tr>
+			{% endfor %}
+			</table>
+		{% else %}
+			There are no merchants added.
+		{% endif %}
+	</div>
+	<div class="clearfix">
+		<form action="{{router.url_for('@addMerchantToAgent')}}" method="post">
+			<br/>
+			<span style="font-size: 14px;">Add merchants</span>
+			<br/>
+			Enter referral ID:
+			{{ forms.input('ref_id', form.values.ref_id) }}
+			{{ forms.errors(form.errors.ref_id) }}
+			<br/>
+			<input type="submit" rel="mda" class="g-button g-button-submit " value="Add" />
+		</form>
+		{#% if users_count > 0 %}
+			<form action="{{router.url_for('@addMerchantToAgent')}}" method="post">
+			<br/>
+			<span style="font-size: 14px;">Add merchants</span>
+			{{ forms.select('user_id', form.user_id.options, form.values.user_id) }}
+			{{ forms.errors(form.errors.user_id) }}
+			<input type="submit" rel="mda" class="g-button g-button-submit " value="Add" />
+			</form>
+		{% else %}
+			<br/>There are no merchants to be added.
+		{% endif %#}
+	</div>
+</div>
+<div class="ma_bottom"></div>
+
+{% endblock content_page %}
+
+{% block right_side %}
+    {% if not imgajax %}
+        {% set ma_menu = 'agent' %}
+        {% include "myaccount/menu.twig" %}
+    {% endif %}
+{% endblock right_side %}

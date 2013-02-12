@@ -1,0 +1,98 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+{% block css %}
+    {% if not app.ajax %}
+        {% include "myaccount/css.twig" %}
+    {% endif %}
+{% endblock css %}
+{% block js %}
+    {% if not app.ajax %}
+        {% include "myaccount/js.twig" %}
+    {% endif %}
+{% endblock js %}
+
+{% block content_page %}
+    <h1>Build My Network: Send E-mails</h1>
+    <div class="ma_top"></div>
+    <div class="ma_content">
+        <a href="/my-account/my-referral-id" class="g-button ajax-link">My Referral id</a> <a href="/my-account/my-referral-id/send-emails" class="g-button g-button-share ajax-link">Send E-Mails</a> <a href="/my-account/my-referral-id/sent-invitations" class="g-button ajax-link">Sent Invitations</a> <a href="/my-account/my-referral-id/accepted-invitations" class="g-button ajax-link">Accepted Invitations</a>
+        <br /><br />
+        {% if stop == 1 %}
+            You can only send emails once a day, please try again tomorrow.
+        {% else %}
+            <div class="info-blue"><p>In the Build My Network: Send E-Mails Section you may have WinMaWeb send E-mail invitations to your best friends and colleagues.  The E-Mails will contain your Referral ID along with the message and subject you choose.  To send them please fill in their E-mail information below and choose a subject and appropriate message below.  These E-Mail addresses will never be shared with a third party and are protected under our privacy policy.</p></div>
+        <br /><br />
+        {% if form.errors %}
+            <br /><div class="error_box"><strong>There were errors - please verify all fields for errors</strong></div>
+        {% endif %}
+        {% if form.success %}
+            <div class="infotip"><strong>Success</strong><br /><br />Emails sent successfully</div>
+        {% endif %}
+        <form enctype="application/x-www-form-urlencoded" action="/my-account/my-referral-id/send-emails" method="post">
+        <div class="form-global clearfix">
+            <div class="clearfix">
+            <div class="label label_big"><label for="email_1">Friend E-Mail #1:</label></div>
+            <div class="input">
+                {{ forms.input('email_1', form.values.email_1) }}
+                {{ forms.errors(form.errors.email_1) }}
+            </div>
+            </div>
+                 <div class="clearfix">
+            <div class="label label_big"><label for="email_2">Friend E-Mail #2:</label></div>
+            <div class="input">
+                {{ forms.input('email_2', form.values.email_2) }}
+                {{ forms.errors(form.errors.email_2) }}
+            </div>
+            </div>
+             <div class="clearfix">
+            <div class="label label_big"><label for="email_3">Friend E-Mail #3:</label></div>
+            <div class="input">
+                {{ forms.input('email_3', form.values.email_3) }}
+                {{ forms.errors(form.errors.email_3) }}
+            </div>
+            </div>
+             <div class="clearfix">
+            <div class="label label_big"><label for="email_4">Friend E-Mail #4:</label></div>
+            <div class="input">
+                {{ forms.input('email_4', form.values.email_4) }}
+                {{ forms.errors(form.errors.email_4) }}
+            </div>
+            </div>
+            <div class="clearfix">
+            <div class="label label_big"><label for="email_5">Friend E-Mail #5:</label></div>
+            <div class="input">
+                {{ forms.input('email_5', form.values.email_5) }}
+                {{ forms.errors(form.errors.email_5) }}
+            </div>
+            </div>
+            <div class="clearfix">
+            <div class="label"><label for="subject">Subject:</label></div>
+            <div class="input input_big">
+                {{ forms.input('subject', form.values.subject) }}
+                {{ forms.errors(form.errors.subject) }}
+            </div>
+            </div>
+             <div class="clearfix">
+            <div class="label"><label for="message">Message:</label></div>
+            <div class="input input_big">
+                {{ forms.textarea('message', form.values.message) }}
+                {{ forms.errors(form.errors.message) }}
+            </div>
+            </div>
+        </div>
+        <div class="form-global clearfix">
+            <div class="label"><label>&nbsp;</label></div>
+            <div class="left"><input type="submit" class="g-button g-button-submit ajax-submit" value="Send" /></div>
+        </div>
+    </form>
+    {% endif %}
+    </div>
+    <div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+    {% if not app.ajax %}
+        {% set ma_menu = 'ref_id' %}
+        {% include "myaccount/menu.twig" %}
+    {% endif %}
+{% endblock right_side %}

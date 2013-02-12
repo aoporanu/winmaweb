@@ -1,0 +1,43 @@
+{% extends imgajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block css %}
+    {% if not imgajax %}
+        {% include "myaccount/css.twig" %}
+    {% endif %}
+{% endblock css %}
+{% block js %}
+    {% if not imgajax %}
+        {% include "myaccount/js.twig" %}
+    {% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<h1>Request Agent Account <a title="Help" style="font-size: 11px" class="help-link" href="#">help</a><div class="inv help-message">{{helpObj.getHelp(10).content|raw}}</div></h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		<ul class="steps clearfix">
+				<li class="steps_bg steps_done clearfix"><div class="no left">1</div><div class="left">Information</div></li>
+				<li class="steps_bg steps_done clearfix"><div class="no left">2</div><div class="left">Review</div></li>
+				<li class="steps_bg steps_active clearfix"><div class="no left">3</div><div class="left">Payment</div></li>
+		</ul>
+		<div class="info-blue">
+				{#<p>Your request has been accepted, now after you pay the fixed fee({{merchantFee|currency}}), your account will automatically become an agent account and you will be able to sell offers through the site.</p>#}
+                        <p>Thank you for sending in your information. To proceed with your account upgrade you must send in an Agent Verification Fee and Test Transaction of {{merchantFee|currency}} This fee is meant to verify your financial and identify details with WinMaWeb. After it is sent your account will automatically be upgraded to that of an Agent Account.</p>
+		</div>
+		<br />
+		{% if app.user.wallet >= merchantFee %}
+				<a href="{{router.url_for('@myAccountAgent?pay=1')}}" class="g-button g-button-submit aja-link">Pay</a>
+		{% else %}
+				You need more money in your wallet, please deposit more money first.
+		{% endif %}
+	</div>
+  <div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+    {% if not imgajax %}
+        {% set ma_menu = 'agent' %}
+        {% include "myaccount/menu.twig" %}
+    {% endif %}
+{% endblock right_side %}

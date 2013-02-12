@@ -1,0 +1,11 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block main_title %}
+    {% if not app.ajax %}
+    <h1>Modules</h1>
+    {% endif %}
+{% endblock main_title %}
+
+{% block content %}
+    
+{% endblock content %}

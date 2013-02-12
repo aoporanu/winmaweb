@@ -1,0 +1,44 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+<h1>Manage transactions</h1>
+    {% set actionsMenu = 'deposit' %}
+    {% include "transaction/menu.twig" %}
+    <br /><br />
+    <br /><br />
+    <div style="text-align:right">
+        <a href="{{router.url_for('@manageTransactionsMATA')}}" class="g-button{% if not view  %} g-button-submit{% endif %} ajax-link">Pending</a>
+        <a href="{{router.url_for('@manageTransactionsMATA?view=accepted')}}" class="g-button {% if view == 'accepted' %} g-button-submit{% endif %} ajax-link">Accepted</a>
+        <a href="{{router.url_for('@manageTransactionsMATA?view=rejected')}}" class="g-button {% if view == 'rejected' %} g-button-submit{% endif %} ajax-link">Rejected</a></div>
+    <br />
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+    <div class="yui3-g" style="font-weight:bold;font-size:16px;">
+        <div class="yui3-u" style="width:100px;">Requested</div>
+        <div class="yui3-u" style="width:100px;">User</div>
+        <div class="yui3-u" style="width:150px;">Amount</div>
+        <div class="yui3-u" style="width:150px;">Actions</div>
+    </div>
+    {% for request in requests %}
+    <div class="yui3-g" style="padding:10px;background-color:#C0C0BB ;border-bottom:1px solid #cacaca;">
+        <div class="yui3-u" style="width:100px;">{{request.created_at}}</div>
+        <div class="yui3-u" style="width:100px;"><a href="{{router.url_for('@manageUsersActions?id='~request.User.id)}}" class="modal-user" title="{{request.User.username}}">{{request.User.username}}</a></div>
+        <div class="yui3-u" style="width:150px;">{% if request.amount %}{{request.amount|currency}}{% endif %}</div>
+        <div class="yui3-u" style="width:150px;">
+            
+            {% if not view  %}
+            <a href="{{router.url_for('@manageTransactionsMATA?id='~request.id~'&ac=accept')}}" title="Details" class="g-button g-button-share modal-user" style="padding:2px;height:15px;line-height:15px;">Details</a>
+            <a href="{{router.url_for('@manageTransactionsMATA?id='~request.id~'&ac=reject')}}" title="Are you sure you want to reject this request?" class="g-button g-button-red ajax-confirm" style="padding:2px;height:15px;line-height:15px;">Reject</a>
+            {% else %}
+            <a href="{{router.url_for('@manageTransactionsMATA?id='~request.id~'&ac=accept&i=1')}}" title="Details" class="g-button g-button-share modal-user" style="padding:2px;height:15px;line-height:15px;">Details</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+{% endblock content %}
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'transactions' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

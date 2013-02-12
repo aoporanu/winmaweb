@@ -1,0 +1,5 @@
+- take out questions from deal offer - first page also DONE
+- customize voucher to appear more nicely and be able to print it half of a4 not on the whole page as it is right now DONE
+- check the gold extra percentage in 6th, 7th and 8th tier along for silver and bronze
+
+parola joost: 2c44c659e26cfe292ba2a8f5dd010f52

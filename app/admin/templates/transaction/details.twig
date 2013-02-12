@@ -1,0 +1,101 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+{#{% set actionsMenu = 'general' %}
+{% include "user/actionsMenu.twig" %}#}
+{% if transaction.status == -1 and transaction.action != 1 %}
+<div class="error_box">
+    <strong>You need to refund this transaction</strong><br /> 
+    Hint: {{transaction.hint}}
+    <br /><br />
+    <a href="{{router.url_for('@manageTransactionsDetail?id='~transaction.id~'&ac=refund')}}" title="Are you sure you want to set this transaction as refunded?Keep in mind that you need to actualy refund this transaction from your paypal account" class="g-button g-button-red ajax-modal-confirm" style="padding:2px;height:15px;line-height:15px;">Set this transaction as refunded</a>
+</div>
+{% else %}
+<div class="info-blue">
+    <p>Transaction was setted as refunded.(This is only for internal tracking, you still need to refund this transaction on your paypal account, check <strong>Paypal transaction id</strong> field)</p>
+</div>
+{% endif %}
+<div style="padding-top:10px;">
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item"  style="width:180px;">Transaction id:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.id}}</div>
+    </div>
+    {% if transaction.parent_id > 0 %}
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Parent transaction:</div>
+        <div class="yui3-u" style="width:350px;"><a href="{{router.url_for('@manageTransactionsDetail?id='~parent.id)}}" class="modal-user">Parent transaction</a></div>
+    </div>
+    {% endif %}
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Transaction type:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.transaction_type}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Buying User:</div>
+        <div class="yui3-u" style="width:350px;"><a href="{{router.url_for('@manageUsersActions?id='~transaction.byUser.id)}}" class="modal-user" title="{{transaction.byUser.username}}">{{transaction.byUser.username}}</a></div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">From User:</div>
+        <div class="yui3-u" style="width:350px;"><a href="{{router.url_for('@manageUsersActions?id='~transaction.fromUser.id)}}" class="modal-user" title="{{transaction.fromUser.username}}">{{transaction.fromUser.username}}</a></div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Product name:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.product_name}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Product price:</div>
+        <div class="yui3-u" style="width:350px;">${{transaction.product_price}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Product qty:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.quantity}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Full payment:</div>
+        <div class="yui3-u" style="width:350px;">${{transaction.full_payment}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Transaction received at:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.created_at|date()}}</div>
+    </div>
+        
+    <div class="" style="font-size:18px;">Paypal</div>
+    
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Paypal transaction id:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal_txn_id}}</div>
+    </div>
+    {% if transaction.paypal_parent_txn_id %}
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Paypal parent transaction id:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal_parent_txn_id}}</div>
+    </div>
+    {% endif %}
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Paypal transaction type:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal_txn_type}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Paypal payment status:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal_payment_status}}</div>
+    </div>
+    {% if transaction.paypal_pending_reason %}
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Paypal pending reason:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal_pending_reason}}</div>
+    </div>
+    {% endif %}
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Paypal payment date:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal_payment_date}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Paypal payment:</div>
+        <div class="yui3-u" style="width:350px;">${{transaction.paypal_mc_gross}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">All paypal details:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal}}</div>
+    </div>
+</div>
+{% endblock content %}

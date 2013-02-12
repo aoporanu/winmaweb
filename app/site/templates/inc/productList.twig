@@ -1,0 +1,68 @@
+	<div class="blog-small">
+		<div class="title-blog-small"><a href="/{{product.User.username}}/{{product.slug}}.html">{{product.name}}</a></div><!--/title-blog-small-->
+		<div class="images-small">
+			<a href="/{{product.User.username}}/{{product.slug}}.html" class="pirobox " title="" rel="single">
+				{% if product.ProductMedia %}
+					<img src="{{product.ProductMedia.0.dir}}/thumb250x156/{{product.ProductMedia.0.file_name}}_{{product.ProductMedia.0.id}}.{{product.ProductMedia.0.ext}}" width="250" height="156" />
+        {% endif %}
+			</a>
+			<div class="statistic">
+					<ul>
+							<li>Deal Value<p>{{product.ProductPrice.0.suplier_price|currency}}</p></li>
+							<li class="statistic-border"></li>
+							<li>Discount<p>{{product.ProductPrice.0.discount}}%</p></li>
+							<li class="statistic-border"></li>
+							<li>Price<p>{{product.ProductPrice.0.price|currency}}</p></li>
+					</ul>
+			</div><!--statistic-->
+		</div><!--/images-small-->
+		<div class="blog-small-button" style="width:285px">
+			<script type="text/javascript">
+			{#jQuery(document).ready(function(){
+							$('.footer-count-1').countdown({until: new Date(2012, 02-1, 09, 19, 30, 03), layout: '{dn} days {hnn} hrs {mnn} min {snn} sec', compact: true, timezone:0});
+			})#}
+			</script>
+                        <div class="left" style="width:25px;color:#8C8B8C;margin-top:-10px;">Deal Ends In</div><div class="timer_content left">{{product.endtime|date('Y/m/d H:i')}}</div>
+				<div class="small-button">
+					<a href="/{{product.User.username}}/{{product.slug}}.html">
+						<div class="button_see">
+							<div class="small-left"></div>
+							<div class="small-center">SEE DEAL</div>
+							<div class="small-right"></div>
+						</div>
+					</a><!--/button-->
+				</div><!--/small-button-->
+		</div><!--/blog-small-button-->
+	</div><!--/blog-small-->
+	
+	
+	{#<div class="yui3-g">
+        <div class="yui3-u-3-8">
+            
+        </div>
+        <div class="yui3-u-5-8">
+            <div class="product_content">
+                <h2>{{product.name}}</h2>
+                <div class="product_desc">{{product.short_description}}</div>
+                <div>
+                    Value: <span class="text_big">${{product.ProductPrice.0.suplier_price}}</span> | Discount: <span class="text_big">{{product.ProductPrice.0.discount}}%</span> | You save: <span class="text_big">${{product.ProductPrice.0.money_save}}</span>
+                </div>
+                <div class="product_bottom clearfix">
+                    <a href="/{{product.User.username}}/{{product.slug}}.html">more</a>
+                    <div class="product_timer right">
+                        <div class="left">
+                            <div class="timer_top">
+                                <span>h:</span><span>m:</span><span>s:</span>
+                            </div>
+                            <div class="timer_content">{{product.endtime|date('Y/m/d H:i')}}</div>
+                        </div>
+                        <div class="right">
+                            <div class="timer_price">
+                                ${{product.ProductPrice.0.price}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>#}

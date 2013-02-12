@@ -1,0 +1,7 @@
+Role:
+  Role_1:
+    name: USER
+  Role_2:
+    name: SHOP
+  Role_3:
+    name: ADMIN

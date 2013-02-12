@@ -1,0 +1,36 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block css %}
+    {% if not app.ajax %}
+        {% include "myaccount/css.twig" %}
+    {% endif %}
+{% endblock css %}
+{% block js %}
+    {% if not app.ajax %}
+        {% include "myaccount/js.twig" %}
+    {% endif %}
+{% endblock js %}
+
+{% block content_page %}
+    <h1>Build My Network</h1>
+    <div class="ma_top"></div>
+    <div class="ma_content">
+        <a href="/my-account/my-referral-id" class="g-button ajax-link">My Referral id</a> <a href="/my-account/my-referral-id/send-emails" class="g-button ajax-link">Send E-Mails</a> <a href="/my-account/my-referral-id/sent-invitations" class="g-button g-button-share ajax-link">Sent Invitations</a> <a href="/my-account/my-referral-id/accepted-invitations" class="g-button ajax-link">Accepted Invitations</a>
+        <br /><br /><br />
+        <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+        <ul>
+        {% for email in emails %}
+            <li style="padding:10px;">{{email.email}}</li>
+        {% endfor %}
+        </ul>
+        <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+    </div>
+    <div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+    {% if not app.ajax %}
+        {% set ma_menu = 'ref_id' %}
+        {% include "myaccount/menu.twig" %}
+    {% endif %}
+{% endblock right_side %}

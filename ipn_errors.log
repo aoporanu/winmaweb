@@ -1,0 +1,539 @@
+[11-Jan-2012 12:03:41] Invalid HTTP request method.
+[11-Jan-2012 12:03:46] Invalid HTTP request method.
+[11-Jan-2012 12:03:59] Invalid HTTP request method.
+[11-Jan-2012 12:17:22] Invalid HTTP request method.
+[11-Jan-2012 12:17:26] Invalid HTTP request method.
+[11-Jan-2012 12:18:12] Invalid HTTP request method.
+[11-Jan-2012 12:18:25] Invalid HTTP request method.
+[11-Jan-2012 12:18:38] Invalid HTTP request method.
+[11-Jan-2012 12:18:47] Invalid HTTP request method.
+[11-Jan-2012 12:35:25] Invalid HTTP request method.
+[11-Jan-2012 13:06:54] Invalid HTTP request method.
+[11-Jan-2012 13:28:01] Invalid HTTP request method.
+[11-Jan-2012 13:28:09] Invalid HTTP request method.
+[11-Jan-2012 13:49:34] Invalid HTTP request method.
+[11-Jan-2012 03:20:24] test
+[11-Jan-2012 03:21:36] test
+[10-May-2012 03:30:26] PHP Fatal error:  require_once(): Failed opening required '/var/www/vhosts/default.com/httpdocs/lib/cms/payment/paypal/ipnlistener.php' (include_path='/var/www/vhosts/default.com/httpdocs/lib') in /var/www/vhosts/default.com/httpdocs/app/site/controllers/paymentController.php on line 556
+[10-May-2012 03:35:34] ver
+[10-May-2012 03:35:34] --------------------------------------------------------------------------------
+[05/10/2012 3:35 AM] - https://www.sandbox.paypal.com/cgi-bin/webscr (curl)
+--------------------------------------------------------------------------------
+HTTP/1.1 100 Continue
+
+HTTP/1.1 200 OK
+Date: Thu, 10 May 2012 07:35:33 GMT
+Server: Apache
+X-Frame-Options: SAMEORIGIN
+Set-Cookie: c9MWDuvPtT9GIMyPc3jwol1VSlO=UZ3dqXDu-VO-cAomrzD_4yXTDPRChA4J4FRXIfhawI8YbqMoQSLJYc6bdhjei-lF3rc3KJct0HT6ybv9NBN8tKaUXiTSA9FPpKax7451I7pWYAe1UCBpifq1SyLIF8fu9D5qmW%7chjOBSKfOd4w5fhbpTHcvg_U-UKjzFWmiCHQNyWIX5zCc6yF7wIN9rHXtBXzTX1yAaY2d1G%7cjWsbId15p8fzh6FW2FUd0ma6BMP7L7VTc5kHVnQdWtOjjGeV4k6xCI7QXkIfbTCbDlM4Hm%7c1336635334; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: cookie_check=yes; expires=Sun, 08-May-2022 07:35:34 GMT; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: navcmd=_notify-validate; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: navlns=0.0; expires=Wed, 05-May-2032 07:35:34 GMT; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: Apache=10.72.109.11.1336635333881509; path=/; expires=Sat, 03-May-42 07:35:33 GMT
+X-Cnection: close
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=UTF-8
+
+VERIFIED
+--------------------------------------------------------------------------------
+mc_gross                 6.00
+protection_eligibility   Eligible
+address_status           confirmed
+payer_id                 NLB2NM5QV78W4
+tax                      0.00
+address_street           1 Main St
+payment_date             00:35:29 May 10, 2012 PDT
+payment_status           Completed
+charset                  windows-1252
+address_zip              95131
+first_name               Digital
+mc_fee                   0.67
+address_country_code     US
+address_name             Digital Dreams Design
+notify_version           3.4
+custom                   
+payer_status             verified
+business                 radu.d_1336565634_biz@digitaldreamsdesign.net
+address_country          United States
+address_city             San Jose
+quantity                 1
+verify_sign              A22ScfTjAJf4nf9U8HfWDg58AWFOAYMPtoPFOxHhSzt0JPxoTqK12aUi
+payer_email              radu.d_1336565523_per@digitaldreamsdesign.net
+txn_id                   88X02976XM832483C
+payment_type             instant
+last_name                Dreams Design
+address_state            CA
+receiver_email           radu.d_1336565634_biz@digitaldreamsdesign.net
+payment_fee              
+receiver_id              3WBT886QQS5FS
+txn_type                 web_accept
+item_name                WinMaWeb Deposit
+mc_currency              SGD
+item_number              
+residence_country        US
+test_ipn                 1
+handling_amount          0.00
+transaction_subject      WinMaWeb Deposit
+payment_gross            
+shipping                 0.00
+ipn_track_id             21d44bcba5f1b
+
+
+
+[10-May-2012 04:30:31] Invalid HTTP request method.
+[10-May-2012 04:52:24] ver
+[10-May-2012 04:52:24] --------------------------------------------------------------------------------
+[05/10/2012 4:52 AM] - https://www.sandbox.paypal.com/cgi-bin/webscr (curl)
+--------------------------------------------------------------------------------
+HTTP/1.1 200 OK
+Date: Thu, 10 May 2012 08:52:24 GMT
+Server: Apache
+X-Frame-Options: SAMEORIGIN
+Set-Cookie: c9MWDuvPtT9GIMyPc3jwol1VSlO=0uscAmsISJLlljD1w-wkz4O3HObg_xj0LZq9uXYwjLKTqfe4UriX1wo2APiDXuvIVIxVO4zmo849h7XxxaEKY-YQjzC6pBDGxdt21RieFxMCLjvVgrym0EPoBfELfd3hKupOI0%7c7pm_ymxqG-OYOYVL2Gp3uH9vpEVhQTBbNeNy-Ifi77qOwtnOPv8_ElaGO7nXd3o9IpBkFG%7cUE9jzSxOAsiUWiPWXGnhAenaDkIgObgqhp_TNjulvYj2Aw0sv7RM4DxG9gAGel887Swx6m%7c1336639944; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: cookie_check=yes; expires=Sun, 08-May-2022 08:52:24 GMT; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: navcmd=_notify-validate; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: navlns=0.0; expires=Wed, 05-May-2032 08:52:24 GMT; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: Apache=10.72.109.11.1336639944452157; path=/; expires=Sat, 03-May-42 08:52:24 GMT
+X-Cnection: close
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=UTF-8
+
+VERIFIED
+--------------------------------------------------------------------------------
+test_ipn                 1
+payment_type             instant
+payment_date             01:52:19 May 10, 2012 PDT
+payment_status           Completed
+address_status           confirmed
+payer_status             unverified
+first_name               John
+last_name                Smith
+payer_email              buyer@paypalsandbox.com
+payer_id                 TESTBUYERID01
+address_name             John Smith
+address_country          United States
+address_country_code     US
+address_zip              95131
+address_state            CA
+address_city             San Jose
+address_street           123, any street
+receiver_email           seller@paypalsandbox.com
+receiver_id              TESTSELLERID1
+residence_country        US
+item_name1               something
+item_number1             AK-1234
+quantity1                1
+tax                      2.02
+mc_currency              USD
+mc_fee                   0.44
+mc_gross_1               9.34
+mc_handling              2.06
+mc_handling1             1.67
+mc_shipping              3.02
+mc_shipping1             1.02
+txn_type                 cart
+txn_id                   19510852
+notify_version           2.4
+custom                   xyz123
+invoice                  abc1234
+charset                  windows-1252
+verify_sign              AQU0e5vuZCvSg-XJploSa.sGUDlpA.Cn73FTzb1L3lgJkUluJj6dv8Up
+
+
+
+[10-May-2012 04:54:54] Invalid HTTP request method.
+[10-May-2012 04:59:09] depositPaypalIPNAction
+[10-May-2012 04:59:09] Invalid HTTP request method.
+[10-May-2012 06:18:51] depositAction
+[10-May-2012 06:40:48] ver
+[10-May-2012 06:40:48] --------------------------------------------------------------------------------
+[05/10/2012 6:40 AM] - https://www.sandbox.paypal.com/cgi-bin/webscr (curl)
+--------------------------------------------------------------------------------
+HTTP/1.1 100 Continue
+
+HTTP/1.1 200 OK
+Date: Thu, 10 May 2012 10:40:48 GMT
+Server: Apache
+X-Frame-Options: SAMEORIGIN
+Set-Cookie: c9MWDuvPtT9GIMyPc3jwol1VSlO=91uQpu-3ErF0l4uHdwVYpTbWjViQu_1SRZHTj2v2FoIo3EAqZx0WTLtQoUO-TbbWd8ZVlsXYJ7ioS9DMPAGqniLzIVKXD6u1qKO2wOB2HEaMF9r-lswhotKlmmDTBc9KDtXBrW%7cvloWIoUZTpnce0XC4nMLec2uEW2feEjrMT34asrG9Y_jsRFUvldLvhuwffiAKyHkKIxDWG%7cnmKelRXlt5UNXg4iWrBWi9J88hCU7SVKSyKsUmEGim6lkAXuWNev1Doklyy15nMxVcWvam%7c1336646448; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: cookie_check=yes; expires=Sun, 08-May-2022 10:40:48 GMT; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: navcmd=_notify-validate; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: navlns=0.0; expires=Wed, 05-May-2032 10:40:48 GMT; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: Apache=10.72.109.11.1336646448434968; path=/; expires=Sat, 03-May-42 10:40:48 GMT
+X-Cnection: close
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=UTF-8
+
+VERIFIED
+--------------------------------------------------------------------------------
+mc_gross                 18.00
+protection_eligibility   Eligible
+address_status           confirmed
+payer_id                 NLB2NM5QV78W4
+tax                      0.00
+address_street           1 Main St
+payment_date             03:40:44 May 10, 2012 PDT
+payment_status           Completed
+charset                  windows-1252
+address_zip              95131
+first_name               Digital
+mc_fee                   1.02
+address_country_code     US
+address_name             Digital Dreams Design
+notify_version           3.4
+custom                   
+payer_status             verified
+business                 radu.d_1336565634_biz@digitaldreamsdesign.net
+address_country          United States
+address_city             San Jose
+quantity                 1
+verify_sign              A0yehh44EgVeijCPXi2OqSHvMfCkAZifUjZfWxT30pfzE93XUfkOoBR5
+payer_email              radu.d_1336565523_per@digitaldreamsdesign.net
+txn_id                   46937998SL933812N
+payment_type             instant
+last_name                Dreams Design
+address_state            CA
+receiver_email           radu.d_1336565634_biz@digitaldreamsdesign.net
+payment_fee              
+receiver_id              3WBT886QQS5FS
+txn_type                 web_accept
+item_name                WinMaWeb Deposit
+mc_currency              SGD
+item_number              
+residence_country        US
+test_ipn                 1
+handling_amount          0.00
+transaction_subject      WinMaWeb Deposit
+payment_gross            
+shipping                 0.00
+ipn_track_id             cac8e4f1c42a9
+
+
+
+[10-May-2012 07:01:31] ver
+[10-May-2012 07:01:31] --------------------------------------------------------------------------------
+[05/10/2012 7:01 AM] - https://www.sandbox.paypal.com/cgi-bin/webscr (curl)
+--------------------------------------------------------------------------------
+HTTP/1.1 100 Continue
+
+HTTP/1.1 200 OK
+Date: Thu, 10 May 2012 11:01:30 GMT
+Server: Apache
+X-Frame-Options: SAMEORIGIN
+Set-Cookie: c9MWDuvPtT9GIMyPc3jwol1VSlO=UrySGU5JLA4QKe4wcNhzZeRYN7hSAALn8vA_OBEF_dRWNEWa8pJiiJXc9jQ9NGrwzeDgpYWJ-OEPrET7eOzmZgI-l6Kn82UfiIMypCOLlgb9HMXjFpMbQ13zoN6kP9eRgfdjmm%7cafPcxmIONVI8MHUXIqs0Dbaog6zEVXVJQVCLYxP1YGFDkY-05VejMhN-Mkd5pB8mNNGGwW%7cE4xquhkvSaQy1-g-Px61Ioy-i8G75fSgmcaZwuqGu8Phddv2eR3dmgWSLt83LDmHfHemtG%7c1336647691; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: cookie_check=yes; expires=Sun, 08-May-2022 11:01:31 GMT; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: navcmd=_notify-validate; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: navlns=0.0; expires=Wed, 05-May-2032 11:01:31 GMT; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: Apache=10.72.109.11.1336647690680982; path=/; expires=Sat, 03-May-42 11:01:30 GMT
+X-Cnection: close
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=UTF-8
+
+VERIFIED
+--------------------------------------------------------------------------------
+mc_gross                 19.00
+protection_eligibility   Eligible
+address_status           confirmed
+payer_id                 NLB2NM5QV78W4
+tax                      0.00
+address_street           1 Main St
+payment_date             04:01:25 May 10, 2012 PDT
+payment_status           Completed
+charset                  windows-1252
+address_zip              95131
+first_name               Digital
+mc_fee                   1.05
+address_country_code     US
+address_name             Digital Dreams Design
+notify_version           3.4
+custom                   
+payer_status             verified
+business                 radu.d_1336565634_biz@digitaldreamsdesign.net
+address_country          United States
+address_city             San Jose
+quantity                 1
+verify_sign              ALejXrqEjojypfHK1jRRnr4KjFNeAQ3lYcgtVaUgOE-Vc7N-BPs08CPx
+payer_email              radu.d_1336565523_per@digitaldreamsdesign.net
+txn_id                   7GN10557GY5128323
+payment_type             instant
+last_name                Dreams Design
+address_state            CA
+receiver_email           radu.d_1336565634_biz@digitaldreamsdesign.net
+payment_fee              
+receiver_id              3WBT886QQS5FS
+txn_type                 web_accept
+item_name                WinMaWeb Deposit
+mc_currency              SGD
+item_number              
+residence_country        US
+test_ipn                 1
+handling_amount          0.00
+transaction_subject      WinMaWeb Deposit
+payment_gross            
+shipping                 0.00
+ipn_track_id             170b54d7d5845
+
+
+
+[10-May-2012 07:01:31] 19.00
+[10-May-2012 07:01:31] PHP Fatal error:  Call to undefined method stdClass::save() in /var/www/vhosts/default.com/httpdocs/app/site/controllers/paymentController.php on line 599
+[10-May-2012 07:19:11] ver
+[10-May-2012 07:19:11] 20.00
+[10-May-2012 07:19:11] 
+[10-May-2012 07:19:11] 
+[10-May-2012 07:22:46] 
+[10-May-2012 07:22:46] 
+[10-May-2012 07:22:47] ver
+[10-May-2012 07:22:47] 21.00
+[10-May-2012 07:22:47] 
+[10-May-2012 07:22:47] 
+[10-May-2012 07:57:49] 
+[10-May-2012 07:57:49] 
+[10-May-2012 07:57:50] ver
+[10-May-2012 07:57:50] 23.00
+[10-May-2012 07:57:50] 
+[10-May-2012 07:57:50] 
+[10-May-2012 08:01:31] 
+[10-May-2012 08:01:31] 
+[10-May-2012 08:01:32] ver
+[10-May-2012 08:01:32] 24.00
+[10-May-2012 08:01:32] 
+[10-May-2012 08:01:32] 
+[10-May-2012 08:08:42] user: 2
+[10-May-2012 08:08:42] PHP Catchable fatal error:  Object of class paymentController could not be converted to string in /var/www/vhosts/default.com/httpdocs/app/site/controllers/paymentController.php on line 556
+[10-May-2012 08:11:05] user: 2
+[10-May-2012 08:11:05] user: 4488.07
+[10-May-2012 08:11:05] user: 
+[10-May-2012 08:11:05] user wallet: 
+[10-May-2012 08:11:06] ver
+[10-May-2012 08:11:06] 25.00
+[10-May-2012 08:11:06] 
+[10-May-2012 08:11:06] 
+[10-May-2012 08:20:31] ver
+[10-May-2012 08:20:31] --------------------------------------------------------------------------------
+[05/10/2012 8:20 AM] - https://www.sandbox.paypal.com/cgi-bin/webscr (curl)
+--------------------------------------------------------------------------------
+HTTP/1.1 100 Continue
+
+HTTP/1.1 200 OK
+Date: Thu, 10 May 2012 12:20:30 GMT
+Server: Apache
+X-Frame-Options: SAMEORIGIN
+Set-Cookie: c9MWDuvPtT9GIMyPc3jwol1VSlO=64csE63r8sYs9z6QnF700Cdr6pCclunOyMzWcs6r9eEqFLRHrDK6DRgC29pW908U8yfOJeXuD1ljBGGvdYMXZ_BfwIRQKAlAogw1OfAJNoRqOF9R1yqYSkIe0OZt5ZunJTlZE0%7czrqGm3J_Hb4ovnLO3eD2SolRY2GoIjzU7jYCH5FIADLHXnbqz6QQNp9AjJm0R5S4P2H6K0%7cOauaNlKpyWB1Txn9vAv04wnYhVYOSXd88ELWxFonCyz-c2FwN5FzFf4EZ3j_DirlTntuoG%7c1336652431; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: cookie_check=yes; expires=Sun, 08-May-2022 12:20:31 GMT; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: navcmd=_notify-validate; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: navlns=0.0; expires=Wed, 05-May-2032 12:20:31 GMT; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: Apache=10.72.109.11.1336652430580669; path=/; expires=Sat, 03-May-42 12:20:30 GMT
+X-Cnection: close
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=UTF-8
+
+VERIFIED
+--------------------------------------------------------------------------------
+mc_gross                 26.00
+protection_eligibility   Eligible
+address_status           confirmed
+payer_id                 NLB2NM5QV78W4
+tax                      0.00
+address_street           1 Main St
+payment_date             05:20:26 May 10, 2012 PDT
+payment_status           Completed
+charset                  windows-1252
+address_zip              95131
+first_name               Digital
+mc_fee                   1.25
+address_country_code     US
+address_name             Digital Dreams Design
+notify_version           3.4
+custom                   
+payer_status             verified
+business                 radu.d_1336565634_biz@digitaldreamsdesign.net
+address_country          United States
+address_city             San Jose
+quantity                 1
+verify_sign              AFcWxV21C7fd0v3bYYYRCpSSRl31Apb5o7tRbWgTtmIHVeFfICvlrROo
+payer_email              radu.d_1336565523_per@digitaldreamsdesign.net
+txn_id                   5Y83726371147984R
+payment_type             instant
+last_name                Dreams Design
+address_state            CA
+receiver_email           radu.d_1336565634_biz@digitaldreamsdesign.net
+payment_fee              
+receiver_id              3WBT886QQS5FS
+txn_type                 web_accept
+item_name                WinMaWeb Deposit
+mc_currency              SGD
+item_number              34
+residence_country        US
+test_ipn                 1
+handling_amount          0.00
+transaction_subject      WinMaWeb Deposit
+payment_gross            
+shipping                 0.00
+ipn_track_id             e5cb1f2ad8b40
+
+
+
+[10-May-2012 08:20:31] 26.00
+[10-May-2012 08:25:05] ver
+[10-May-2012 08:25:05] 27.00
+[10-May-2012 08:25:05] 2
+[10-May-2012 08:25:05] 4488.07
+[10-May-2012 08:27:38] ver
+[10-May-2012 08:27:38] 28.00
+[11-Jul-2012 02:08:47] Invalid HTTP request method.
+[11-Jul-2012 02:11:15] Invalid HTTP request method.
+[11-Jul-2012 02:11:38] Invalid HTTP request method.
+[11-Jul-2012 02:12:18] Invalid HTTP request method.
+[11-Jul-2012 02:17:37] PHP Fatal error:  Uncaught exception 'Doctrine_Connection_Mysql_Exception' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '0JB17291DU040230M' for key 'paypaltxnindex_idx'' in /var/www/vhosts/winmaweb.com/httpdocs/lib/Doctrine/Doctrine/Connection.php:1082
+Stack trace:
+#0 /var/www/vhosts/winmaweb.com/httpdocs/lib/Doctrine/Doctrine/Connection/Statement.php(269): Doctrine_Connection->rethrowException(Object(PDOException), Object(Doctrine_Connection_Statement))
+#1 /var/www/vhosts/winmaweb.com/httpdocs/lib/Doctrine/Doctrine/Connection.php(1042): Doctrine_Connection_Statement->execute(Array)
+#2 /var/www/vhosts/winmaweb.com/httpdocs/lib/Doctrine/Doctrine/Connection.php(687): Doctrine_Connection->exec('INSERT INTO tra...', Array)
+#3 /var/www/vhosts/winmaweb.com/httpdocs/lib/Doctrine/Doctrine/Connection/UnitOfWork.php(647): Doctrine_Connection->insert(Object(TransactionTable), Array)
+#4 /var/www/vhosts/winmaweb.com/httpdocs/lib/Doctrine/Doctrine/Connection/UnitOfWork.php(571): Doctrine_Connection_Uni in /var/www/vhosts/winmaweb.com/httpdocs/lib/Doctrine/Doctrine/Connection.php on line 1082
+[11-Jul-2012 02:17:38] PHP Fatal error:  Uncaught exception 'Doctrine_Connection_Mysql_Exception' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1AJ733971A257623G' for key 'paypaltxnindex_idx'' in /var/www/vhosts/winmaweb.com/httpdocs/lib/Doctrine/Doctrine/Connection.php:1082
+Stack trace:
+#0 /var/www/vhosts/winmaweb.com/httpdocs/lib/Doctrine/Doctrine/Connection/Statement.php(269): Doctrine_Connection->rethrowException(Object(PDOException), Object(Doctrine_Connection_Statement))
+#1 /var/www/vhosts/winmaweb.com/httpdocs/lib/Doctrine/Doctrine/Connection.php(1042): Doctrine_Connection_Statement->execute(Array)
+#2 /var/www/vhosts/winmaweb.com/httpdocs/lib/Doctrine/Doctrine/Connection.php(687): Doctrine_Connection->exec('INSERT INTO tra...', Array)
+#3 /var/www/vhosts/winmaweb.com/httpdocs/lib/Doctrine/Doctrine/Connection/UnitOfWork.php(647): Doctrine_Connection->insert(Object(TransactionTable), Array)
+#4 /var/www/vhosts/winmaweb.com/httpdocs/lib/Doctrine/Doctrine/Connection/UnitOfWork.php(571): Doctrine_Connection_Uni in /var/www/vhosts/winmaweb.com/httpdocs/lib/Doctrine/Doctrine/Connection.php on line 1082
+[17-Aug-2012 01:53:22] test
+[17-Aug-2012 02:00:06] test
+[17-Aug-2012 02:00:07] not
+[17-Aug-2012 02:00:07] --------------------------------------------------------------------------------
+[08/17/2012 2:00 AM] - https://www.paypal.com/cgi-bin/webscr (curl)
+--------------------------------------------------------------------------------
+HTTP/1.1 100 Continue
+
+HTTP/1.1 200 OK
+Date: Fri, 17 Aug 2012 06:00:07 GMT
+X-Frame-Options: SAMEORIGIN
+Set-Cookie: cwrClyrK4LoCV1fydGbAxiNL6iG=bk8StFNO8G1Bpa3lu5GEcpZsaJ-KTiDgmHV9oFJ6GRD9Cvz1C7vxfNrWgDaF6QT4ufIzNyKfVHjttOX9WKJ54ka8w49pdD-zzGd23dlwmFMBRJhnDYILsYv_1Ja%7cbUIctKx12DZmuUR_CTP72HNcPYBCzF2vmzcmFQ4SWDU3IGsSNG7xD-GkUaETUx8j988mDG%7cMqXZEPe6PKRToVLXR8LdRL8XjA9TzxLAN30T_APPMngWtoVQ1H446MVt9DEyILSuc0L6LG%7c1345183207; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: cookie_check=yes; expires=Mon, 15-Aug-2022 06:00:07 GMT; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: navcmd=_notify-validate; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: navlns=0.0; expires=Thu, 12-Aug-2032 06:00:07 GMT; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: Apache=10.73.8.65.1345183207136980; path=/; expires=Sun, 10-Aug-42 06:00:07 GMT
+Vary: Accept-Encoding
+Strict-Transport-Security: max-age=14400
+Content-Type: text/html; charset=UTF-8
+Set-Cookie: TS6a0e62=c97a4977dd2d7f781ae6945a46c90ad06e126fed3fdf6a66502ddde7a0e24589bb74e952634137d16081497ffaa6df6385ae782bba64fcf83ecccf34b4608ba7ef6f9b6b; Path=/
+Transfer-Encoding: chunked
+
+INVALID
+--------------------------------------------------------------------------------
+mc_gross                 5.00
+protection_eligibility   Eligible
+address_status           confirmed
+payer_id                 NLB2NM5QV78W4
+tax                      0.00
+address_street           1 Main St
+payment_date             23:00:02 Aug 16, 2012 PDT
+payment_status           Completed
+charset                  windows-1252
+address_zip              95131
+first_name               Digital
+mc_fee                   0.65
+address_country_code     US
+address_name             Digital Dreams Design
+notify_version           3.6
+custom                   
+payer_status             verified
+business                 radu.d_1336565634_biz@digitaldreamsdesign.net
+address_country          United States
+address_city             San Jose
+quantity                 1
+verify_sign              A2sGDfKxct0XOcqxaUF5XLq9S5gkAkeFmSsN7NTeOr1Ks3LRcuv3hSwe
+payer_email              radu.d_1336565523_per@digitaldreamsdesign.net
+txn_id                   4WS934729X696650D
+payment_type             instant
+last_name                Dreams Design
+address_state            CA
+receiver_email           radu.d_1336565634_biz@digitaldreamsdesign.net
+payment_fee              
+receiver_id              3WBT886QQS5FS
+txn_type                 web_accept
+item_name                WinMaWeb Deposit
+mc_currency              SGD
+item_number              10
+residence_country        US
+test_ipn                 1
+handling_amount          0.00
+transaction_subject      WinMaWeb Deposit
+payment_gross            
+shipping                 0.00
+ipn_track_id             ebf7bb7cae364
+
+
+
+[17-Aug-2012 02:01:36] test
+[17-Aug-2012 02:01:36] Invalid HTTP request method.
+[17-Aug-2012 02:16:55] test
+[17-Aug-2012 02:16:56] not
+[17-Aug-2012 02:16:56] --------------------------------------------------------------------------------
+[08/17/2012 2:16 AM] - https://www.paypal.com/cgi-bin/webscr (curl)
+--------------------------------------------------------------------------------
+HTTP/1.1 100 Continue
+
+HTTP/1.1 200 OK
+Date: Fri, 17 Aug 2012 06:16:56 GMT
+X-Frame-Options: SAMEORIGIN
+Set-Cookie: cwrClyrK4LoCV1fydGbAxiNL6iG=a_qDLmyIWgw0ELJRQwyGJbPHMdsMxtwNWozUQG0Vr0KC3p25L1TLYJreERPaZFVwj-fGqQ-aON2TOJarhCUW5CpfoUO3MYhG9nbGbNHnG85JMwXhLwexZSPiA6GRTS4b5tuKb0%7cgQuj_p5XxkNOiFzslFdvNhWNH4U0rBHbbHQvE1p-GzGb-F0dsVhh_fkBOJH6FR6BgswDUG%7crxIMiSsxpHTUUes8L4oP-6BGXVTbhycK-Ua2mUp8tEFyZbYB5u02A5znTPVQWKj1fHQrQ0%7c1345184216; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: cookie_check=yes; expires=Mon, 15-Aug-2022 06:16:56 GMT; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: navcmd=_notify-validate; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: navlns=0.0; expires=Thu, 12-Aug-2032 06:16:56 GMT; domain=.paypal.com; path=/; Secure; HttpOnly
+Set-Cookie: Apache=10.74.8.46.1345184216349470; path=/; expires=Sun, 10-Aug-42 06:16:56 GMT
+Vary: Accept-Encoding
+Strict-Transport-Security: max-age=14400
+Content-Type: text/html; charset=UTF-8
+Set-Cookie: TSe9a623=a01e2c9bc1e51f0d19214672646f0f4e7e032c6cc6c00674502de1d8a0e24589d3c24a97634137d16081497ffaa6df6385ae782bba64fcf83ecccf34b4608ba7162df4a2; Path=/
+Transfer-Encoding: chunked
+
+INVALID
+--------------------------------------------------------------------------------
+mc_gross                 5.00
+protection_eligibility   Eligible
+address_status           confirmed
+payer_id                 NLB2NM5QV78W4
+tax                      0.00
+address_street           1 Main St
+payment_date             23:16:52 Aug 16, 2012 PDT
+payment_status           Completed
+charset                  windows-1252
+address_zip              95131
+first_name               Digital
+mc_fee                   0.65
+address_country_code     US
+address_name             Digital Dreams Design
+notify_version           3.6
+custom                   
+payer_status             verified
+business                 radu.d_1336565634_biz@digitaldreamsdesign.net
+address_country          United States
+address_city             San Jose
+quantity                 1
+verify_sign              AFcWxV21C7fd0v3bYYYRCpSSRl31AzEpiYBVh.6e-S3DItkoll3tpLc-
+payer_email              radu.d_1336565523_per@digitaldreamsdesign.net
+txn_id                   64X20870220698644
+payment_type             instant
+last_name                Dreams Design
+address_state            CA
+receiver_email           radu.d_1336565634_biz@digitaldreamsdesign.net
+payment_fee              
+receiver_id              3WBT886QQS5FS
+txn_type                 web_accept
+item_name                WinMaWeb Deposit
+mc_currency              SGD
+item_number              10
+residence_country        US
+test_ipn                 1
+handling_amount          0.00
+transaction_subject      WinMaWeb Deposit
+payment_gross            
+shipping                 0.00
+ipn_track_id             b925d2853951c
+
+
+
+[17-Aug-2012 02:21:09] test

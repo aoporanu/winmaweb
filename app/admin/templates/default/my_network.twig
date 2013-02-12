@@ -1,0 +1,48 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+
+<h1>My Network Links</h1>
+    <div>
+        <a href="{{router.url_for('@myNetwork?ac=add')}}" class="g-button g-button-share ajax-link">Add Media</a>
+    </div>
+    <br />
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+    <div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed; width: 400px;">
+            <div class="yui3-u" style="width: 50px;">
+                ID
+            </div>
+            <div class="yui3-u" style="width: 120px;">
+                Title
+            </div>
+            <div class="yui3-u" style="width: 120px;">
+                File name
+            </div>
+            <div class="yui3-u" style="width: 110px;">
+                Actions
+            </div>
+    </div>
+    {% for link in links %}
+        <div class="yui3-g">
+            <div class="yui3-u" style="width: 50px;">
+                {{ link.id }}
+            </div>
+            <div class="yui3-u" style="width: 120px;">
+                {{ link.title }}
+            </div>
+            <div class="yui3-u" style="width: 120px;">
+                {{ link.filename }}
+            </div>
+            <div class="yui3-u" style="width: 110px;">
+							 <a href="{{router.url_for('@myNetwork?ac=delete&id='~link.id)}}" class="g-button g-button-share ajax-link">Delete</a>
+            </div>
+        </div>
+    {% endfor %}
+        <ul class="pagination clearfix" id="pagination">{{ pagination|raw }}</ul>
+{% endblock content %}
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'my_network' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

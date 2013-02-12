@@ -1,0 +1,21 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block content_page %}
+<ul class="pagination-modal clearfix">{{ pagination|raw }}</ul>
+{% for question in questions %}
+<div style="margin: 15px 0;border-bottom:1px solid #cacaca;">
+    <div style="">By: {{question.User.first_name}} <a href="{{router.url_for('@myProducts?ac=questions&id='~pid~'&m=a&qid='~question.id~'&page='~page)}}" title="Answer" class="g-button g-button-share g-button-small modal-normal">Answer this question</a></div>
+    <div style="padding:5px 0 10px 10px;"><span class="label2 label-info">question</span> {{question.question|nl2br}}</div>
+    {% if question.Answer %}
+    {% for answer in question.Answer %}
+    <div style="margin: 10px 0 0 15px;padding-top:5px;border-top:1px solid #cacaca;">
+        <div style="">By: {{answer.User.first_name}}</div>
+        <div style="padding:5px 0 10px 10px;"><span class="label2 label-important">answer</span> {{answer.answer|nl2br}}</div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endfor %}
+<ul class="pagination-modal clearfix">{{ pagination|raw }}</ul>
+{% endblock content_page %}

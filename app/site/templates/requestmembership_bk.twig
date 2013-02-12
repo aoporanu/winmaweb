@@ -1,0 +1,126 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout_default.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block content_page %}
+{% if not app.ajax %}
+<div class="general-container">
+    <h1>Request Membership</h1>
+    <br /><br />
+{% endif %}
+<div class="info-blue"><p>Welcome to WinMaWeb. To Register as a new member please fill out this form.  
+<br /><br />
+Note:  This is the ONLY registration page needed to obtain your membership. (There are no further registration pages beyond this one in order to access the website.)</p></div>
+<br />    
+{% if form.errors or form.globalErrors%}
+    <div class="error_box">
+            <strong>Please check if the information you provided was enough. Our Web-Site requires that all fields be completed.</strong>
+            {{ forms.errors(form.globalErrors) }}
+    </div>
+{% endif %}
+{% if form.success %}
+    <div class="infotip"><strong>Success</strong>
+        <br /><br />You have registered successfully
+        <br/>
+        <a href="/user/activate/{{refid}}">/user/activate/{{refid}}</a>
+    </div>
+{% endif %}
+<form name="frmRegister" enctype="application/x-www-form-urlencoded" action="/request-membership" method="post">
+    <div class="form-global form-reg clearfix">
+        <div class="label"><label for="reg_username">Username:</label></div>
+        <div class="input input_big">
+            {{ forms.input('reg_username', form.values.reg_username) }}
+            {{ forms.errors(form.errors.reg_username) }}
+        </div>
+				<div class="clear"></div>
+        <div class="label"><label for="reg_password">Password:</label></div>
+        <div class="input input_big">
+            {{ forms.input('reg_password', '', 'password') }}
+            {{ forms.errors(form.errors.reg_password) }}
+        </div>
+				<div class="clear"></div>
+        <div class="label"><label for="email">E-mail:</label></div>
+        <div class="input input_big">
+            {{ forms.input('email', form.values.email) }}
+            {{ forms.errors(form.errors.email) }}
+        </div>
+				<div class="clear"></div>
+        <div class="label"><label for="first_name">First Name:</label></div>
+        <div class="input input_big">
+            {{ forms.input('first_name', form.values.first_name) }}
+            {{ forms.errors(form.errors.first_name) }}
+        </div>
+				<div class="clear"></div>
+        <div class="label"><label for="last_name">Last Name:</label></div>
+        <div class="input input_big">
+            {{ forms.input('last_name', form.values.last_name) }}
+            {{ forms.errors(form.errors.last_name) }}
+        </div>
+				<div class="clear"></div>
+        {#<div class="label"><label for="phone">Phone:</label></div>
+        <div class="input input_big">
+            {{ forms.input('phone', form.values.phone) }}
+            {{ forms.errors(form.errors.phone) }}
+        </div>
+				<div class="clear"></div>#}
+        
+    </div>
+    <div class="form-global form-reg clearfix">
+        {#<div class="label"><label for="address">Address:</label></div>
+        <div class="input input_big">
+            {{ forms.input('address', form.values.address) }}
+            {{ forms.errors(form.errors.address) }}
+        </div>
+				<div class="clear"></div>#}
+        <div class="label"><label for="city">City:</label></div>
+        <div class="input input_big">
+            {{ forms.input('city', form.values.city) }}
+            {{ forms.errors(form.errors.city) }}
+        </div>
+				<div class="clear"></div>
+        {#<div class="label"><label for="county">Province/County:</label></div>
+        <div class="input input_big">
+            {{ forms.input('county', form.values.county) }}
+            {{ forms.errors(form.errors.county) }}
+        </div>
+				<div class="clear"></div>#}
+        <div class="label"><label for="postcode">Postal Code:</label></div>
+        <div class="input input_big">
+            {{ forms.input('postcode', form.values.postcode) }}
+            {{ forms.errors(form.errors.postcode) }}
+        </div>
+				<div class="clear"></div>
+        <div class="label"><label for="country">Country:</label></div>
+        <div class="input input_big">
+            {{ forms.select('country', form.countries.options, form.values.country) }}
+            {{ forms.errors(form.errors.country) }}
+        </div>
+				<div class="clear"></div>
+        <div class="label"><label for="referral">Referral id:</label></div>
+        <div class="input input_big">
+            {{ forms.input('referral', form.values.referral) }}
+            {{ forms.errors(form.errors.referral) }}
+            <br /><em style="color:#000">You must provide a Referral ID from an existing member in order to register.</em>
+        </div>
+				<div class="clear"></div>
+      </div>
+    <div class="form-global clearfix">
+        <div class="label"><label>&nbsp;</label></div>
+        <div class="left">
+					{#<input type="submit" class="g-button g-button-mda {% if app.ajax %}modal-submit{% else %}{% endif %}" value="Register" />#}
+					<div class="small-button">
+						<a href="" {% if app.ajax %}{% else %}onclick="document.forms['frmRegister'].submit();{% endif %} return false;" class="{% if app.ajax %}modal-submit{% endif %}">
+							<div class="button_see">
+								<div class="small-left"></div>
+								<div class="small-center">Register</div>
+								<div class="small-right"></div>
+							</div>
+						</a>
+					</div>
+					<input type="submit" style="display: none;" />
+				</div>
+    </div>
+</form>
+{% if not app.ajax %}
+</div>
+{% endif %}        
+{% endblock content_page %}

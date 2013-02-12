@@ -1,0 +1,33 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout_default.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block content_page %}
+<div class="p-container">
+	<h1 style="margin-bottom: 5px;">Request password</h1>
+    {% if form.errors or form.globalErrors%}
+        <div class="error_box">
+                <strong>There were errors - please verify all fields for errors</strong>
+                {{ forms.errors(form.globalErrors) }}
+        </div>
+    {% endif %}
+    {% if form.success %}
+        <div class="infotip"><strong>Success</strong>
+            <br /><br />Please verify your email for details
+            <br /><br /><a href="/login">Return to Login Page</a>
+        </div>
+    {% else %}
+    <form enctype="application/x-www-form-urlencoded" action="/forgot-password" method="post">
+        <div class="form-global clearfix">
+            <div class="label"><label for="email">Email:</label></div>
+            <div class="input">
+                {{ forms.input('email', form.values.email) }}
+                {{ forms.errors(form.errors.email) }}
+            </div>
+        </div>
+        <div class="">
+            <input type="submit" class="g-button g-button-submit" value="Submit" />
+        </div>
+    </form>
+    {% endif %}
+</div>
+{% endblock content_page %}

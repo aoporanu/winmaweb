@@ -1,0 +1,58 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+{% set actionsMenu = 'general' %}
+{% include "user/actionsMenu.twig" %}
+
+<div style="padding-top:20px;">
+    {% if not user.is_active %}
+        <div class="error_box"><strong>User is not activated!<br /> <a href="{{router.url_for('@manageUsersActions?id='~user.id~'&ac=activate')}}" class="ajax-modal-confirm" title="Are you sure you want to activate this user?">Click to activate user</a></strong></div>
+    {% endif %}
+    {% if user.request_step == '2' %}
+        <div class="error_box"><strong>User requested a merchant account!<br /> <a href="{{router.url_for('@manageUsersActions?id='~user.id~'&tab=request')}}" class="modal-ajax-link">Click to review request</a></strong></div>
+    {% endif %}
+    {% if user.request_step == '3' %}
+        <div class="error_box"><strong>You approved the request, after user will pay the fixed fee his account will become automaticaly a merchant account!<br /> <a href="{{router.url_for('@manageUsersActions?id='~user.id~'&tab=general&ac=cr_req')}}" class="ajax-modal-confirm" title="Are you sure you want to update this account to a merchant account?">Click to create a merchant account now</a></strong></div>
+    {% endif %}
+		{% if user.agent_request_step == '2' %}
+        <div class="error_box"><strong>User requested an agent account!<br /> <a href="{{router.url_for('@manageUsersActions?id='~user.id~'&tab=agent_request')}}" class="modal-ajax-link">Click to review request</a></strong></div>
+    {% endif %}
+    {% if user.agent_request_step == '3' %}
+        <div class="error_box"><strong>You approved the request, after user will pay the fixed fee his account will become automaticaly an agent account!<br /> <a href="{{router.url_for('@manageUsersActions?id='~user.id~'&tab=general&ac=a_req')}}" class="ajax-modal-confirm" title="Are you sure you want to update this account to an agent account?">Click to create an agent account now</a></strong></div>
+    {% endif %}
+    <dl>
+        <dt>Name:</dt>
+        <dd>{{user.first_name|title}} {{user.last_name|title}}</dd>
+        <dt>Phone:</dt>
+        <dd>{{user.phone}}</dd>
+        <dt>Username:</dt>
+        <dd>{{user.username}}</dd>
+				<dt>refID:</dt>
+        <dd>{{user.ref_id}}</dd>
+        <dt>Email:</dt>
+        <dd>{{user.email}}</dd>
+        <dt>User type:</dt>
+        <dd>{{role|capitalize}}</dd>
+        {% if role == 'merchant' %}
+        {#<dt>Company name:</dt>
+        <dd>{{user.company_name}}</dd>
+        <dt>Vat number:</dt>
+        <dd>{{user.vat_number}}</dd>#}
+        {#<dt>Contract</dt>
+        <dd><a href="{{pdf}}" target="_blank">Download contract</a></dd>#}
+        <dt>Merchant account requested at:</dt>
+        <dd>{{user.mrequest_at|date("M d Y H:i:s")}}</dd>
+        <dt>Merchant account approved at:</dt>
+        <dd>{% if user.mrequest_approved_at %}{{user.mrequest_approved_at|date("M d Y H:i:s")}}{% else %} - {% endif %}</dd>
+        {% endif %}
+        <dt>Refferer:</dt>
+        <dd>{% if ref %}<a href="{{router.url_for('@manageUsersActions?id='~ref.id)}}" class="modal-user" title="{{ref.username}} actions">{{ref.username}}</a> ({{ref.first_name|title}} {{ref.last_name|title}}){% else %}Not reffered by anyone{% endif %}</dd>
+        <dt>Created at:</dt>
+        <dd>{{user.created_at|date("M d Y H:i:s")}}</dd>
+        <dt>Activated at:</dt>
+        <dd>{% if user.activated_at %}{{user.activated_at|date("M d Y H:i:s")}}{% else %} - {% endif %}</dd>
+        <dt>Last login:</dt>
+        <dd>{% if user.last_login %}{{user.last_login|date("M d Y H:i:s")}}{% else %} never {% endif %}</dd>
+    </dl>
+</div>
+{% endblock content %}

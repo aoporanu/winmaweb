@@ -1,0 +1,67 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+<h1>Charity Deals</h1>
+<div class="ma_content">
+        <a href="{{router.url_for('@charity')}}" class="g-button {% if show == '' %}g-button-submit {% endif %}ajax-link">Running</a>
+        <a href="{{router.url_for('@charity?show=expired')}}" class="g-button {% if show == 'expired' %}g-button-submit {% endif %}ajax-link">Expired</a>
+        <a href="{{router.url_for('@charity?show=will')}}" class="g-button {% if show == 'will' %}g-button-submit {% endif %}ajax-link">Will Run</a>
+        <a href="{{router.url_for('@charityAdd')}}" class="g-button modal-user">Add</a>
+        <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+        <ul class="ma_products">
+        {% for product in products %}
+                <li{% if loop.last %} class="last"{% endif %}>
+                    <div class="yui3-g">
+                        <div class="yui3-u-1-4">
+                            {% if product.CharityMedia.0 %}
+                            <div style="width:120px;height:67px;"><img src="{{product.CharityMedia.0.dir}}/thumb120x67/{{product.CharityMedia.0.file_name}}_{{product.CharityMedia.0.id}}.{{product.CharityMedia.0.ext}}" width="120" height="67" style="border:2px solid #fff;padding:1px;" /></div>
+                            {% else %}
+                            <div style="width:120px;height:67px;border:2px solid #fff;padding:1px;">No image</div>
+                            {% endif %}
+                        </div>
+                        <div class="yui3-u-3-4">
+                            <div class="yui3-g">
+                                <div class="yui3-u-3-4">
+                                    <h2>{{product.name}}</h2>
+                                    <div style="padding-bottom:10px;">
+                                        From: <span style="font-weight:bold;color: #992a1b">{{product.starttime|date('Y-m-d H:i:s')}} till {{product.endtime|date('Y-m-d H:i:s')}}</span>
+                                    </div>
+                                    <div class="yui3-g">
+                                        <div class="yui3-u-1-3">
+                                            <div>
+                                                <div>Donators: <span style="font-weight:bold;color: #992a1b">{{product.sold}}</span></div>
+                                                <div>Amount: <span style="font-weight:bold;color: #992a1b">{{product.amount}}</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="yui3-u-1-3">
+                                            {% if product.is_first %}Charity is on First Page{% endif %}
+                                        </div>
+                                       <div class="yui3-u-1-3">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="yui3-u-1-4">
+                                    <ul class="ma-product-settings">
+                                    {#<li><a href="{{router.url_for('@manageProducts?ac=gallery&id='~product.id)}}" class="modal-prodgal">Gallery</a></li>#}
+                                    <li><a href="{{router.url_for('@charityEdit?id='~product.id)}}" class="modal-addprod">Edit</a></li>
+                                    <li><a href="{{router.url_for('@charityGallery?id='~product.id)}}" class="modal-addprod">Galery</a></li>
+                                    {% if show == '' %}<li><a href="{{router.url_for('@charity?ac=main&id='~product.id)}}" class="ajax-confirm" title="Are you sure?">Set On First Page</a></li>{% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% else %}
+            <li class="last">No charities</li>
+        {% endfor %}
+        </ul>
+        <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+    </div>
+{% endblock content %}
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'charity' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

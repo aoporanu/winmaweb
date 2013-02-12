@@ -1,0 +1,49 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+<h1>Manage users</h1>
+<div class="clearfix">
+    <form method="post" action="{{router.url_for('@manageUsers?search=1')}}">
+    <div class="form-global clearfix">
+        <div class="input"><input type="text" name="squery" id="squery" value="{{sq}}" /></div>
+        <input type="submit" class="g-button g-button-submit ajax-search-submit" value="Search" />
+    </div>
+    </form>
+</div>
+    <a href="{{router.url_for('@manageUsers')}}" class="g-button{% if activeMenu == '' %} g-button-share{% endif %} ajax-link">All</a>
+    <a href="{{router.url_for('@manageUsers?show=normal')}}" class="g-button{% if activeMenu == 'normal' %} g-button-share{% endif %} ajax-link">Normal users</a>
+    <a href="{{router.url_for('@manageUsers?show=merchant')}}" class="g-button{% if activeMenu == 'merchant' %} g-button-share{% endif %} ajax-link">Agents/Merchants</a>
+    <a href="{{router.url_for('@manageUsers?show=do')}}" class="g-button{% if activeMenu == 'do' %} g-button-share{% endif %} ajax-link">Deal owners</a>
+    <a href="{{router.url_for('@manageUsers?show=admin')}}" class="g-button{% if activeMenu == 'admin' %} g-button-share{% endif %} ajax-link">Admins</a>
+    <a href="{{router.url_for('@manageUsers?show=notactivated')}}" class="g-button{% if activeMenu == 'notactivated' %} g-button-share{% else %} g-button-red{% endif %} ajax-link">Not Activated</a>
+    <a href="{{router.url_for('@manageUsers?show=email_list')}}" class="g-button">Emails List</a>
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+    <table cellspacing="0" cellpadding="0" border="0" style="width: 100%">
+        <tr class="th-class alt-row">
+            {#<th style="width: 50px;"><a class="href-link  arrow-up " href="#">id</a></th>#}
+            <th style="width: 50%;"><a class="href-link " href="#">username</a></th>
+            <th style="width: 50%;"><a class="href-link " href="#">email</a></th>
+            <th align="center" style="width: 414px;">action</th>
+        </tr>
+    {% for user in users %}
+        <tr{% if loop.index is divisibleby(2) %} class="tr-even"{% else %} class="tr-odd"{% endif %}>
+						<td style="margin-bottom:5px;padding: 5px 2px;" nowrap>{{user.username}}{% if user.is_banned %} <span class="label2 label-important">banned</span>{% endif %}{% if user.is_do %} <span class="label2 label-info">deal owner</span>{% endif %}{% if user.rolename == 'AGENT' or user.agent_request_step == '100' %} <span class="label2 label-info" style="background-color: #888;">agent</span>{% endif %}</td>
+            <td style="margin-bottom:5px;padding: 5px 2px;">{{user.email}}</td>
+            <td style="margin-bottom:5px;padding: 5px 0px;" nowrap>
+								{#<a href="{{router.url_for('@manageUsers?show='~activeMenu~'&ac=agent&uid='~user.id)}}" class="g-button-agent ajax-confirm g-button-small" title="Are you sure?" style="border: 1px solid rgba(0, 0, 0, 0.1);border-radius: 2px 2px 2px 2px;cursor: default;display: inline-block;font-size: 11px;text-align: center;font-weight: bold;min-width: 54px;color: white; background-color: #888; background-image: -moz-linear-gradient(center top , #888, #888);">agent</a>
+								<a href="{{router.url_for('@manageUsers?show='~activeMenu~'&ac=merchant&uid='~user.id)}}" class="g-button g-button-merchant ajax-confirm g-button-small" title="Are you sure?">merchant</a>
+								<a href="{{router.url_for('@manageUsers?show='~activeMenu~'&ac=do&uid='~user.id)}}" class="g-button g-button-submit ajax-confirm g-button-small" title="Are you sure?">{% if user.is_do %}deal owner{% else %}deal owner{% endif %}</a>#}
+                <a href="{{router.url_for('@manageUsers?show='~activeMenu~'&ac=ban&uid='~user.id)}}" class="g-button g-button-red ajax-confirm g-button-small" title="Are you sure?">{% if user.is_banned %}unban{% else %}ban{% endif %}</a>
+                <a href="{{router.url_for('@manageUsersActions?id='~user.id)}}" class="g-button g-button-share modal-user g-button-small" title="{{user.username}} actions">actions</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+{% endblock content %}
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'users' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

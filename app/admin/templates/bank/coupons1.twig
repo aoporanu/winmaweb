@@ -1,0 +1,20 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block content %}
+<h1>Manage Bank</h1>
+<div>
+<a href="{{router.url_for('@manageBank')}}" class="g-button ajax-link">Overall</a>
+<a href="{{router.url_for('@manageBank?view=transactions')}}" class="g-button ajax-link">Transactions</a>
+<a href="{{router.url_for('@manageBank?view=withdraw')}}" class="g-button ajax-link">Withdraw</a>
+<a href="{{router.url_for('@manageBank?view=coupons')}}" class="g-button g-button-submit ajax-link">Coupons</a>
+</div>
+<br /><br />
+asdasd
+{% endblock content %}
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'bank' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

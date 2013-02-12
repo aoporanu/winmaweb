@@ -1,0 +1,15 @@
+<div style="padding-top:10px;">
+    <div style="padding:5px;">Offer: {{coupon.name}}</div>
+    <div style="padding:5px;">Quantity: {{coupon.quantity}}</div>
+    <div style="padding:5px;">Cost: {{coupon.price|currency}}</div>
+    <div style="padding:5px;">Created at: {{coupon.created_at|date()}}</div>
+    <div style="padding:5px;">Expires at: {{coupon.expire_at|date()}}</div>
+    <div style="color: #808080;font-size: 12px;padding-top:10px;">Voucher Code: {{coupon.code}}</div>
+    <div style="color: #808080;font-size: 12px;padding-top:10px;">Voucher Number: {{coupon.code2}}</div>
+</div>
+{% if coupon.friend_id == user_id %}
+        
+	<div style="padding-top:10px;"><a href="{{router.url_for('@myAccountCouponDetails?ac=pdf&coupon_id='~coupon.id~'&friend='~coupon.friend)}}" class="g-button g-button-mda" target="_blank">Download My Voucher</a></div>
+	<div class="info-blue" style="padding-top:10px;"><p>Note: Your Voucher will be downloaded as a Pdf file which you should save on your computer.</p></div>
+        <div style="padding:10px;"><strong>Message from friend:</strong><br /> {{coupon.msg|nl2br}}</div>
+{% endif %}

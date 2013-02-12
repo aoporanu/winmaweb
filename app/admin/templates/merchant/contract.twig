@@ -1,0 +1,33 @@
+{% extends imgajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block content %}
+<div class="info-blue">
+    <p>Upload a new contract, if you allready have a contract uploaded, it will be overwritten with the new one.<br />Only .pdf files</p>
+    {% if cfile %}<p><a href="{{cfile}}" target="_blank">Download current uploaded contract</a></p>{% endif %}
+</div>
+<br />
+{% if form.errors %}
+    <div class="error_box"><strong>There were errors - please verify all fields for errors</strong></div>
+{% endif %}
+{% if form.success %}
+    <div class="infotip"><strong>Success</strong><br /><br />Contract added successfully</div>
+{% endif %}
+        
+<form enctype="application/x-www-form-urlencoded" action="{{router.url_for('@manageMerchantsContract')}}" method="post">
+    <div class="form-global clearfix">
+        <input type='hidden' name='isajaxrequest' id='isajaxrequest' value='0' />
+        <div class="label"><label for="contract">Contract:</label></div>
+        <div class="input input_big">
+            <input name="contract" type="file" id="contract" />
+            {{ forms.errors(form.errors.contract) }}
+        </div>
+    </div>
+    <div class="form-global clearfix">
+        <div class="label"><label>&nbsp;</label></div>
+        <div class="left"><input type="submit" class="g-button g-button-submit modal-ajax-submit" value="Upload" /></div>
+    </div>
+</form>
+<br />
+
+{% endblock content %}

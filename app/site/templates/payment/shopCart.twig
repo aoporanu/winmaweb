@@ -1,0 +1,241 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout_default.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block page_title %}{% if title == '' %}{{name}} :: DailyDeals{% else %}{{title}}{% endif %}{% endblock %}
+{% block seo %}
+    <meta name="description" content="{{meta_desc}}" />
+    <meta name="keywords" content="{{tags}}" />
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="/js/jquery.countdown.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>
+    <script type="text/javascript" src="/js/slides.min.jquery.js"></script>
+    <script type="text/javascript" src="/js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="/js/product.js"></script>
+{% endblock js %}
+{% block css %}
+    {#<link rel="stylesheet" type="text/css" href="/css/ui-lightness/jquery-ui-1.8.16.custom.css" />
+    <link rel="stylesheet" type="text/css" href="/css/prettyPhoto.css" />#}
+{% endblock css %}
+{% block content_page %}
+    {% set mda = '' %}
+    {% set ccc = 0 %}
+    <div class="p-container">
+        <h1>Payment</h1>
+        {% if err == 22 %}
+        <div class="error_box">
+            Your Account details must first be completed before you may purchase a deal. <a href="/my-account/edit-account">Please click here to edit and complete your profile information.</a>
+        </div>
+        {% else %}
+        {% if form.errors %}
+            <div class="error_box">
+                <ul>
+                    <li><strong>Error</strong></li>
+            {% for error in form.errors %}
+                    <li>{% for serror in error %}{{serror}}<br />{% else %}{{error}}{% endfor %}</li>
+            {% endfor %}
+						{% if (showDepositButton) %}
+							<li style="list-style-type: none;">
+								<a href="{{router.url_for('@myAccountDeposit')}}">
+									<div class="button_see">
+										<div class="small-left"></div>
+										<div class="small-center">Deposit</div>
+										<div class="small-right"></div>
+									</div>
+										<div class="clear"></div>
+								</a>
+							</li>
+						{% endif %}
+                </ul>
+            </div>
+        {% endif %}
+        <form action="{{router.url_for('@paymentShopCart')}}" method="post">
+        <div class="yui3-g" style="border-bottom:1px solid #EDB4C4;padding-bottom:10px;margin-bottom:10px;">
+            <div class="yui3-u" style="font-weight:bold;width:550px;">Product</div>
+            <div class="yui3-u" style="font-weight:bold;width:100px;text-align:center">Price</div>
+            <div class="yui3-u" style="font-weight:bold;width:50px;text-align:center">Qty</div>
+            <div class="yui3-u" style="font-weight:bold;width:100px;text-align:center">Subtotal</div>
+            <div class="yui3-u" style="font-weight:bold;width:100px;text-align:center">Actions</div>
+        </div>
+        {% set sub_total = 0 %}
+        {% for product in products %}
+        <script type="text/javascript">
+        $(function() {
+            $('#cart_qty_0_{{product.id}}').live('change', function(e){
+                var qty = $(this).val();
+                
+                document.location.href = '/shopping-cart?ac=qty&product_id={{product.id}}&i='+qty;
+            })
+
+            $('#cart_op_0_{{product.id}}').live('change', function(e){
+                var oid = $(this).val();
+                var url = '{{router.url_for('@paymentShopCart?ac=add&product_id='~product.id)}}' + '&option_id='+oid;
+                document.location.href = url;
+            })
+        });
+        </script>
+        <div class="hidden" style="display: none" id="fmm">{{router.url_for('@paymentShopCart?ac=add&product_id='~product.id)}}</div>
+        <div class="yui3-g" style="margin-bottom: 15px;">
+            <div class="yui3-u" style="font-weight:bold;width:550px;">
+                <div class="yui3-g">
+                    <div class="yui3-u" style="font-weight:bold;width:122px;height:69px;border: 2px solid #00375C"><img src="{{product.ProductMedia.0.dir}}/thumb120x67/{{product.ProductMedia.0.file_name}}_{{product.ProductMedia.0.id}}.{{product.ProductMedia.0.ext}}" width="120" height="67" style="border: 1px solid #fff" /></div>
+                    <div class="yui3-u" style="font-weight:bold;width:315px;padding-left:5px;">
+                        {{ forms.select('cart_op_0_'~product.id, form.options[product.id]['options'], form.values['cart_op_'~product.id]) }}
+                        {#<select name="{{ name }}" id="{{ id|default(name) }}">
+                            {% set fmm = 'cart_op_'~product.id %}
+                            {% for key, option in formOBJ.'fmm'.getMultiOptions() %}
+                            <option value="{{key}}"{% if key == value %} selected="selected"{% endif %}>{{option}}</option>
+                            {% endfor %}
+                        </select>#}
+                        {{ forms.errors(form.errors['cart_op_0_'~product.id]) }}
+                    </div>
+                </div>
+            </div>
+            <div class="yui3-u" style="font-weight:bold;width:100px;text-align:center">${{options[product.id].price}}</div>
+            <div class="yui3-u" style="font-weight:bold;width:50px;text-align:center">
+                    {#{{ forms.select('cart_qty_'~product.id, form.qtys.options, form.values.cart_qty) }}#}
+                    {#<div class="inv mda123">{{router.url_for('@paymentShopCart?ac=qty&product_id='~product.id~'')}}</div>#}
+                    {{ forms.select('cart_qty_0_'~product.id, form.options[product.id]['qty'], form.values['cart_qty_0_'~product.id]) }}
+                    {{ forms.errors(form.errors['cart_qty_0_'~product.id]) }}
+            </div>
+            {% set sub_total = sub_total + options[product.id].price*form.values['cart_qty_0_'~product.id] %}
+            <div class="yui3-u" style="font-weight:bold;width:100px;text-align:center"><span id="cart_subtotal1">${{options[product.id].price*form.values['cart_qty_0_'~product.id]}}</span></div>
+            <div class="yui3-u" style="font-weight:bold;width:100px;text-align:center"><a href="{{router.url_for('@paymentShopCart?ac=remove&product_id='~product.id)}}">Remove</a></div>
+        </div>
+            {% set ccc = 1 %}
+        {% else %}
+            {% if err %}
+                {% set mda = err %} 
+            {% else %}
+        {% set mda = 'No product selected.' %}
+                
+            {% endif %}
+        {% endfor %}
+                
+        {% for product in fr_products %}
+        <script type="text/javascript">
+        $(function() {
+            $('#cart_qty_1_{{product.id}}').live('change', function(e){
+                var qty = $(this).val();
+                
+                document.location.href = '/shopping-cart?ac=qty&product_id={{product.id}}&friend=1&i='+qty;
+            })
+
+            $('#cart_op_1_{{product.id}}').live('change', function(e){
+                var oid = $(this).val();
+                var url = '{{router.url_for('@paymentShopCart?ac=add&product_id='~product.id)}}' + '&friend=1&option_id='+oid;
+                document.location.href = url;
+            })
+        });
+        </script>
+        <div class="hidden" style="display: none" id="fmm">{{router.url_for('@paymentShopCart?ac=add&friend=1&product_id='~product.id)}}</div>
+        <div class="yui3-g" style="margin-bottom: 15px;">
+            <div class="yui3-u" style="font-weight:bold;width:550px;">
+                <div class="yui3-g">
+                    <div class="yui3-u" style="font-weight:bold;width:122px;height:69px;border: 2px solid #00375C"><img src="{{product.ProductMedia.0.dir}}/thumb120x67/{{product.ProductMedia.0.file_name}}_{{product.ProductMedia.0.id}}.{{product.ProductMedia.0.ext}}" width="120" height="67" style="border: 1px solid #fff" /></div>
+                    <div class="yui3-u" style="font-weight:bold;width:315px;padding-left:5px;">
+                        {{ forms.select('cart_op_1_'~product.id, form.options1[product.id]['options'], form.values['cart_op_1_'~product.id]) }}
+                        {#<select name="{{ name }}" id="{{ id|default(name) }}">
+                            {% set fmm = 'cart_op_'~product.id %}
+                            {% for key, option in formOBJ.'fmm'.getMultiOptions() %}
+                            <option value="{{key}}"{% if key == value %} selected="selected"{% endif %}>{{option}}</option>
+                            {% endfor %}
+                        </select>#}
+                        {{ forms.errors(form.errors['cart_op_1_'~product.id]) }}
+                        <br />
+                        Friend's Referral Id: {{ forms.input('ref_'~product.id, form.values['ref_'~product.id]) }}
+                        {{ forms.errors(form.errors['ref'~product.id]) }}
+                    </div>
+                </div>
+            </div>
+            <div class="yui3-u" style="font-weight:bold;width:100px;text-align:center">${{options2[product.id].price}}</div>
+            <div class="yui3-u" style="font-weight:bold;width:50px;text-align:center">
+                    {#{{ forms.select('cart_qty_'~product.id, form.qtys.options, form.values.cart_qty) }}#}
+                    {#<div class="inv mda123">{{router.url_for('@paymentShopCart?ac=qty&product_id='~product.id~'')}}</div>#}
+                    {{ forms.select('cart_qty_1_'~product.id, form.options1[product.id]['qty'], form.values['cart_qty_1_'~product.id]) }}
+                    {{ forms.errors(form.errors['cart_qty_1_'~product.id]) }}
+            </div>
+            {% set sub_total = sub_total + options2[product.id].price*form.values['cart_qty_1_'~product.id] %}
+            <div class="yui3-u" style="font-weight:bold;width:100px;text-align:center"><span id="cart_subtotal1">${{options2[product.id].price*form.values['cart_qty_1_'~product.id]}}</span></div>
+            <div class="yui3-u" style="font-weight:bold;width:100px;text-align:center"><a href="{{router.url_for('@paymentShopCart?ac=remove&friend=1&product_id='~product.id)}}">Remove</a></div>
+        </div>
+            {% set ccc = 1 %}
+        {% else %}
+            {% if err %}
+               {% set mda = err %} 
+            {% else %}
+                {% set mda = 'No product selected.' %}
+            {% endif %}
+        {% endfor %}
+        {% if ccc == 0 %}    
+        {{mda}}
+        {% endif %}
+        
+        <div class="yui3-g">
+            <div class="yui3-u" style="font-weight:bold;width:650px;">&nbsp;</div>
+            <div class="yui3-u" style="font-weight:bold;width:268px;text-align:right;padding-top:20px;border-top:1px solid #EDB4C4;">Sub total: <span style="font-size: 16px" id="cart_subtotal2">${{sub_total}}</span></div>
+        </div>
+        <div class="yui3-g" style="border:2px solid #EDB4C4;padding:20px;margin-top:20px;background-color: #F3EDF0">
+           <div class="yui3-u" style="font-weight:bold;width:880px;text-align:right; font-size: 20px">Total: <span id="cart_total">${{sub_total}}</span></div>
+        </div>
+                
+                
+{% if friend == 1 %}
+<div class="form-global form-reg clearfix" style="padding-top:10px;">
+<div class="clearfix">
+<h1>Buy For A Friend</h1>
+    Your friend must have an account with WinMaWeb before you may purchase a Voucher as a gift.
+    <br />
+    <a href="/my-account/my-referral-id/send-emails">Send Invitations</a>
+    <br /><br />
+</div>
+<div class="clearfix">
+<div class="label"><label for="email">Friend's Referral Id:</label></div>
+<div class="input input_big">
+{{ forms.input('ref', form.values.ref) }}
+{{ forms.errors(form.errors.ref) }}
+</div>
+</div>
+<div class="clearfix">
+<div class=" label"><label for="message">Message:</label></div>
+<div class="input">
+{{ forms.textarea('message', form.values.message) }}
+{{ forms.errors(form.errors.message) }}
+</div>
+</div>
+</div>
+{% endif %}
+                {% if not userObj.isAuthenticated %}
+            <div style="padding-top:50px;">
+                To continue you need to be logged in to WinMaWeb.<br /><br />
+                If you already have an account please <a href="/login" id="login" title="Login">click here to login</a><br /><br />
+                If you don't have an account <a href="/request-membership" id="request-membership" title="Request membership">click here to request memebership</a>
+								(after you login you can find this purchase request for your friend in your shopping cart)
+            </div>
+            {% else %}{#
+                {% if app.user.wallet < product.price*form.values.cart_qty %}
+                    You do not have enought money in your wallet, please add more money so you can buy this product.
+                {% else %}#}
+            
+                {% if sub_total > 0 %}
+        <div class="left">
+            <fieldset style="border:1px solid #cacaca;padding:20px;">
+                <legend>Payment Options</legend>
+                <input type="radio" name="kkt" value="1" checked="checked" /> My Money<br/>
+                <input type="radio" name="kkt" value="2" /> WMW Credits<br/>
+                <input type="radio" name="kkt" onclick="window.location = '/my-account/deposit?m={{sub_total}}'" /> PayPal<br/>
+                <input type="radio" name="kkt" disabled="disabled" /> <span style="color:#cacaca">Credit Card/ Debit Card</span>
+            </fieldset>
+        </div>
+                    <div style="padding:30px 0;text-align:right">
+                        <input type="submit" name="submit" value="Save And Continue shopping!" class="button-buy" /> {#<a href="/all-deals" value="Buy now!" class="button-buy" >Continue Shopping</a>#} <input type="submit" name="submit" value="Buy now!" class="button-buy" />
+                    </div>
+                {% endif %}
+                {#{% endif %}#}
+            {% endif %}
+            
+        </form>
+        {% endif %}
+    </div>
+    
+{% endblock content_page %}

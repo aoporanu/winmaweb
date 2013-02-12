@@ -1,0 +1,7 @@
+User:
+  User_1:
+    username: test
+    password: 123456
+    email:  test@test.com
+    is_active: 1
+    Roles:  [Role_1]

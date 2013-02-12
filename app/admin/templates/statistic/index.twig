@@ -1,0 +1,20 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+<h1>Manage Statistic</h1>
+<a href="{{router.url_for('@manageStatistics')}}" class="g-button {% if action == 'user' %}g-button-submit {% endif %}ajax-link">User registrations</a>
+<a href="{{router.url_for('@manageStatistics?action=offers')}}" class="g-button {% if action == 'offers' %}g-button-submit {% endif %}ajax-link">Offers</a>
+<a href="{{router.url_for('@manageStatistics?action=wallet')}}" class="g-button {% if action == 'wallet' %}g-button-submit {% endif %}ajax-link">Users wallet</a>
+{#<script src="/js/highcharts.js" type="text/javascript"></script>
+<script src="/js/modules/exporting.js" type="text/javascript"></script>#}
+
+{% include "statistic/"~action~"/"~type~".twig" %}
+
+
+{% endblock content %}
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'statistics' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

@@ -1,0 +1,107 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block content %}
+{% set actionsMenu = 'edit' %}
+{% include "user/actionsMenu.twig" %}
+
+<div style="padding-top:20px;">
+    {% if form.errors %}
+        <br /><div class="error_box"><strong>There were errors - please verify all fields for errors</strong></div>
+    {% endif %}
+    {% if form.success %}
+        <div class="infotip"><strong>Success</strong><br /><br />Details were updated successfully</div>
+    {% endif %}
+    <form enctype="application/x-www-form-urlencoded" action="{{router.url_for('@manageUsersActions?id='~userId~'&tab=edit')}}" method="post">
+        <div class="form-global clearfix">
+            <div class="label"><label for="first_name">First name:</label></div>
+            <div class="input input_big">
+                {{ forms.input('first_name', form.values.first_name) }}
+                {{ forms.errors(form.errors.first_name) }}
+            </div>
+            <div class="label"><label for="last_name">Last name:</label></div>
+            <div class="input input_big">
+                {{ forms.input('last_name', form.values.last_name) }}
+                {{ forms.errors(form.errors.last_name) }}
+            </div>
+            <div class="label"><label for="phone">Phone:</label></div>
+            <div class="input input_big">
+                {{ forms.input('phone', form.values.phone) }}
+                {{ forms.errors(form.errors.phone) }}
+            </div>
+            <div class="label"><label for="email">Email:</label></div>
+            <div class="input input_big">
+                {{ forms.input('email', form.values.email) }}
+                {{ forms.errors(form.errors.email) }}
+            </div>
+        </div>
+        <div class="page_subtitle_wrapper clearfix">
+            <span class="page_subtitle_two" style="background-color:#fff;">Address</span>
+        </div>
+            <div class="form-global clearfix">
+                <div class="label"><label for="address">Address:</label></div>
+                <div class="input input_big">
+                    {{ forms.input('address', form.values.address) }}
+                    {{ forms.errors(form.errors.address) }}
+                </div>
+                <div class="label"><label for="city">City:</label></div>
+                <div class="input input_big">
+                    {{ forms.input('city', form.values.city) }}
+                    {{ forms.errors(form.errors.city) }}
+                </div>
+                <div class="label"><label for="county">County:</label></div>
+                <div class="input input_big">
+                    {{ forms.input('county', form.values.county) }}
+                    {{ forms.errors(form.errors.county) }}
+                </div>
+                <div class="label"><label for="postcode">Postal code:</label></div>
+                <div class="input input_big">
+                    {{ forms.input('postcode', form.values.postcode) }}
+                    {{ forms.errors(form.errors.postcode) }}
+                </div>
+                <div class="label"><label for="country">Country:</label></div>
+                <div class="input input_big">
+                    {{ forms.select('country', form.countries.options, form.values.country) }}
+                    {{ forms.errors(form.errors.country) }}
+                </div>
+            </div>
+            <div class="page_subtitle_wrapper clearfix">
+                <span class="page_subtitle_two" style="background-color:#fff;">Bank Details</span>
+            </div>
+            <div class="form-global clearfix">
+                <div class="label"><label for="beneficiary_name">Beneficiary Name:</label></div>
+                <div class="input input_big">
+                    {{ forms.input('beneficiary_name', form.values.beneficiary_name) }}
+                    {{ forms.errors(form.errors.beneficiary_name) }}
+                </div>
+                <div class="label"><label for="bank_code">Bank Code:</label></div>
+                <div class="input input_big">
+                    {{ forms.input('bank_code', form.values.bank_code) }}
+                    {{ forms.errors(form.errors.bank_code) }}
+                </div>
+                <div class="label"><label for="bank_branch_code">Bank Branch Code:</label></div>
+                <div class="input input_big">
+                    {{ forms.input('bank_branch_code', form.values.bank_branch_code) }}
+                    {{ forms.errors(form.errors.bank_branch_code) }}
+                </div>
+                <div class="label"><label for="bank_account_number">Bank Account Number:</label></div>
+                <div class="input input_big">
+                    {{ forms.input('bank_account_number', form.values.bank_account_number) }}
+                    {{ forms.errors(form.errors.bank_account_number) }}
+                </div>
+                <div class="label"><label for="bank_name">Bank Name:</label></div>
+                <div class="input input_big">
+                    {{ forms.select('bank_name', form.kkt.options, form.values.bank_name) }}
+                    {{ forms.errors(form.errors.bank_name) }}
+                </div>
+                <div class="label"><label for="bank_address">Bank Address:</label></div>
+                <div class="input input_big">
+                    {{ forms.input('bank_address', form.values.bank_address) }}
+                    {{ forms.errors(form.errors.bank_address) }}
+                </div>
+                <div class="label"><label>&nbsp;</label></div>
+                <div class="left"><input type="submit" class="g-button g-button-submit modal-ajax-submit" value="Change" /></div>
+            </div>
+    </form>
+</div>
+{% endblock content %}

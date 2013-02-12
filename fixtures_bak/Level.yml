@@ -1,0 +1,31 @@
+Level:
+  Level_1:
+    commission: root
+    lft: '1'
+    rgt: '12'
+    level: '0'
+  Level_2:
+    commission: '10'
+    lft: '10'
+    rgt: '11'
+    level: '1'
+  Level_3:
+    commission: '10'
+    lft: '8'
+    rgt: '9'
+    level: '1'
+  Level_4:
+    commission: '0'
+    lft: '6'
+    rgt: '7'
+    level: '1'
+  Level_5:
+    commission: '10'
+    lft: '4'
+    rgt: '5'
+    level: '1'
+  Level_6:
+    commission: '10'
+    lft: '2'
+    rgt: '3'
+    level: '1'

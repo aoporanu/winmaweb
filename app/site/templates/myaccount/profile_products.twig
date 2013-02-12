@@ -1,0 +1,53 @@
+{% if products %}
+<div class="ma_top"></div>
+<div class="ma_content">
+    {% for product in products %}
+		<div class="blog-small">
+            <div class="title-blog-small">
+                <a href="/{{product.User[0].username}}/{{product.Product[0].slug}}.html">{{ product.Product[0].name }}</a>
+            </div><!--/title-blog-small-->
+            <div class="images-small">
+                <a rel="single" title="" class="pirobox " href="/{{product.User[0].username}}/{{product.Product[0].slug}}.html">
+                    <img width="240" height="156" src="{{product.Product[0].ProductMedia[0].dir}}/thumb250x156/{{product.Product[0].ProductMedia[0].file_name}}_{{product.Product[0].ProductMedia[0].id}}.{{product.Product[0].ProductMedia[0].ext}}" {#style="opacity: 1;margin-left: 5px;"#}>
+                </a>
+                    <div class="statistic">
+                        <ul>
+                                <li>Deal Value<p>{{product.Product[0].ProductPrice[0].suplier_price|currency}}</p></li>
+                                <li class="statistic-border"></li>
+                                <li>Discount<p>{{product.Product[0].ProductPrice[0].discount}}%</p></li>
+                                <li class="statistic-border"></li>
+                                <li>Price<p>{{product.Product[0].ProductPrice[0].price|currency}}</p></li>
+                        </ul>
+                </div><!--statistic-->
+            </div><!--/images-small-->
+            <div style="width:285px;padding-left:5px;" class="blog-small-button">
+                <div style="width:25px;" class="left">Deal Ends In</div>
+                <div class="timer_content{{ product.Product[0].id }} left timer_content_original">
+                    {{product.Product[0].endtime|date('d H:i:s')}}
+                </div>
+                <script type="text/javascript">
+                    // javascriptul trebuie tinut in pagina, ca sa citeasca id-ul la produs, altfel nu va merge
+                    // nici un contor.
+                    var t = "{{ product.Product[0].endtime }}".split(/[- :]/);
+                    var d = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
+                    $('.timer_content{{product.Product[0].id}}').countdown({ until: d, format: 'ODHMS', onExpiry: $(this).parent().parent().remove() });
+                    $('.border-vertical').css('margin', '7px 16px -290px');
+                </script>
+                <div class="small-button">
+                    <a href="/{{product.User[0].username}}/{{product.Product[0].slug}}.html">
+                        <div class="button_see">
+                            <div class="small-left"></div>
+                            <div class="small-center">SEE DEAL</div>
+                            <div class="small-right"></div>
+                        </div>
+                    </a><!--/button-->
+                </div><!--/small-button-->
+            </div><!--/blog-small-button-->
+	</div><!--/blog-small-->
+    <div class="{{ cycle(['', 'border-vertical'],loop.index) }}"></div>
+    {% endfor %}
+    <div class="clearfix"></div>
+    </div>
+<!--</div> -->
+<div class="ma_bottom"></div>
+{% endif %}

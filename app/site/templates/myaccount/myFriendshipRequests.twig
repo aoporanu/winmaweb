@@ -1,0 +1,72 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block css %}
+	{% if not app.ajax %}
+		{% include "myaccount/css.twig" %}
+	{% endif %}
+{% endblock css %}
+{% block js %}
+	{% if not app.ajax %}
+		{% include "myaccount/js.twig" %}
+	{% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<h1>My Friendship Requests</h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+	<a href="{{router.url_for('@myAccountMyFriends')}}" class="g-button ajax-link" style="min-width:10px;">Invite Friends</a>
+	<a href="{{router.url_for('@myAccountListFriendsAction')}}" class="g-button ajax-link" style="min-width:10px;">Friends List</a>
+	<a href="{{router.url_for('@myAccountListPendingFriends')}}" class="g-button ajax-link" style="min-width:10px;">Pending Friends</a>
+	<a href="{{router.url_for('@myAccountMyFriendshipRequests')}}" class="g-button ajax-link g-button-submit" style="min-width:10px;">My Frienship Requests</a>
+	<br />
+	<br />
+	<div class="info-blue">
+		<p>
+			In this tab you can view your friendship requests
+		</p>
+	</div>
+	<br />
+	{% if friends|length == 0 %}
+		<div class="info-blue">
+			<p>
+				You have no new friendship requests
+			</p>
+		</div>
+	{% endif %}
+	
+	<br />
+	{% if friends %}
+		<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+		<br />
+			<div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+				<div class="yui3-u" style="width:130px;">Friend's Name</div>
+				<div class="yui3-u" style="width:100px;">Friend's Avatar</div>
+				<div class="yui3-u" style="width:100px;">Status</div>
+				<div class="yui3-u" style="width:90px;">Actions</div>
+			</div>
+			<div class="yui3-g">
+				{% for friend in friends %}
+				<div class="yui3-g" style="line-height:50px;padding:2px 0;">
+					<div class="yui3-u" style="width:130px;">{% if friend.friends_id == 0 %} Unknown user {% else %} <div class="my_status_links"><a href="/profile/{{ friend.User[0].username }}" title="{{ friend.User[0].username }}">{{ friend.User[0].username }}</a></div> {% endif %}</div>
+					<div class="yui3-u" style="width:100px;">{% if friend.User[0].UserMedia[0].file_name %} <a href="/profile/{{ friend.User[0].username }}" title="{{ friend.User[0].username }}"><img src="{{ friend.User[0].UserMedia[0].dir }}/thumb120x67/{{ friend.User[0].UserMedia[0].file_name }}_{{friend.User[0].UserMedia[0].id }}.{{friend.User[0].UserMedia[0].ext}}" width="50" /></a> {% else %} <a href="/profile/{{ friend.User[0].username }}" title="{{ friend.User[0].username }}"><img src="/uploads/users/images/no_avatar.jpg" width="50" /></a> {% endif %}</div>
+					<div class="yui3-u" style="width:80px;">{% if friend.pending == 0 %} Approved {% else %}  Pending  {% endif %}</div>
+					<div class="yui3-u">
+						<a href="{{ router.url_for('@myAccountApproveFriendRequest?id='~friend.id) }}" class="g-button g-button-share modal-normal-with-close" title="Approve Friend Request">Accept</a>&nbsp;or&nbsp;
+						<a href="{{ router.url_for('@myAccountRemovePendingRequest?id='~friend.id) }}" class="g-button g-button-share modal-normal-with-close" title="Remove Pending Request">Decline</a>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+			<br />
+	{% endif %}
+	</div>
+	<div class="ma_bottom"></div>
+{% endblock content_page %}
+{% block right_side %}
+	{% if not app.ajax %}
+		{% set ma_menu = 'myFriends' %}
+		{% include "myaccount/menu.twig" %}
+	{% endif %}
+{% endblock right_side %}

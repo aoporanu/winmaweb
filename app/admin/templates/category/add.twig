@@ -1,0 +1,20 @@
+{% import "/forms/forms.twig" as forms %}
+
+{% if form.errors %}
+<div class="error_box"><strong>There were errors - please verify all fields for errors</strong></div>
+{% endif %}
+{% if form.success %}
+<div class="infotip"><strong>Success</strong><br /><br /></div>
+{% endif %}
+<form enctype="application/x-www-form-urlencoded" action="{{router.url_for('@manageCategory?action=add&parent_id='~parent_id)}}" method="post">
+<div class="form-global">
+    <div class="clearfix">
+    <div class="label"><label for="pname">Name:</label></div>
+    <div class="input">
+        {{ forms.input('pname', form.values.pname) }}
+        {{ forms.errors(form.errors.pname) }}
+    </div>
+    </div>
+</div>
+    <div class="modal-bottom"><a href="#" class="g-button g-button-submit modal-ajax-submit">Add</a> <a href="#" class="g-button g-button-white modal-close">Close</a></div>
+</form>

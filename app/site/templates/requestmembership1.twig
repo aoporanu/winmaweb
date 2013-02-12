@@ -1,0 +1,96 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block content_page %}
+{% if not app.ajax %}
+<div class="general-container">
+    <h1>Register</h1>
+    <br /><br />
+{% endif %}
+{% if form.errors or form.globalErrors%}
+    <div class="error_box">
+            <strong>There were errors - please verify all fields for errors</strong>
+            {{ forms.errors(form.globalErrors) }}
+    </div>
+{% endif %}
+{% if form.success %}
+    <div class="infotip"><strong>Success</strong>
+        <br /><br />You have registered successfully
+        <br/>
+        <a href="/user/activate/{{refid}}">/user/activate/{{refid}}</a>
+    </div>
+{% endif %}
+<form enctype="application/x-www-form-urlencoded" action="/request-membership" method="post">
+    <div class="form-global clearfix">
+        <div class="label"><label for="reg_username">Username:</label></div>
+        <div class="input input_big">
+            {{ forms.input('reg_username', form.values.reg_username) }}
+            {{ forms.errors(form.errors.reg_username) }}
+        </div>
+        <div class="label"><label for="reg_password">Password:</label></div>
+        <div class="input input_big">
+            {{ forms.input('reg_password', '', 'password') }}
+            {{ forms.errors(form.errors.reg_password) }}
+        </div>
+        <div class="label"><label for="email">Email:</label></div>
+        <div class="input input_big">
+            {{ forms.input('email', form.values.email) }}
+            {{ forms.errors(form.errors.email) }}
+        </div>
+        <div class="label"><label for="first_name">First name:</label></div>
+        <div class="input input_big">
+            {{ forms.input('first_name', form.values.first_name) }}
+            {{ forms.errors(form.errors.first_name) }}
+        </div>
+        <div class="label"><label for="last_name">Last name:</label></div>
+        <div class="input input_big">
+            {{ forms.input('last_name', form.values.last_name) }}
+            {{ forms.errors(form.errors.last_name) }}
+        </div>
+        <div class="label"><label for="phone">Phone:</label></div>
+        <div class="input input_big">
+            {{ forms.input('phone', form.values.phone) }}
+            {{ forms.errors(form.errors.phone) }}
+        </div>
+        
+    </div>
+    <div class="form-global clearfix">
+        <div class="label"><label for="address">Address:</label></div>
+        <div class="input input_big">
+            {{ forms.input('address', form.values.address) }}
+            {{ forms.errors(form.errors.address) }}
+        </div>
+        <div class="label"><label for="city">City:</label></div>
+        <div class="input input_big">
+            {{ forms.input('city', form.values.city) }}
+            {{ forms.errors(form.errors.city) }}
+        </div>
+        <div class="label"><label for="county">Region:</label></div>
+        <div class="input input_big">
+            {{ forms.input('county', form.values.county) }}
+            {{ forms.errors(form.errors.county) }}
+        </div>
+        <div class="label"><label for="postcode">Postal code:</label></div>
+        <div class="input input_big">
+            {{ forms.input('postcode', form.values.postcode) }}
+            {{ forms.errors(form.errors.postcode) }}
+        </div>
+        <div class="label"><label for="country">Country:</label></div>
+        <div class="input input_big">
+            {{ forms.select('country', form.countries.options, form.values.country) }}
+            {{ forms.errors(form.errors.country) }}
+        </div>
+        <div class="label"><label for="referral">Referral id:</label></div>
+        <div class="input input_big">
+            {{ forms.input('referral', form.values.referral) }}
+            {{ forms.errors(form.errors.referral) }}
+            <br /><em style="color:#cacaca">If you don't have a referral id please leave this field empty;</em>
+        </div>
+        <div class="label"><label>&nbsp;</label></div>
+        <div class="left"><input type="submit" class="g-button g-button-submit {% if app.ajax %}modal-submit{% else %}{% endif %}" value="Register" /></div>
+    </div>
+</form>
+{% if not app.ajax %}
+</div>
+{% endif %}        
+{% endblock content_page %}

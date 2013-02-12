@@ -1,0 +1,164 @@
+{% extends "layouts/ajax.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block content %}
+{% set actionsMenu = 'company' %}
+{% include "user/actionsMenu.twig" %}
+<script type="text/javascript">
+    function updateMarkerPosition(latLng) {
+      document.getElementById('g_lat').value=latLng.lat();
+      document.getElementById('g_lng').value=latLng.lng();
+    }
+    function initialize() {
+          var latLng = new google.maps.LatLng(1.2940447772307804, 103.830810546875);
+          var mlatLng = {% if form.values.g_lat != 0 or form.values.g_lng != 0 %}new google.maps.LatLng({{form.values.g_lat}}, {{form.values.g_lng}}){%else%}latLng{% endif %}
+
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 5,
+            center: mlatLng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          });
+          var marker = new google.maps.Marker({
+            position: mlatLng,
+            title: 'Drag to your business location',
+            {% if form.values.g_lat != 0 or form.values.g_lng != 0 %}
+            map:map,            
+            {% endif %}
+            draggable: true
+          });
+      //var infoWindow = new google.maps.InfoWindow;
+
+      // Update current position info.
+
+      google.maps.event.addListener(map, 'click', function(event) {
+        marker.setMap(map);
+        marker.setPosition(event.latLng);
+        map.setCenter(marker.getPosition());
+        updateMarkerPosition(marker.getPosition());
+      });
+      
+      // Add dragging event listeners.
+      google.maps.event.addListener(marker, 'click', function() {
+
+      });
+
+      google.maps.event.addListener(marker, 'drag', function() {
+      });
+
+      google.maps.event.addListener(marker, 'dragend', function() {
+        map.setCenter(marker.getPosition());
+        updateMarkerPosition(marker.getPosition());
+      });
+    }
+    function loadScript() {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+      document.body.appendChild(script);
+    }
+  
+    
+    // Onload handler to fire off the app.
+    {% if not imgajax %}
+        window.onload = loadScript;
+    //google.maps.event.addDomListener(window, 'load', initialize);
+    {% else %}
+        $(function() {
+            loadScript();
+            //initialize();
+        });
+    {% endif %}
+</script>
+<br /><br /><br />
+{% if form.errors %}
+            <div class="error_box"><strong>There were errors - please verify all fields for errors</strong>
+                {% if form.errors.g_lat or form.errors.g_lng %}
+                    <br /><br />Please select the location of the business on the map.
+                {% endif %}
+            </div>
+        {% endif %}
+        {% if form.success %}
+            <div class="infotip"><strong>Success</strong><br /><br />Company edited successfully</div>
+        {% endif %}
+        <form enctype="multipart/form-data" action="{{router.url_for('@manageUsersActions?id='~userId~'&tab=company')}}" method="post">
+					<div class="form-global clearfix">
+						<div class="inv">
+							{#<input type="hidden" name="isajaxrequest" value="1" />#}
+							{{ forms.input('g_lat', form.values.g_lat, 'hidden') }}
+							{{ forms.input('g_lng', form.values.g_lng, 'hidden') }}
+						</div>
+						<div class="clearfix">
+							<div class="label label_big"><label for="company_name">Company name:</label></div>
+							<div class="input">
+								{{ forms.input('company_name', form.values.company_name) }}
+								{{ forms.errors(form.errors.company_name) }}
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class="label label_big"><label for="vat_number">Vat number:</label></div>
+							<div class="input">
+								{{ forms.input('vat_number', form.values.vat_number) }}
+								{{ forms.errors(form.errors.vat_number) }}
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class="label label_big"><label for="phone">Company phone:</label></div>
+							<div class="input">
+								{{ forms.input('phone', form.values.phone) }}
+								{{ forms.errors(form.errors.phone) }}
+							</div>
+						</div>
+						{#<div class="clearfix">
+							<input type='hidden' name='isajaxrequest' id='isajaxrequest' value='0' />
+							<div class="label label_big"><label for="contract">Contract: <em>(file need to be in .pdf format)</em></label></div>
+							<div class="input">
+								<input name="contract" type="file" id="contract" />
+								{{ forms.errors(form.errors.contract) }}
+							</div>
+						</div>#}
+						<div class="clearfix">
+							<div class="label label_big"><label for="address">Address:</label></div>
+							<div class="input">
+								{{ forms.input('address', form.values.address) }}
+								{{ forms.errors(form.errors.address) }}
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class="label label_big"><label for="city">City:</label></div>
+							<div class="input">
+								{{ forms.input('city', form.values.city) }}
+								{{ forms.errors(form.errors.city) }}
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class="label label_big"><label for="county">County:</label></div>
+							<div class="input">
+								{{ forms.input('county', form.values.county) }}
+								{{ forms.errors(form.errors.county) }}
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class="label label_big"><label for="postcode">Postal code:</label></div>
+							<div class="input">
+								{{ forms.input('postcode', form.values.postcode) }}
+								{{ forms.errors(form.errors.postcode) }}
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class="label label_big"><label for="country">Country:</label></div>
+							<div class="input">
+								{{ forms.select('country', form.countries.options, form.values.country) }}
+								{{ forms.errors(form.errors.country) }}
+							</div>
+						</div>
+						<div class="clearfix">
+							<div style="width:600px">Add a marker exactly where the business is located, please zoom in and double click the map where you'd like the marker to be. </div>
+							<div id="map" align="center" style="width: 600px; height: 300px;margin-top:15px; position: relative;overflow: hidden;"></div>
+						</div>
+					</div>
+					<div class="form-global clearfix">
+						<div class="label label_big"><label>&nbsp;</label></div>
+						<div class="left"><input type="submit" rel="mda" class="g-button g-button-submit modal-ajax-submit" value="Edit" /></div>
+					</div>
+        </form>
+{% endblock content %}

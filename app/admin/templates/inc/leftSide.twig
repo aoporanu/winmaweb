@@ -1,0 +1,54 @@
+<div class="acc_info">
+    <ul>
+        <li>Welcome, Admin</li>
+        <li><a href="/" target="_blank">Go to site</a></li>
+        {#<li><a href="{{router.url_for('@changePassword')}}">Change password</a></li>#}
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+    </div>
+    <div id="sidebar" class="profile_actions">
+        <ul id="main-nav">  <!-- Accordion Menu -->
+            <li>
+                <a class="nav-top-item no-submenu{% if adm_menu == 'users' %} current{% endif %}" href="{{router.url_for('@manageUsers')}}" style="padding-right: 15px;">Manage Users</a>
+            </li>
+            <li>
+                <a class="nav-top-item no-submenu{% if adm_menu == 'merchants' %} current{% endif %}" href="{{router.url_for('@manageMerchants')}}" style="padding-right: 15px;">Agents/Merchants</a>
+            </li>
+            <li>
+                <a class="nav-top-item no-submenu{% if adm_menu == 'commission' %} current{% endif %}" href="{{router.url_for('@manageCommissions')}}" style="padding-right: 15px;">Manage Commissions</a>
+            </li>
+            {#<li>
+            <a class="nav-top-item{% if adm_menu == 'pages' %} current{% endif %}" href="{{router.url_for('@managePages')}}" style="padding-right: 15px;">Manage Pages</a>
+            </li>#}
+            <li>
+            <a class="nav-top-item{% if adm_menu == 'transactions' %} current{% endif %}" href="{{router.url_for('@manageTransactions')}}" style="padding-right: 15px;">Manage Transactions</a>
+            </li>
+            {#<li>
+                <a class="nav-top-item{% if adm_menu == 'statistics' %} current{% endif %} no" href="{{router.url_for('@manageStatistics')}}" style="padding-right: 15px;">Manage Statistics</a>
+            </li>#}
+            <li>
+                <a class="nav-top-item{% if adm_menu == 'bank' %} current{% endif %}" href="{{router.url_for('@manageBank')}}" style="padding-right: 15px;">Manage Bank</a>
+            </li>
+            {#<li>
+                <a class="nav-top-item{% if adm_menu == 'category' %} current{% endif %}" href="{{router.url_for('@manageCategory')}}" style="padding-right: 15px;">Manage Categories</a>
+            </li>#}
+            <li>
+                <a class="nav-top-item{% if adm_menu == 'products' %} current{% endif %}" href="{{router.url_for('@manageProducts')}}" style="padding-right: 15px;">Deal Offers</a>
+            </li>
+            {#<li>
+                <a class="nav-top-item{% if adm_menu == 'newsletter' %} current{% endif %}" href="{{router.url_for('@newsletter')}}" style="padding-right: 15px;">Newsletter</a>
+            </li>#}
+            {#<li>
+                <a class="nav-top-item{% if adm_menu == 'charity' %} current{% endif %}" href="{{router.url_for('@charity')}}" style="padding-right: 15px;">Charity Deals</a>
+            </li>#}
+            {#<li>
+                <a class="nav-top-item{% if adm_menu == 'reports' %} current{% endif %}" href="{{router.url_for('@reports')}}" style="padding-right: 15px;">Reports</a>
+            </li>#}
+            {#<li>
+                <a class="nav-top-item{% if adm_menu == 'help' %} current{% endif %}" href="{{router.url_for('@help')}}" style="padding-right: 15px;">Help</a>
+            </li>#}
+						<li>
+								<a class="nav-top-item{% if adm_menu == 'my_network' %} current{% endif %}" href="{{router.url_for('@myNetwork')}}" style="padding-right: 15px;">My Network Links</a>
+						</li>
+        </ul>
+</div>

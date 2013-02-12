@@ -1,0 +1,1495 @@
+Country:
+  Country_1:
+    name: Andorra
+    code: AD
+    continent: EU
+    latitude: '42.50'
+    longitude: '1.50'
+  Country_2:
+    name: 'United Arab Emirates'
+    code: AE
+    continent: AS
+    latitude: '24.00'
+    longitude: '54.00'
+  Country_3:
+    name: Afghanistan
+    code: AF
+    continent: AS
+    latitude: '33.00'
+    longitude: '66.00'
+  Country_4:
+    name: 'Antigua and Barbuda'
+    code: AG
+    continent: NA
+    latitude: '17.05'
+    longitude: '-61.80'
+  Country_5:
+    name: Anguilla
+    code: AI
+    continent: NA
+    latitude: '18.22'
+    longitude: '-63.05'
+  Country_6:
+    name: Albania
+    code: AL
+    continent: EU
+    latitude: '41.00'
+    longitude: '20.00'
+  Country_7:
+    name: Armenia
+    code: AM
+    continent: AS
+    latitude: '40.00'
+    longitude: '45.00'
+  Country_8:
+    name: Angola
+    code: AO
+    continent: AF
+    latitude: '-12.50'
+    longitude: '18.50'
+  Country_9:
+    name: Antarctica
+    code: AQ
+    continent: AN
+    latitude: '-90.00'
+    longitude: '0.00'
+  Country_10:
+    name: Argentina
+    code: AR
+    continent: SA
+    latitude: '-34.00'
+    longitude: '-64.00'
+  Country_11:
+    name: 'American Samoa'
+    code: AS
+    continent: OC
+    latitude: '-11.06'
+    longitude: '-171.08'
+  Country_12:
+    name: Austria
+    code: AT
+    continent: EU
+    latitude: '47.33'
+    longitude: '13.33'
+  Country_13:
+    name: Australia
+    code: AU
+    continent: OC
+    latitude: '-25.00'
+    longitude: '135.00'
+  Country_14:
+    name: Aruba
+    code: AW
+    continent: NA
+    latitude: '12.50'
+    longitude: '-69.97'
+  Country_15:
+    name: 'Åland Islands'
+    code: AX
+    continent: EU
+    latitude: '60.25'
+    longitude: '20.00'
+  Country_16:
+    name: Azerbaijan
+    code: AZ
+    continent: AS
+    latitude: '40.50'
+    longitude: '47.50'
+  Country_17:
+    name: 'Bosnia and Herzegovina'
+    code: BA
+    continent: EU
+    latitude: '44.25'
+    longitude: '17.83'
+  Country_18:
+    name: Barbados
+    code: BB
+    continent: NA
+    latitude: '13.17'
+    longitude: '-59.53'
+  Country_19:
+    name: Bangladesh
+    code: BD
+    continent: AS
+    latitude: '24.00'
+    longitude: '90.00'
+  Country_20:
+    name: Belgium
+    code: BE
+    continent: EU
+    latitude: '50.83'
+    longitude: '4.00'
+  Country_21:
+    name: 'Burkina Faso'
+    code: BF
+    continent: AF
+    latitude: '13.00'
+    longitude: '-2.00'
+  Country_22:
+    name: Bulgaria
+    code: BG
+    continent: EU
+    latitude: '43.00'
+    longitude: '25.00'
+  Country_23:
+    name: Bahrain
+    code: BH
+    continent: AS
+    latitude: '26.00'
+    longitude: '50.50'
+  Country_24:
+    name: Burundi
+    code: BI
+    continent: AF
+    latitude: '-3.50'
+    longitude: '30.00'
+  Country_25:
+    name: Benin
+    code: BJ
+    continent: AF
+    latitude: '9.50'
+    longitude: '2.25'
+  Country_26:
+    name: 'Saint Barthélemy'
+    code: BL
+    continent: NA
+    latitude: '17.90'
+    longitude: '-62.83'
+  Country_27:
+    name: Bermuda
+    code: BM
+    continent: NA
+    latitude: '32.33'
+    longitude: '-64.75'
+  Country_28:
+    name: Brunei
+    code: BN
+    continent: AS
+    latitude: '4.50'
+    longitude: '114.67'
+  Country_29:
+    name: Bolivia
+    code: BO
+    continent: SA
+    latitude: '-17.00'
+    longitude: '-65.00'
+  Country_30:
+    name: 'Bonaire, Saint Eustatius and Saba'
+    code: BQ
+    continent: NA
+    latitude: '12.21'
+    longitude: '-68.29'
+  Country_31:
+    name: Brazil
+    code: BR
+    continent: SA
+    latitude: '-10.00'
+    longitude: '-55.00'
+  Country_32:
+    name: Bahamas
+    code: BS
+    continent: NA
+    latitude: '24.00'
+    longitude: '-76.00'
+  Country_33:
+    name: Bhutan
+    code: BT
+    continent: AS
+    latitude: '27.50'
+    longitude: '90.50'
+  Country_34:
+    name: 'Bouvet Island'
+    code: BV
+    continent: AN
+    latitude: '-54.43'
+    longitude: '3.40'
+  Country_35:
+    name: Botswana
+    code: BW
+    continent: AF
+    latitude: '-22.00'
+    longitude: '24.00'
+  Country_36:
+    name: Belarus
+    code: BY
+    continent: EU
+    latitude: '53.00'
+    longitude: '28.00'
+  Country_37:
+    name: Belize
+    code: BZ
+    continent: NA
+    latitude: '17.25'
+    longitude: '-88.75'
+  Country_38:
+    name: Canada
+    code: CA
+    continent: NA
+    latitude: '60.00'
+    longitude: '-96.00'
+  Country_39:
+    name: 'Cocos [Keeling] Islands'
+    code: CC
+    continent: AS
+    latitude: '-12.16'
+    longitude: '96.87'
+  Country_40:
+    name: 'Congo [DRC]'
+    code: ''
+    continent: AF
+    latitude: '0.00'
+    longitude: '0.00'
+  Country_41:
+    name: 'Central African Republic'
+    code: CF
+    continent: AF
+    latitude: '7.00'
+    longitude: '21.00'
+  Country_42:
+    name: 'Congo [Republic]'
+    code: CG
+    continent: AF
+    latitude: '-1.00'
+    longitude: '15.00'
+  Country_43:
+    name: Switzerland
+    code: CH
+    continent: EU
+    latitude: '47.00'
+    longitude: '8.01'
+  Country_44:
+    name: 'Ivory Coast'
+    code: CI
+    continent: AF
+    latitude: '8.00'
+    longitude: '-5.00'
+  Country_45:
+    name: 'Cook Islands'
+    code: CK
+    continent: OC
+    latitude: '-21.25'
+    longitude: '-159.79'
+  Country_46:
+    name: Chile
+    code: CL
+    continent: SA
+    latitude: '-30.00'
+    longitude: '-71.00'
+  Country_47:
+    name: Cameroon
+    code: CM
+    continent: AF
+    latitude: '6.00'
+    longitude: '12.00'
+  Country_48:
+    name: China
+    code: CN
+    continent: AS
+    latitude: '35.00'
+    longitude: '105.00'
+  Country_49:
+    name: Colombia
+    code: CO
+    continent: SA
+    latitude: '4.00'
+    longitude: '-72.00'
+  Country_50:
+    name: 'Costa Rica'
+    code: CR
+    continent: NA
+    latitude: '10.00'
+    longitude: '-84.00'
+  Country_51:
+    name: Cuba
+    code: CU
+    continent: NA
+    latitude: '22.00'
+    longitude: '-79.50'
+  Country_52:
+    name: 'Cape Verde'
+    code: CV
+    continent: AF
+    latitude: '16.00'
+    longitude: '-24.00'
+  Country_53:
+    name: Curacao
+    code: CW
+    continent: NA
+    latitude: '12.17'
+    longitude: '-69.00'
+  Country_54:
+    name: 'Christmas Island'
+    code: CX
+    continent: AS
+    latitude: '-10.50'
+    longitude: '105.67'
+  Country_55:
+    name: Cyprus
+    code: CY
+    continent: EU
+    latitude: '35.00'
+    longitude: '33.00'
+  Country_56:
+    name: 'Czech Republic'
+    code: CZ
+    continent: EU
+    latitude: '49.75'
+    longitude: '15.00'
+  Country_57:
+    name: Germany
+    code: DE
+    continent: EU
+    latitude: '51.50'
+    longitude: '10.50'
+  Country_58:
+    name: Djibouti
+    code: DJ
+    continent: AF
+    latitude: '11.59'
+    longitude: '43.14'
+  Country_59:
+    name: Denmark
+    code: DK
+    continent: EU
+    latitude: '56.00'
+    longitude: '10.00'
+  Country_60:
+    name: Dominica
+    code: DM
+    continent: NA
+    latitude: '15.50'
+    longitude: '-61.33'
+  Country_61:
+    name: 'Dominican Republic'
+    code: DO
+    continent: NA
+    latitude: '19.00'
+    longitude: '-70.67'
+  Country_62:
+    name: Algeria
+    code: DZ
+    continent: AF
+    latitude: '28.00'
+    longitude: '3.00'
+  Country_63:
+    name: Ecuador
+    code: EC
+    continent: SA
+    latitude: '-2.00'
+    longitude: '-77.50'
+  Country_64:
+    name: Estonia
+    code: EE
+    continent: EU
+    latitude: '59.00'
+    longitude: '26.00'
+  Country_65:
+    name: Egypt
+    code: EG
+    continent: AF
+    latitude: '27.00'
+    longitude: '30.00'
+  Country_66:
+    name: 'Western Sahara'
+    code: EH
+    continent: AF
+    latitude: '24.49'
+    longitude: '-12.66'
+  Country_67:
+    name: Eritrea
+    code: ER
+    continent: AF
+    latitude: '15.00'
+    longitude: '39.00'
+  Country_68:
+    name: Spain
+    code: ES
+    continent: EU
+    latitude: '40.00'
+    longitude: '-4.00'
+  Country_69:
+    name: Ethiopia
+    code: ET
+    continent: AF
+    latitude: '8.00'
+    longitude: '38.00'
+  Country_70:
+    name: Finland
+    code: FI
+    continent: EU
+    latitude: '64.00'
+    longitude: '26.00'
+  Country_71:
+    name: Fiji
+    code: FJ
+    continent: OC
+    latitude: '-18.00'
+    longitude: '178.00'
+  Country_72:
+    name: 'Falkland Islands'
+    code: FK
+    continent: SA
+    latitude: '-51.75'
+    longitude: '-59.17'
+  Country_73:
+    name: Micronesia
+    code: FM
+    continent: OC
+    latitude: '6.92'
+    longitude: '158.16'
+  Country_74:
+    name: 'Faroe Islands'
+    code: FO
+    continent: EU
+    latitude: '62.00'
+    longitude: '-7.00'
+  Country_75:
+    name: France
+    code: FR
+    continent: EU
+    latitude: '46.00'
+    longitude: '2.00'
+  Country_76:
+    name: Gabon
+    code: GA
+    continent: AF
+    latitude: '-1.00'
+    longitude: '11.75'
+  Country_77:
+    name: 'United Kingdom'
+    code: GB
+    continent: EU
+    latitude: '54.00'
+    longitude: '-4.00'
+  Country_78:
+    name: Grenada
+    code: GD
+    continent: NA
+    latitude: '12.12'
+    longitude: '-61.67'
+  Country_79:
+    name: Georgia
+    code: GE
+    continent: AS
+    latitude: '42.00'
+    longitude: '43.50'
+  Country_80:
+    name: 'French Guiana'
+    code: GF
+    continent: SA
+    latitude: '4.00'
+    longitude: '-53.00'
+  Country_81:
+    name: Guernsey
+    code: GG
+    continent: EU
+    latitude: '49.58'
+    longitude: '-2.33'
+  Country_82:
+    name: Ghana
+    code: GH
+    continent: AF
+    latitude: '8.00'
+    longitude: '-2.00'
+  Country_83:
+    name: Gibraltar
+    code: GI
+    continent: EU
+    latitude: '36.14'
+    longitude: '-5.35'
+  Country_84:
+    name: Greenland
+    code: GL
+    continent: NA
+    latitude: '72.00'
+    longitude: '-40.00'
+  Country_85:
+    name: Gambia
+    code: GM
+    continent: AF
+    latitude: '13.50'
+    longitude: '-15.50'
+  Country_86:
+    name: Guinea
+    code: GN
+    continent: AF
+    latitude: '11.00'
+    longitude: '-10.00'
+  Country_87:
+    name: Guadeloupe
+    code: GP
+    continent: NA
+    latitude: '16.25'
+    longitude: '-61.58'
+  Country_88:
+    name: 'Equatorial Guinea'
+    code: GQ
+    continent: AF
+    latitude: '2.00'
+    longitude: '10.00'
+  Country_89:
+    name: Greece
+    code: GR
+    continent: EU
+    latitude: '39.00'
+    longitude: '22.00'
+  Country_90:
+    name: 'South Georgia and the South Sandwich Islands'
+    code: GS
+    continent: AN
+    latitude: '-56.00'
+    longitude: '-33.00'
+  Country_91:
+    name: Guatemala
+    code: GT
+    continent: NA
+    latitude: '15.50'
+    longitude: '-90.25'
+  Country_92:
+    name: Guam
+    code: GU
+    continent: OC
+    latitude: '13.48'
+    longitude: '144.73'
+  Country_93:
+    name: Guinea-Bissau
+    code: GW
+    continent: AF
+    latitude: '12.00'
+    longitude: '-15.00'
+  Country_94:
+    name: Guyana
+    code: GY
+    continent: SA
+    latitude: '5.00'
+    longitude: '-59.00'
+  Country_95:
+    name: 'Hong Kong'
+    code: HK
+    continent: AS
+    latitude: '22.29'
+    longitude: '114.16'
+  Country_96:
+    name: 'Heard Island and McDonald Islands'
+    code: HM
+    continent: AN
+    latitude: '-53.12'
+    longitude: '73.51'
+  Country_97:
+    name: Honduras
+    code: HN
+    continent: NA
+    latitude: '15.00'
+    longitude: '-86.50'
+  Country_98:
+    name: Croatia
+    code: HR
+    continent: EU
+    latitude: '45.17'
+    longitude: '15.50'
+  Country_99:
+    name: Haiti
+    code: HT
+    continent: NA
+    latitude: '19.00'
+    longitude: '-72.42'
+  Country_100:
+    name: Hungary
+    code: HU
+    continent: EU
+    latitude: '47.00'
+    longitude: '20.00'
+  Country_101:
+    name: Indonesia
+    code: ID
+    continent: AS
+    latitude: '-5.00'
+    longitude: '120.00'
+  Country_102:
+    name: Ireland
+    code: IE
+    continent: EU
+    latitude: '53.00'
+    longitude: '-8.00'
+  Country_103:
+    name: Israel
+    code: IL
+    continent: AS
+    latitude: '31.50'
+    longitude: '34.75'
+  Country_104:
+    name: 'Isle of Man'
+    code: IM
+    continent: EU
+    latitude: '54.25'
+    longitude: '-4.50'
+  Country_105:
+    name: India
+    code: IN
+    continent: AS
+    latitude: '20.00'
+    longitude: '77.00'
+  Country_106:
+    name: 'British Indian Ocean Territory'
+    code: ''
+    continent: AS
+    latitude: '0.00'
+    longitude: '0.00'
+  Country_107:
+    name: Iraq
+    code: IQ
+    continent: AS
+    latitude: '33.00'
+    longitude: '44.00'
+  Country_108:
+    name: Iran
+    code: IR
+    continent: AS
+    latitude: '32.00'
+    longitude: '53.00'
+  Country_109:
+    name: Iceland
+    code: IS
+    continent: EU
+    latitude: '65.00'
+    longitude: '-18.00'
+  Country_110:
+    name: Italy
+    code: IT
+    continent: EU
+    latitude: '42.83'
+    longitude: '12.83'
+  Country_111:
+    name: Jersey
+    code: JE
+    continent: EU
+    latitude: '49.22'
+    longitude: '-2.12'
+  Country_112:
+    name: Jamaica
+    code: JM
+    continent: NA
+    latitude: '18.25'
+    longitude: '-77.50'
+  Country_113:
+    name: Jordan
+    code: JO
+    continent: AS
+    latitude: '31.00'
+    longitude: '36.00'
+  Country_114:
+    name: Japan
+    code: JP
+    continent: AS
+    latitude: '35.69'
+    longitude: '139.75'
+  Country_115:
+    name: Kenya
+    code: KE
+    continent: AF
+    latitude: '1.00'
+    longitude: '38.00'
+  Country_116:
+    name: Kyrgyzstan
+    code: KG
+    continent: AS
+    latitude: '41.00'
+    longitude: '75.00'
+  Country_117:
+    name: Cambodia
+    code: KH
+    continent: AS
+    latitude: '13.00'
+    longitude: '105.00'
+  Country_118:
+    name: Kiribati
+    code: KI
+    continent: OC
+    latitude: '1.42'
+    longitude: '172.98'
+  Country_119:
+    name: Comoros
+    code: KM
+    continent: AF
+    latitude: '-12.17'
+    longitude: '44.25'
+  Country_120:
+    name: 'Saint Kitts and Nevis'
+    code: KN
+    continent: NA
+    latitude: '17.33'
+    longitude: '-62.75'
+  Country_121:
+    name: 'North Korea'
+    code: KP
+    continent: AS
+    latitude: '40.00'
+    longitude: '127.00'
+  Country_122:
+    name: 'South Korea'
+    code: KR
+    continent: AS
+    latitude: '37.00'
+    longitude: '127.50'
+  Country_123:
+    name: Kuwait
+    code: KW
+    continent: AS
+    latitude: '29.50'
+    longitude: '47.75'
+  Country_124:
+    name: 'Cayman Islands'
+    code: KY
+    continent: NA
+    latitude: '19.50'
+    longitude: '-80.67'
+  Country_125:
+    name: Kazakhstan
+    code: KZ
+    continent: AS
+    latitude: '48.00'
+    longitude: '68.00'
+  Country_126:
+    name: Laos
+    code: LA
+    continent: AS
+    latitude: '18.00'
+    longitude: '105.00'
+  Country_127:
+    name: Lebanon
+    code: LB
+    continent: AS
+    latitude: '33.83'
+    longitude: '35.83'
+  Country_128:
+    name: 'Saint Lucia'
+    code: LC
+    continent: NA
+    latitude: '13.88'
+    longitude: '-60.97'
+  Country_129:
+    name: Liechtenstein
+    code: LI
+    continent: EU
+    latitude: '47.17'
+    longitude: '9.53'
+  Country_130:
+    name: 'Sri Lanka'
+    code: LK
+    continent: AS
+    latitude: '7.00'
+    longitude: '81.00'
+  Country_131:
+    name: Liberia
+    code: LR
+    continent: AF
+    latitude: '6.50'
+    longitude: '-9.50'
+  Country_132:
+    name: Lesotho
+    code: LS
+    continent: AF
+    latitude: '-29.50'
+    longitude: '28.25'
+  Country_133:
+    name: Lithuania
+    code: LT
+    continent: EU
+    latitude: '56.00'
+    longitude: '24.00'
+  Country_134:
+    name: Luxembourg
+    code: LU
+    continent: EU
+    latitude: '49.75'
+    longitude: '6.17'
+  Country_135:
+    name: Latvia
+    code: LV
+    continent: EU
+    latitude: '57.00'
+    longitude: '25.00'
+  Country_136:
+    name: Libya
+    code: LY
+    continent: AF
+    latitude: '25.00'
+    longitude: '17.00'
+  Country_137:
+    name: Morocco
+    code: MA
+    continent: AF
+    latitude: '32.00'
+    longitude: '-5.00'
+  Country_138:
+    name: Monaco
+    code: MC
+    continent: EU
+    latitude: '43.73'
+    longitude: '7.42'
+  Country_139:
+    name: Moldova
+    code: MD
+    continent: EU
+    latitude: '47.00'
+    longitude: '29.00'
+  Country_140:
+    name: Montenegro
+    code: ME
+    continent: EU
+    latitude: '42.50'
+    longitude: '19.30'
+  Country_141:
+    name: 'Saint Martin'
+    code: MF
+    continent: NA
+    latitude: '18.07'
+    longitude: '-63.07'
+  Country_142:
+    name: Madagascar
+    code: MG
+    continent: AF
+    latitude: '-20.00'
+    longitude: '47.00'
+  Country_143:
+    name: 'Marshall Islands'
+    code: MH
+    continent: OC
+    latitude: '7.11'
+    longitude: '171.25'
+  Country_144:
+    name: Macedonia
+    code: MK
+    continent: EU
+    latitude: '41.83'
+    longitude: '22.00'
+  Country_145:
+    name: Mali
+    code: ML
+    continent: AF
+    latitude: '17.00'
+    longitude: '-4.00'
+  Country_146:
+    name: 'Myanmar [Burma]'
+    code: MM
+    continent: AS
+    latitude: '22.00'
+    longitude: '98.00'
+  Country_147:
+    name: Mongolia
+    code: MN
+    continent: AS
+    latitude: '46.00'
+    longitude: '105.00'
+  Country_148:
+    name: Macau
+    code: MO
+    continent: AS
+    latitude: '22.20'
+    longitude: '113.55'
+  Country_149:
+    name: 'Northern Mariana Islands'
+    code: MP
+    continent: OC
+    latitude: '15.21'
+    longitude: '145.76'
+  Country_150:
+    name: Martinique
+    code: MQ
+    continent: NA
+    latitude: '14.67'
+    longitude: '-61.00'
+  Country_151:
+    name: Mauritania
+    code: MR
+    continent: AF
+    latitude: '20.00'
+    longitude: '-12.00'
+  Country_152:
+    name: Montserrat
+    code: MS
+    continent: NA
+    latitude: '16.75'
+    longitude: '-62.20'
+  Country_153:
+    name: Malta
+    code: MT
+    continent: EU
+    latitude: '35.92'
+    longitude: '14.43'
+  Country_154:
+    name: Mauritius
+    code: MU
+    continent: AF
+    latitude: '-20.30'
+    longitude: '57.58'
+  Country_155:
+    name: Maldives
+    code: MV
+    continent: AS
+    latitude: '3.20'
+    longitude: '73.00'
+  Country_156:
+    name: Malawi
+    code: MW
+    continent: AF
+    latitude: '-13.50'
+    longitude: '34.00'
+  Country_157:
+    name: Mexico
+    code: MX
+    continent: NA
+    latitude: '19.43'
+    longitude: '-99.13'
+  Country_158:
+    name: Malaysia
+    code: MY
+    continent: AS
+    latitude: '2.50'
+    longitude: '112.50'
+  Country_159:
+    name: Mozambique
+    code: MZ
+    continent: AF
+    latitude: '-18.25'
+    longitude: '35.00'
+  Country_160:
+    name: Namibia
+    code: NA
+    continent: AF
+    latitude: '-22.00'
+    longitude: '17.00'
+  Country_161:
+    name: 'New Caledonia'
+    code: NC
+    continent: OC
+    latitude: '-21.50'
+    longitude: '165.50'
+  Country_162:
+    name: Niger
+    code: NE
+    continent: AF
+    latitude: '16.00'
+    longitude: '8.00'
+  Country_163:
+    name: 'Norfolk Island'
+    code: NF
+    continent: OC
+    latitude: '-29.03'
+    longitude: '167.95'
+  Country_164:
+    name: Nigeria
+    code: NG
+    continent: AF
+    latitude: '10.00'
+    longitude: '8.00'
+  Country_165:
+    name: Nicaragua
+    code: NI
+    continent: NA
+    latitude: '13.00'
+    longitude: '-85.00'
+  Country_166:
+    name: Netherlands
+    code: NL
+    continent: EU
+    latitude: '52.50'
+    longitude: '5.75'
+  Country_167:
+    name: Norway
+    code: NO
+    continent: EU
+    latitude: '62.00'
+    longitude: '10.00'
+  Country_168:
+    name: Nepal
+    code: NP
+    continent: AS
+    latitude: '28.00'
+    longitude: '84.00'
+  Country_169:
+    name: Nauru
+    code: NR
+    continent: OC
+    latitude: '-0.52'
+    longitude: '166.93'
+  Country_170:
+    name: Niue
+    code: NU
+    continent: OC
+    latitude: '-19.03'
+    longitude: '-169.87'
+  Country_171:
+    name: 'New Zealand'
+    code: NZ
+    continent: OC
+    latitude: '-42.00'
+    longitude: '174.00'
+  Country_172:
+    name: Oman
+    code: OM
+    continent: AS
+    latitude: '21.00'
+    longitude: '57.00'
+  Country_173:
+    name: Panama
+    code: PA
+    continent: NA
+    latitude: '9.00'
+    longitude: '-80.00'
+  Country_174:
+    name: Peru
+    code: PE
+    continent: SA
+    latitude: '-10.00'
+    longitude: '-76.00'
+  Country_175:
+    name: 'French Polynesia'
+    code: PF
+    continent: OC
+    latitude: '-15.00'
+    longitude: '-140.00'
+  Country_176:
+    name: 'Papua New Guinea'
+    code: PG
+    continent: OC
+    latitude: '-6.00'
+    longitude: '147.00'
+  Country_177:
+    name: Philippines
+    code: PH
+    continent: AS
+    latitude: '13.00'
+    longitude: '122.00'
+  Country_178:
+    name: Pakistan
+    code: PK
+    continent: AS
+    latitude: '30.00'
+    longitude: '70.00'
+  Country_179:
+    name: Poland
+    code: PL
+    continent: EU
+    latitude: '52.00'
+    longitude: '20.00'
+  Country_180:
+    name: 'Saint Pierre and Miquelon'
+    code: PM
+    continent: NA
+    latitude: '46.83'
+    longitude: '-56.33'
+  Country_181:
+    name: 'Pitcairn Islands'
+    code: PN
+    continent: OC
+    latitude: '-25.07'
+    longitude: '-130.10'
+  Country_182:
+    name: 'Puerto Rico'
+    code: PR
+    continent: NA
+    latitude: '18.25'
+    longitude: '-66.50'
+  Country_183:
+    name: 'Palestinian Territories'
+    code: ''
+    continent: AS
+    latitude: '0.00'
+    longitude: '0.00'
+  Country_184:
+    name: Portugal
+    code: PT
+    continent: EU
+    latitude: '39.50'
+    longitude: '-8.00'
+  Country_185:
+    name: Palau
+    code: PW
+    continent: OC
+    latitude: '7.50'
+    longitude: '134.62'
+  Country_186:
+    name: Paraguay
+    code: PY
+    continent: SA
+    latitude: '-22.99'
+    longitude: '-58.00'
+  Country_187:
+    name: Qatar
+    code: QA
+    continent: AS
+    latitude: '25.50'
+    longitude: '51.25'
+  Country_188:
+    name: Réunion
+    code: RE
+    continent: AF
+    latitude: '-21.10'
+    longitude: '55.60'
+  Country_189:
+    name: Romania
+    code: RO
+    continent: EU
+    latitude: '46.00'
+    longitude: '25.00'
+  Country_190:
+    name: Serbia
+    code: RS
+    continent: EU
+    latitude: '44.82'
+    longitude: '20.46'
+  Country_191:
+    name: Russia
+    code: RU
+    continent: EU
+    latitude: '60.00'
+    longitude: '100.00'
+  Country_192:
+    name: Rwanda
+    code: RW
+    continent: AF
+    latitude: '-2.00'
+    longitude: '30.00'
+  Country_193:
+    name: 'Saudi Arabia'
+    code: SA
+    continent: AS
+    latitude: '25.00'
+    longitude: '45.00'
+  Country_194:
+    name: 'Solomon Islands'
+    code: SB
+    continent: OC
+    latitude: '-8.00'
+    longitude: '159.00'
+  Country_195:
+    name: Seychelles
+    code: SC
+    continent: AF
+    latitude: '-4.58'
+    longitude: '55.67'
+  Country_196:
+    name: Sudan
+    code: SD
+    continent: AF
+    latitude: '15.00'
+    longitude: '30.00'
+  Country_197:
+    name: Sweden
+    code: SE
+    continent: EU
+    latitude: '62.00'
+    longitude: '15.00'
+  Country_198:
+    name: Singapore
+    code: SG
+    continent: AS
+    latitude: '1.29'
+    longitude: '103.85'
+  Country_199:
+    name: 'Saint Helena'
+    code: SH
+    continent: AF
+    latitude: '-15.95'
+    longitude: '-5.70'
+  Country_200:
+    name: Slovenia
+    code: SI
+    continent: EU
+    latitude: '46.25'
+    longitude: '15.17'
+  Country_201:
+    name: 'Svalbard and Jan Mayen'
+    code: SJ
+    continent: EU
+    latitude: '78.00'
+    longitude: '20.00'
+  Country_202:
+    name: Slovakia
+    code: SK
+    continent: EU
+    latitude: '48.67'
+    longitude: '19.50'
+  Country_203:
+    name: 'Sierra Leone'
+    code: SL
+    continent: AF
+    latitude: '8.50'
+    longitude: '-11.50'
+  Country_204:
+    name: 'San Marino'
+    code: SM
+    continent: EU
+    latitude: '43.93'
+    longitude: '12.42'
+  Country_205:
+    name: Senegal
+    code: SN
+    continent: AF
+    latitude: '14.00'
+    longitude: '-14.00'
+  Country_206:
+    name: Somalia
+    code: SO
+    continent: AF
+    latitude: '6.00'
+    longitude: '48.00'
+  Country_207:
+    name: Suriname
+    code: SR
+    continent: SA
+    latitude: '4.00'
+    longitude: '-56.00'
+  Country_208:
+    name: 'São Tomé and Príncipe'
+    code: ST
+    continent: AF
+    latitude: '1.00'
+    longitude: '7.00'
+  Country_209:
+    name: 'El Salvador'
+    code: SV
+    continent: NA
+    latitude: '13.83'
+    longitude: '-88.92'
+  Country_210:
+    name: 'Sint Maarten'
+    code: SX
+    continent: NA
+    latitude: '18.04'
+    longitude: '-63.07'
+  Country_211:
+    name: Syria
+    code: SY
+    continent: AS
+    latitude: '35.00'
+    longitude: '38.00'
+  Country_212:
+    name: Swaziland
+    code: SZ
+    continent: AF
+    latitude: '-26.50'
+    longitude: '31.50'
+  Country_213:
+    name: 'Turks and Caicos Islands'
+    code: TC
+    continent: NA
+    latitude: '21.73'
+    longitude: '-71.58'
+  Country_214:
+    name: Chad
+    code: TD
+    continent: AF
+    latitude: '15.00'
+    longitude: '19.00'
+  Country_215:
+    name: 'French Southern Territories'
+    code: TF
+    continent: AN
+    latitude: '-43.00'
+    longitude: '67.00'
+  Country_216:
+    name: Togo
+    code: TG
+    continent: AF
+    latitude: '8.00'
+    longitude: '1.17'
+  Country_217:
+    name: Thailand
+    code: TH
+    continent: AS
+    latitude: '15.00'
+    longitude: '100.00'
+  Country_218:
+    name: Tajikistan
+    code: TJ
+    continent: AS
+    latitude: '39.00'
+    longitude: '71.00'
+  Country_219:
+    name: Tokelau
+    code: TK
+    continent: OC
+    latitude: '-9.17'
+    longitude: '-171.83'
+  Country_220:
+    name: 'East Timor'
+    code: TL
+    continent: OC
+    latitude: '-8.83'
+    longitude: '125.75'
+  Country_221:
+    name: Turkmenistan
+    code: TM
+    continent: AS
+    latitude: '40.00'
+    longitude: '60.00'
+  Country_222:
+    name: Tunisia
+    code: TN
+    continent: AF
+    latitude: '34.00'
+    longitude: '9.00'
+  Country_223:
+    name: Tonga
+    code: TO
+    continent: OC
+    latitude: '-20.00'
+    longitude: '-175.00'
+  Country_224:
+    name: Turkey
+    code: TR
+    continent: AS
+    latitude: '39.06'
+    longitude: '34.91'
+  Country_225:
+    name: 'Trinidad and Tobago'
+    code: TT
+    continent: NA
+    latitude: '11.00'
+    longitude: '-61.00'
+  Country_226:
+    name: Tuvalu
+    code: TV
+    continent: OC
+    latitude: '-8.52'
+    longitude: '179.14'
+  Country_227:
+    name: Taiwan
+    code: TW
+    continent: AS
+    latitude: '24.00'
+    longitude: '121.00'
+  Country_228:
+    name: Tanzania
+    code: TZ
+    continent: AF
+    latitude: '-6.00'
+    longitude: '35.00'
+  Country_229:
+    name: Ukraine
+    code: UA
+    continent: EU
+    latitude: '49.00'
+    longitude: '32.00'
+  Country_230:
+    name: Uganda
+    code: UG
+    continent: AF
+    latitude: '2.00'
+    longitude: '33.00'
+  Country_231:
+    name: 'U.S. Minor Outlying Islands'
+    code: ''
+    continent: OC
+    latitude: '0.00'
+    longitude: '0.00'
+  Country_232:
+    name: 'United States'
+    code: US
+    continent: NA
+    latitude: '39.76'
+    longitude: '-98.50'
+  Country_233:
+    name: Uruguay
+    code: UY
+    continent: SA
+    latitude: '-33.00'
+    longitude: '-56.00'
+  Country_234:
+    name: Uzbekistan
+    code: UZ
+    continent: AS
+    latitude: '41.71'
+    longitude: '63.85'
+  Country_235:
+    name: 'Vatican City'
+    code: VA
+    continent: EU
+    latitude: '41.90'
+    longitude: '12.45'
+  Country_236:
+    name: 'Saint Vincent and the Grenadines'
+    code: VC
+    continent: NA
+    latitude: '13.08'
+    longitude: '-61.20'
+  Country_237:
+    name: Venezuela
+    code: VE
+    continent: SA
+    latitude: '8.00'
+    longitude: '-66.00'
+  Country_238:
+    name: 'British Virgin Islands'
+    code: VG
+    continent: NA
+    latitude: '18.50'
+    longitude: '-64.50'
+  Country_239:
+    name: 'U.S. Virgin Islands'
+    code: VI
+    continent: NA
+    latitude: '18.35'
+    longitude: '-64.98'
+  Country_240:
+    name: Vietnam
+    code: VN
+    continent: AS
+    latitude: '16.17'
+    longitude: '107.83'
+  Country_241:
+    name: Vanuatu
+    code: VU
+    continent: OC
+    latitude: '-16.00'
+    longitude: '167.00'
+  Country_242:
+    name: 'Wallis and Futuna'
+    code: WF
+    continent: OC
+    latitude: '-13.30'
+    longitude: '-176.20'
+  Country_243:
+    name: Samoa
+    code: WS
+    continent: OC
+    latitude: '-13.80'
+    longitude: '-172.18'
+  Country_244:
+    name: Kosovo
+    code: XK
+    continent: EU
+    latitude: '42.58'
+    longitude: '21.00'
+  Country_245:
+    name: Yemen
+    code: YE
+    continent: AS
+    latitude: '15.50'
+    longitude: '47.50'
+  Country_246:
+    name: Mayotte
+    code: YT
+    continent: AF
+    latitude: '-12.83'
+    longitude: '45.17'
+  Country_247:
+    name: 'South Africa'
+    code: ZA
+    continent: AF
+    latitude: '-30.00'
+    longitude: '26.00'
+  Country_248:
+    name: Zambia
+    code: ZM
+    continent: AF
+    latitude: '-15.00'
+    longitude: '30.00'
+  Country_249:
+    name: Zimbabwe
+    code: ZW
+    continent: AF
+    latitude: '-19.00'
+    longitude: '29.00'

@@ -1,0 +1,143 @@
+{% if lat and lng %}
+<script type="text/javascript">
+    var geocoder;
+    var map;
+    function initialize() {
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng( {{ lat }}, {{ lng }});
+        var mapOptions = {
+             zoom: 8,
+             center: latlng,
+             mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+        var marker = new google.maps.Marker({
+            position: latlng,
+            title: 'Positioned exactly at your address',
+            map: map,
+            draggable: true
+        });
+    }
+    
+    /*function codeAddress() {
+        var address = {{ addr.postcode }};
+        geocoder.geocode( {'address': address}, function(results, status) {
+            if(status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+             } else {
+                 alert('Geocode was not succesfull for the following reason: '+status);
+             }
+         });
+    }*/
+    function loadScript() {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "https://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+      document.body.appendChild(script);
+    }
+  
+    
+    // Onload handler to fire off the app.
+    {% if not imgajax %}
+        window.onload = loadScript;
+    //google.maps.event.addDomListener(window, 'load', initialize);
+    {% else %}
+        $(function() {
+            loadScript();
+            //initialize();
+        });
+    {% endif %}
+</script>
+{% endif %}
+<div class="clearfix">
+	<div class="form-global clearfix">
+		<div class="profile_left">
+			{% if (image) %}
+			<img src="{{image.dir}}/thumb120x67/{{image.file_name}}_{{image.id}}.{{image.ext}}" width="200" />
+			{% else %}
+			<img src="/images/logo_final.png" width="200" />
+			{% endif %}
+		</div>
+		<div class="profile_right"
+				 {% if group %}
+				 style="background: url('/images/site/{{group}}-badge.png') no-repeat top right"
+				 {% endif %}
+				 >
+			<div class="profile_acc_descr" style="font-size: 16px;">
+				<!--<strong>{{user.username}}</strong>-->
+				{% if user.my_status %}
+				 - {{user.my_status}}
+				{% endif %}
+			</div>
+			<div class="clearall"></div>
+			<label class="profile_acc_label">{{user.first_name}} {{user.last_name}}</label>
+			<div class="clearall"></div>
+			<label class="profile_acc_label">Member since</label>
+			<div class="profile_acc_descr">{{user.created_at}}</div>
+			<div class="clearall"></div>
+			<label class="profile_acc_label">Last time online</label>
+			<div class="profile_acc_descr">{{user.last_login}}</div>
+			<div class="clearall"></div>
+			<br/>
+			<label class="profile_acc_label">ABOUT ME</label>
+			<div class="clearall"></div>
+			<label class="profile_acc_label">E-mail</label>
+			<div class="profile_acc_descr">{{user.email}}</div>
+			<div class="clearall"></div>
+			<label class="profile_acc_label">Gender</label>
+			<div class="profile_acc_descr">{{user.gender}}</div>
+			<div class="clearall"></div>
+			<label class="profile_acc_label">Age</label>
+			<div class="profile_acc_descr">{{user.age}}</div>
+			<div class="clearall"></div>
+			<br/>
+			<label class="profile_acc_descr"><strong>CONTACT INFORMATION</strong></label>
+			<div class="clearall"></div>
+			<label class="profile_acc_label">Phone</label>
+			<div class="profile_acc_descr">{{user.phone}}</div>
+			<div class="clearall"></div>
+			<label class="profile_acc_label">Address</label>
+			<div class="profile_acc_descr">{{addr.address}}</div>
+			<div class="clearall"></div>
+			<label class="profile_acc_label">City</label>
+			<div class="profile_acc_descr">{{addr.city}}</div>
+			<div class="clearall"></div>
+			<label class="profile_acc_label">Province/County</label>
+			<div class="profile_acc_descr">{{addr.county}}</div>
+			<div class="clearall"></div>
+			<label class="profile_acc_label">Country</label>
+			<div class="profile_acc_descr">{{country}}</div>
+			<div class="clearall"></div>
+			<label class="profile_acc_label">Postal Code</label>
+			<div class="profile_acc_descr">{{addr.postcode}}</div>
+            <div class="clearall"></div>
+            <br />
+            <label class="profile_acc_descr"><strong>My Network</strong></label>
+            <div class="clearall"></div>
+            <label class="profile_acc_label">Total referrals</label>
+            <div class="profile_acc_descr" id="referral_count"></div>
+			<div class="clearall"></div>
+            <label class="profile_acc_label">My Referral ID</label>
+            <div class="profile_acc_descr">{{ user.ref_id }}</div>
+            <div class="clearall"></div>
+			{% if app.user.id != user.id %}
+				<a href="{{ router.url_for('@RequestFriendship?id='~user.id) }}" class="g-button g-button-share modal-normal" title="Request Friendship">Request Friendship</a>
+			{% endif %}
+            <div class="clearall"></div>
+            {% if lat and lng %}
+                <div id="map_canvas"></div>
+            {% endif %}
+		</div>
+		<div class="clearall"></div>
+	</div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#referral_count').load('/my-account/get-my-referrals/'+{{ user.id }} );
+        $('#map_canvas').css('height', '300px');
+    });
+</script>

@@ -1,0 +1,62 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block css %}
+    {% if not app.ajax %}
+        {% include "myaccount/css.twig" %}
+    {% endif %}
+{% endblock css %}
+{% block js %}
+    {% if not app.ajax %}
+        {% include "myaccount/js.twig" %}
+    {% endif %}
+{% endblock js %}
+
+{% block content_page %}
+<h1>Add Photo</h1>
+    <div class="ma_top"></div>
+    <div class="ma_content">
+        <br />
+        <div class="info-blue">
+            <p>You may pick any photo.  Your photo will automatically be resized and fitted to the website.</p>
+        </div><br /><br />
+{% if form.errors %}
+    <div class="error_box"><strong>There were errors - please verify all fields for errors</strong></div>
+{% endif %}
+{% if form.success %}
+    <div class="infotip"><strong>Success</strong><br /><br />Image added successfully</div>
+{% endif %}
+<div class="clearfix">
+{% for image in user.UserMedia %}
+    <div style="width:120px;height:90px;margin:10px;" class="left">
+        <img src="{{image.dir}}/thumb120x67/{{image.file_name}}_{{image.id}}.{{image.ext}}" width="120" height="67" style="border:2px solid {% if image.main == 1 %}red{% else %}#cacaca{% endif %};padding:1px;" />
+        <a href="{{router.url_for('@myAccountEdit?id='~user.id~'&ac=photo&m=delete&pic_id='~image.id)}}" class="modal-ajax-link g-button g-button-submit">Delete</a>
+    </div>
+{% else %}
+        <form enctype="multipart/form-data" action="{{router.url_for('@myAccountEdit?ac=photo')}}" method="post">
+            <div class="form-global clearfix">
+                <input type='hidden' name='isajaxrequest' id='isajaxrequest' value='0' />
+                <div class="label"><label for="photo">Photo:</label></div>
+                <div class="input input_big">
+                    <input name="photo" type="file" id="photo" />
+                    {{ forms.errors(form.errors.photo) }}
+                </div>
+            </div>
+            <div class="form-global clearfix">
+                <div class="label"><label>&nbsp;</label></div>
+                <div class="left"><input type="submit" class="g-button g-button-submit" value="Add" /></div>
+            </div>
+        </form>
+{% endfor %}
+</div>
+        <br />
+</div>
+<div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+    {% if not app.ajax %}
+        {% set ma_menu = 'photo' %}
+        {% include "myaccount/menu.twig" %}
+    {% endif %}
+{% endblock right_side %}

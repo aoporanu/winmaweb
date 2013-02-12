@@ -1,0 +1,78 @@
+{% extends  app.ajax ? "layouts/ajax.twig" : "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+{% block css %}
+	{% if not app.ajax %}
+		{% include "myaccount/css.twig" %}
+	{% endif %}
+{% endblock css %}
+{% block js %}
+	{% if not app.ajax %}
+		{% include "myaccount/js.twig" %}
+	{% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<h1>My Messages</h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		<a href="{{router.url_for('@myAccountReceivedMessages')}}" class="g-button ajax-link" style="min-width:10px;">My Received Messages</a>
+		<a href="{{router.url_for('@myAccountSentMessages')}}" class="g-button ajax-link" style="min-width:10px;">My Sent Messages</a>
+		<a href="{{router.url_for('@myAccountSendMessage')}}" class="g-button ajax-link g-button-submit" style="min-width:10px;">Send Message</a>
+		<br />
+		<br />
+		<div class="info-blue">
+			<p>
+				In the Message section you can view your sent and received messages and send new messages to other users
+			</p>
+		</div>
+        {% if message %}
+            <div class="error_box">
+                {{ message }}
+            </div>
+        {% endif %}
+		<br /><br />
+		{% if form.errors %}
+		    <div class="error_box"><strong>There were errors - please verify all fields for errors</strong></div>
+		{% endif %}
+		{% if form.success %}
+		    <div class="infotip"><strong>Success</strong><br /><br />Sent message to the selected user</div>
+		{% endif %}
+		<form enctype="application/x-www-form-urlencoded" action="{{router.url_for('@myAccountSendMessage')}}" method="post">
+			<div class="form-global clearfix">
+				<div class="label"><label for="users">Username:</label></div>
+				<div class="input input_big">
+					{{ forms.input('users', form.values.users) }}
+					{{ forms.errors(form.errors.users) }}
+				</div>
+				<div class="label"><label for="subject">Subject:</label></div>
+				<div class="input input_big">
+					{{ forms.input('subject', form.values.subject) }}
+					{{ forms.errors(form.errors.subject) }}
+				</div>
+				<div class="label"><label for="body">Message:</label></div>
+				<div class="input input_big">
+					{{ forms.textarea('body', form.values.body) }}
+					{{ forms.errors(form.errors.body) }}
+				</div>
+				<div class="form-global clearfix">
+					<div class="label"><label>&nbsp;</label></div>
+					<div class="left"><input type="submit" class="g-button g-button-submit" value="Send Message" /></div>
+				</div>
+			</div>
+		</form>
+       <br />
+       <br />
+       <div class="clearfix"></div>
+	</div>
+	<div class="ma_bottom"></div>
+	<script type="text/javascript">
+		$('#users').autocomplete("/my-account/autocomplete-user");
+	</script>
+{% endblock content_page %}
+
+{% block right_side %}
+	{% if not app.ajax %}
+		{% set ma_menu = 'myMessenger' %}
+		{% include "myaccount/menu.twig" %}
+	{% endif %}
+{% endblock right_side %}

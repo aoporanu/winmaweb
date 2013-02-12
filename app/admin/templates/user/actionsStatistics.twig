@@ -1,0 +1,15 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+{% set actionsMenu = 'statistics' %}
+{% include "user/actionsMenu.twig" %}
+<br /><br />
+<a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=statistics')}}" class="g-button{% if type == 'bDaily' or type == 'bMonthly'  %} g-button-submit{% endif %} modal-ajax-link">Bought offers</a>
+<a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=statistics&type=sDaily')}}" class="g-button{% if type == 'sDaily' or type == 'sMonthly'  %} g-button-submit{% endif %} modal-ajax-link">Sold offers</a>
+<br /><br />
+{#<script src="/js/highcharts.js" type="text/javascript"></script>
+<script src="/js/modules/exporting.js" type="text/javascript"></script>#}
+
+{% include "user/statistics/"~for~"/"~type~".twig" %}
+
+{% endblock content %}

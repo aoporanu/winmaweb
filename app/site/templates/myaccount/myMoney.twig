@@ -1,0 +1,59 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block css %}
+	{% if not app.ajax %}
+		{% include "myaccount/css.twig" %}
+	{% endif %}
+{% endblock css %}
+{% block js %}
+	{% if not app.ajax %}
+		{% include "myaccount/js.twig" %}
+	{% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<h1>My Money</h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		<div class="info-blue">
+			<a href="{{router.url_for('@myAccountMyMoney')}}" class="g-button g-button-submit ajax-link" style="min-width:10px;">My Money</a>
+			<a href="{{router.url_for('@myAccountWithdraw')}}" class="g-button ajax-link" style="min-width:10px;">Withdraw</a>
+			<a href="{{router.url_for('@myAccountDeposit')}}" class="g-button ajax-link" style="min-width:10px;">Deposit</a>
+			<br/><br/>
+			<p style="border:1px solid #3079ed">
+				In My Money section you may view the deposits you have made to your My Money as well as any credit transfers from WMW Credits to My Money.
+			</p>
+		</div>
+		<br />
+		<span style="font-size:16px;">Your WMW Credits: {{app.user.virtual_wallet|currency}}</span>
+		<br /><br />
+		<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+		<div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+			<div class="yui3-u" style="width:80px;">Date</div>
+			<div class="yui3-u" style="width:150px;">From</div>
+			<div class="yui3-u" style="width:100px;">To</div>
+			<div class="yui3-u" style="width:80px;">Type</div>
+			<div class="yui3-u" style="width:120px;">Amount</div>
+			<div class="yui3-u" style="width:50px;">Actions</div>
+		</div>
+		{% for transaction in transactions %}
+			<div class="yui3-g" style="padding:5px 0;margin-bottom:2px;border-bottom:1px solid #3079ed">
+				<div class="yui3-u" style="width:80px;">{{transaction.created_at}}</div>
+				<div class="yui3-u" style="width:150px;">{% if transactionType[transaction.transaction_type] == 'deposit' %}Paypal{% endif %}{% if transactionType[transaction.transaction_type] == 'transfer-to-wallet'  %}<img src="/images/logo_final.png" width="20"  /> Account{% endif %}{% if transactionType[transaction.transaction_type] == 'withdraw'  %}My Wallet{% endif %}{% if transactionType[transaction.transaction_type] == 'withdraw-giro'  %}My Wallet{% endif %}{% if transactionType[transaction.transaction_type] == 'deposit-giro'  %}GIRO{% endif %}</div>
+				<div class="yui3-u" style="width:100px;">{% if transactionType[transaction.transaction_type] == 'withdraw' %}Paypal{% else %}{% if transactionType[transaction.transaction_type] == 'withdraw-giro' %}GIRO{% else %}My Wallet{% endif %}{% endif %}</div>
+				<div class="yui3-u" style="width:80px;">{{transactionType[transaction.transaction_type]|title}}</div>
+				<div class="yui3-u" style="width:120px;"><strong>{{transaction.full_payment|currency}}</strong></div>
+				<div class="yui3-u" style="width:50px;"><a href="{{router.url_for('@myAccountTransactionDetails?trans_id='~transaction.id)}}" class="g-button g-button-share modal-normal" title="Transaction Details"  style="padding:2px;height:15px;line-height:15px;">View</a></div>
+			</div>
+		{% endfor %}
+		<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+	</div>
+	<div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+	{% if not app.ajax %}
+		{% set ma_menu = 'myMoney' %}
+		{% include "myaccount/menu.twig" %}
+	{% endif %}
+{% endblock right_side %}

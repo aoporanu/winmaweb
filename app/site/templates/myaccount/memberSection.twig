@@ -1,0 +1,65 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block css %}
+	{% if not app.ajax %}
+		{% include "myaccount/css.twig" %}
+	{% endif %}
+{% endblock css %}
+{% block js %}
+	{% if not app.ajax %}
+		{% include "myaccount/js.twig" %}
+	{% endif %}
+    	
+
+		
+{% endblock js %}
+
+{% block content_page %}
+	<h1>{{ user.username}}'s Profile</h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		{% include "profile_box.twig" %}
+	</div>
+	<div class="ma_bottom"></div>
+	<br/>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		<div style="padding: 15px;">
+			<div class="my_status">MY STATUS</div>
+			<div style="float: left; padding-left: 5px;">
+				<form action="" method="post">
+					<input type="text" name="my_status" value="{{user.my_status}}" style="height: 23px; width: 420px;" />
+					<input type="submit" value="Save" />
+				</form>
+			</div>
+			<div style="clear: both;"></div>
+			<div style="padding: 10px;">
+				<div class="my_status_links">
+					<a href="{{router.url_for('@myAccountEdit')}}">Edit profile</a>
+					<br/>
+					<a href="{{router.url_for('@myAccountEdit?ac=photo')}}">Change profile picture</a>
+				</div>
+				<div class="my_status_links">
+					<a href="{{router.url_for('@myAccountMyFriends')}}">Invite friends</a>
+					<br />
+					<a href="{{router.url_for('@myAccountListFriendsAction')}}">My friends</a>
+				</div>
+				<div class="my_status_links">
+					<a href="{{ router.url_for('@myAccountSendMessage')}}">Write message</a>
+					<br/>
+					<a href="{{router.url_for('@myAccountReceivedMessages')}}">View your inbox</a>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="ma_bottom"></div>
+	<br />
+	{% include "myaccount/profile_products.twig" %}
+{% endblock content_page %}
+{% block right_side %}
+	{% if not app.ajax %}
+		{% set ma_menu = 'memberSection' %}
+		{% include "myaccount/menu.twig" %}
+	{% endif %}
+{% endblock right_side %}

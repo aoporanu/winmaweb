@@ -1,0 +1,100 @@
+{% macro input(name, value, type, id, size) %}
+    <input type="{{ type|default('text') }}" name="{{ name }}" id="{{ id|default(name) }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
+{% endmacro %}
+
+{% macro input_book(name, value, type, id, size) %}
+    <input type="{{ type|default('text') }}" name="{{ name }}" id="{{ id|default(name) }}" value="{{ value|e }}" class="change" size="{{ size|default(20) }}" />
+{% endmacro %}
+
+{% macro select_book(name, options, value, id) %}
+    <select name="{{ name }}" id="{{ id|default(name) }}" class="s_change">
+        {% for key, option in options %}
+        <option value="{{key}}"{% if key == value %} selected="selected"{% endif %}>{{option}}</option>
+        {% endfor %}
+    </select>
+{% endmacro %}
+    
+{% macro select(name, options, value, id) %}
+    <select name="{{ name }}" id="{{ id|default(name) }}">
+        {% for key, option in options %}
+        <option value="{{key}}"{% if key == value %} selected="selected"{% endif %}>{{option}}</option>
+        {% endfor %}
+    </select>
+{% endmacro %}
+
+{% macro multiCheckbox(name, options, value, id) %}
+    <div class="clearfix" style="width:750px">
+    {% for key, option in options %}
+        <div style="width:160px;padding:5px;" class="left"><label style="font-weight:normal"><input type="checkbox" name="{{ name }}[{{key}}]" value="{{key}}" id="{{ name }}_{{ key }}" {% if key == value[key] %} checked="checked"{% endif %} style="width:20px" />{{option}}</label></div>
+    {% endfor %}
+    </div>
+{% endmacro %}
+    
+{% macro textarea(name, value) %}
+    <textarea id="{{ id|default(name) }}" name="{{name}}">{{ value|e }}</textarea>
+{% endmacro %}
+    
+{% macro textarea_editor(name, value) %}
+    <textarea id="{{ id|default(name) }}" name="{{name}}" class="tinymce">{{ value|raw }}</textarea>
+{% endmacro %}
+    
+{% macro errors(errors) %}
+    {% if errors %}
+        <ul class="errors">
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+    
+{% macro elem(el) %}
+    {% set value = el.getValue() %}
+    {% if el.helper == 'formText' %}
+        {% set type = 'text' %}
+    {% endif %}
+    {% if el.helper == 'formPassword' %}
+        {% set type = 'password' %}
+        {% set value = '' %}
+    {% endif %}
+    <div class="label{% if el.getMessages() %} elem-err{% endif %}"><label for="{{el.getName()}}">{{el.getLabel()}}:{% if el.isRequired() %}*{% endif %}</label></div>
+    <div class="input{% if el.getMessages() %} elem-err{% endif %}">
+        {% if el.helper == 'formText' or el.helper == 'formPassword' %}
+            {{ _self.input(el.getName(), value, type) }}
+        {% endif %}
+        {% if el.helper == 'formSelect' %}
+            {{_self.select(el.getName(), el.getMultiOptions(), value)}}
+        {% endif %}
+        {% if el.helper == 'formMultiCheckbox' %}
+            {{_self.multiCheckbox(el.getName(), el.getMultiOptions(), value)}}
+        {% endif %}
+        {% if el.helper == 'formTextarea' %}
+            {{_self.textarea(el.getName(), value)}}
+        {% endif %}
+        {% if el.getAttrib('help') %}<span class="tip-content">{{trans._(el.getAttrib('help'))}}</span>{% endif %}
+        {{ _self.errors(el.getMessages()) }}
+    </div>
+{% endmacro elem %}
+
+{% macro formMessage(form) %}
+    {% if form.getMessages() %}
+    <div class="error_box">
+        <span class="text-big">{{trans._('form_error')}}</span>
+        {#{% set err = [trans._('form_first_error')]|merge(form.getErrorMessages()) %}#}
+        {% if form.getErrorMessages() %}
+            {{_self.errors(form.getMessages())}}
+        {% endif %}
+    </div>
+    {% else %}
+        {% if userObj.hasFlash() %}
+        <div class="infotip">
+            <span class="text-big">{{userObj.getFlash().title}}</span>
+            {% if userObj.getFlash().msg %}
+            <ul>
+                <li>{{userObj.getFlash().msg}}</li>
+            </ul>
+            {% endif %}
+        </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}

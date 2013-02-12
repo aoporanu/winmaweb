@@ -1,0 +1,6 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+<h1>{{title}}</h1>
+{{msg}}
+{% endblock content %}

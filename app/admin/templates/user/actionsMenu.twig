@@ -1,0 +1,9 @@
+<a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=general')}}" class="g-button{% if actionsMenu == 'general' %} g-button-share{% endif %} modal-ajax-link">General</a>
+<a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=edit')}}" class="g-button{% if actionsMenu == 'edit' %} g-button-share{% endif %} modal-ajax-link">Edit</a>
+{#<a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=products')}}" class="g-button{% if actionsMenu == 'products' %} g-button-share{% endif %} modal-ajax-link">Products</a>#}
+{#<a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=network')}}" class="g-button{% if actionsMenu == 'network' %} g-button-share{% endif %} modal-ajax-link">Network</a>#}
+{% if user.request_step == '2' or user.request_step == '3' %}<a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=request')}}" class="g-button g-button-red modal-ajax-link">Review request merchant account</a>{% endif %}
+{% if user.agent_request_step == '2' or user.agent_request_step == '3' %}<a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=agent_request')}}" class="g-button g-button-red modal-ajax-link">Review agent account request</a>{% endif %}
+<a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=transactions')}}" class="g-button{% if actionsMenu == 'transactions' %} g-button-share{% endif %} modal-ajax-link">Transactions</a>
+<a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=statistics')}}" class="g-button{% if actionsMenu == 'statistics' %} g-button-share{% endif %} modal-ajax-link">Statistics</a>
+{% if role == 'merchant' %}<a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=company')}}" class="g-button{% if actionsMenu == 'company' %} g-button-share{% endif %} modal-ajax-link">Company</a>{% endif %}

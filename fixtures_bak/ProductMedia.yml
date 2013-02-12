@@ -1,0 +1,8 @@
+ProductMedia:
+  ProductMedia_1:
+    Product: Product_1
+    main: '1'
+    file_name: product
+    dir: /uploads/products/images
+    type: image
+    ext: jpg

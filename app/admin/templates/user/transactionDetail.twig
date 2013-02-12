@@ -1,0 +1,128 @@
+<div style="padding-top:10px;">
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item"  style="width:180px;">Transaction id:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.id}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Transaction type:</div>
+        <div class="yui3-u" style="width:350px;">{% if transactionType[transaction.transaction_type] == 'do-share-do-receive' %}Coupon money{% else %}{{transactionType[transaction.transaction_type]|title}}{% endif %}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Product name:</div>
+        <div class="yui3-u" style="width:350px;">{% if transaction.product_name %}{{transaction.product_name}}{% else %} - {% endif %}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Product price:</div>
+        <div class="yui3-u" style="width:350px;">{% if transaction.product_price %}{{transaction.product_price|currency}}{% else %} - {% endif %}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Product qty:</div>
+        <div class="yui3-u" style="width:350px;">{% if transaction.quantity %}{{transaction.quantity}}{% else %} - {% endif %}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Full payment:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.full_payment|currency}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Transaction received at:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.created_at|date()}}</div>
+    </div>
+{# If buy type, we need to show the user, the seller details  #}
+    {% if transactionType[transaction.transaction_type] == 'buy' %}
+    <div class="" style="font-size:18px;">Seller Details</div>
+    
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Company name:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.Receiver.company_name}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Contact name:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.Receiver.first_name}} {{transaction.Receiver.last_name}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Email:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.Receiver.email}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Phone:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.Receiver.phone}}</div>
+    </div>
+    {% endif %}
+{# If sell type, we need to show the user, the buyer details  #}    
+    {% if transactionType[transaction.transaction_type] == 'sell' %}
+    <div class="" style="font-size:18px;">Buyer Details</div>
+    
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Contact name:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.Sender.first_name}} {{transaction.Sender.last_name}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Email:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.Sender.email}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Phone:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.Sender.phone}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Address:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.Sender.UserAddress.address}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Region:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.Sender.UserAddress.county}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Postal code:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.Sender.UserAddress.postcode}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">City:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.Sender.UserAddress.city}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Country:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.Sender.UserAddress.Country.name}}</div>
+    </div>
+    {% endif %}
+    {% if transactionType[transaction.transaction_type] == 'deposit' %}
+    <div class="" style="font-size:18px;">Paypal</div>
+    
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Paypal transaction id:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal_txn_id}}</div>
+    </div>
+    {% if transaction.paypal_parent_txn_id %}
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Paypal parent transaction id:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal_parent_txn_id}}</div>
+    </div>
+    {% endif %}
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Paypal transaction type:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal_txn_type}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Paypal payment status:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal_payment_status}}</div>
+    </div>
+    {% if transaction.paypal_pending_reason %}
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Paypal pending reason:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal_pending_reason}}</div>
+    </div>
+    {% endif %}
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Paypal payment date:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal_payment_date}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">Paypal payment:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal_mc_gross}}{{transaction.paypal_mc_currency}}</div>
+    </div>
+    <div class="yui3-g trans_field">
+        <div class="yui3-u trans_item" style="width:180px;">All paypal details:</div>
+        <div class="yui3-u" style="width:350px;">{{transaction.paypal}}</div>
+    </div>
+    {% endif %}
+</div>

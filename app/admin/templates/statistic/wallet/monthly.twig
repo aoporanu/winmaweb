@@ -1,0 +1,109 @@
+<script type="text/javascript">
+var chart;
+var chart2;
+$(document).ready(function() {
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: 'container',
+         defaultSeriesType: 'line'
+      },
+      title: {
+         text: 'Monthly buy transactions {{year}}'
+      },
+      subtitle: {
+         text: ''
+      },
+      xAxis: {
+         categories: [{% for key, m in per_month.month %}'{{m}}'{%if not loop.last%},{%endif%}{% endfor %}]
+      },
+      yAxis: {
+         title: {
+            text: ''
+         }
+      },
+      tooltip: {
+         formatter: function() {
+             var a = '';
+            if(this.series.name == 'Transactions') {
+                a = ' buy transactions was made this day';
+            } else {
+                a = ' offers bought this day';
+            }
+            return '<b>'+ this.series.name +'</b><br/>'+
+               this.x +': '+ this.y + a + '';
+         }
+      },
+      plotOptions: {
+         line: {
+            dataLabels: {
+               enabled: true
+            },
+            enableMouseTracking: true
+         }
+      },
+      series: [{
+         name: 'Transactions',
+         data: [{{per_month.transactions|join(', ')}}]
+      },{
+         name: 'Products',
+         data: [{{per_month.quantity|join(', ')}}]
+      }]
+   });
+   
+   chart2 = new Highcharts.Chart({
+      chart: {
+         renderTo: 'container2',
+         defaultSeriesType: 'line'
+      },
+      title: {
+         text: 'Monthly buy transactions(money generated) {{year}}'
+      },
+      subtitle: {
+         text: ''
+      },
+      xAxis: {
+         categories: [{% for key, m in per_month.month %}'{{m}}'{%if not loop.last%},{%endif%}{% endfor %}]
+      },
+      yAxis: {
+         title: {
+            text: ''
+         }
+      },
+      tooltip: {
+         formatter: function() {
+             var a = '';
+            if(this.series.name == 'Money') {
+                a = '$ entered in the system, from buyng offers';
+            } else {
+                a = ' GBP received';
+            }
+            return '<b>'+ this.series.name +'</b><br/>'+
+               this.x +': '+  Highcharts.numberFormat(this.y) + a + '';
+         }
+      },
+      plotOptions: {
+         line: {
+            dataLabels: {
+               enabled: true
+            },
+            enableMouseTracking: true
+         }
+      },
+      series: [{
+         name: 'Money',
+         data: [{{per_month.money|join(', ')}}]
+      }]
+   });
+});
+</script>
+<div class="clearfix" style="padding-top:40px;text-align:right">
+<a href="{{router.url_for('@manageStatistics?action=offers&type=daily')}}" class="g-button g-button-small ajax-link">Daily per month</a>
+<a href="{{router.url_for('@manageStatistics?action=offers&type=monthly')}}" class="g-button g-button-share g-button-small ajax-link">Monthly</a>
+</div>
+<div class="clearfix" style="padding-top:20px;">
+    <div class="left"><a style="text-align:right" class="right ajax-link" href="{{router.url_for('@manageStatistics?action=offers&type=monthly&page='~(page-1))}}">« Last year</a></div>
+    <div class="right"><a style="text-align:right" class="right ajax-link" href="{{router.url_for('@manageStatistics?action=offers&type=monthly&page='~(page+1))}}">Next year »</a></div>
+</div>
+<div id="container" style="width: 100%; height: 400px"></div>
+<br />
+<div id="container2" style="width: 100%; height: 400px"></div>

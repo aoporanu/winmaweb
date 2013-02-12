@@ -1,0 +1,56 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block css %}
+    {% if not app.ajax %}
+        {% include "myaccount/css.twig" %}
+    {% endif %}
+{% endblock css %}
+{% block js %}
+    {% if not app.ajax %}
+        {% include "myaccount/js.twig" %}
+    {% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<div style="float: left">
+		<h1>Build My Network</h1>
+	</div>
+	<div style="float: right; padding-top: 10px;">
+		My Referral ID: {{app.user.ref_id}}
+	</div>
+	<div style="clear: both"></div>
+    <div class="ma_top"></div>
+    <div class="ma_content">
+        Your referral id is: <span class="strong">{{app.user.ref_id}}</span>
+        <br /><br />
+        You may give your Referral ID to prospective WinMaWeb members (your friends, family, colleagues, neighbors, etc.).  They will need your Referral ID when they register. (new members may not join unless they provide a Referral ID from an existing member!)
+        <br /><br />You may also copy and paste the link below.  If a new member follows it then your Referral ID will automatically be embedded in their registration.<br /><br />
+        <strong>https://www.winmaweb.com/request-membership?referral_id={{app.user.ref_id}}</strong>
+        <br /><br />
+        You can also share the link: 
+        <!-- AddThis Button BEGIN -->
+        <a href="https://api.addthis.com/oexchange/0.8/forward/facebook/offer?pco=tbxnj-1.0&amp;url=http%3A%2F%2Fwww.winmaweb.com%2Frequest-membership%3Freferral_id%3D{{app.user.ref_id}}&amp;image=http%3A%2F%2Fwww.winmaweb.com%2images%2site%2header-logo-box2.png&amp;pubid=xa-4f06ba196745fa46" target="_blank" ><img src="https://cache.addthis.com/icons/v1/thumbs/facebook.gif" border="0" alt="Facebook" /></a>
+        <a href="https://api.addthis.com/oexchange/0.8/forward/twitter/offer?pco=tbxnj-1.0&amp;url=http%3A%2F%2Fwww.winmaweb.com%2Frequest-membership%3Freferral_id%3D{{app.user.ref_id}}&amp;pubid=xa-4f06ba196745fa46" target="_blank" ><img src="https://cache.addthis.com/icons/v1/thumbs/twitter.gif" border="0" alt="Twitter" /></a>
+        <a href="https://www.addthis.com/bookmark.php?source=tbxnj-1.0&amp;=250&amp;pubid=xa-4f06ba196745fa46&amp;url=http%3A%2F%2Fwww.winmaweb.com%2Frequest-membership%3Freferral_id%3D{{app.user.ref_id}} " target="_blank"  ><img src="https://cache.addthis.com/icons/v1/thumbs/more.gif" border="0" alt="More..." /></a>
+        <!-- AddThis Button END -->
+				{% if (links) %}
+				<br/><br/>
+				{% for link in links %}
+				<div style="width: 95%; border: 1px solid black; padding: 10px;">
+					<div class="left" style="width: 80%; font-size: 15px; padding-top: 3px; text-decoration: underline;">{{link.title}}</div>
+					<div class="left" style="width: 20%;"><a href="/uploads/mynetwork/{{link.filename}}" class="g-button g-button-share" target="_blank">Download</a></div>
+					<div class="clear"></div>
+				</div>
+				{% endfor %}
+				<br/><br/>
+				{% endif %}
+    </div>
+    <div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+    {% if not app.ajax %}
+        {% set ma_menu = 'buildMyNetwork' %}
+        {% include "myaccount/menu.twig" %}
+    {% endif %}
+{% endblock right_side %}

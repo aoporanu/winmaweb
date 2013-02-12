@@ -1,0 +1,59 @@
+<script type="text/javascript">
+var chart;
+var chart2;
+$(document).ready(function() {
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: 'container',
+         defaultSeriesType: 'line'
+      },
+      title: {
+         text: 'Monthly user registrations {{year}}'
+      },
+      subtitle: {
+         text: ''
+      },
+      xAxis: {
+         categories: [{% for key, m in per_month.month %}'{{m}}'{%if not loop.last%},{%endif%}{% endfor %}]
+      },
+      yAxis: {
+         title: {
+            text: ''
+         }
+      },
+      tooltip: {
+         formatter: function() {
+             var a = '';
+            if(this.series.name == 'Registered') {
+                a = ' user(s) registered this month';
+            } else {
+                a = ' GBP received';
+            }
+            return '<b>'+ this.series.name +'</b><br/>'+
+               this.x +': '+ this.y + a + '';
+         }
+      },
+      plotOptions: {
+         line: {
+            dataLabels: {
+               enabled: true
+            },
+            enableMouseTracking: true
+         }
+      },
+      series: [{
+         name: 'Registered',
+         data: [{{per_month.regs|join(', ')}}]
+      }]
+   });
+});
+</script>
+<div class="clearfix" style="padding-top:40px;text-align:right">
+<a href="{{router.url_for('@manageStatistics?type=daily')}}" class="g-button g-button-small ajax-link">Daily per month</a>
+<a href="{{router.url_for('@manageStatistics?type=monthly')}}" class="g-button g-button-share g-button-small ajax-link">Monthly</a>
+</div>
+<div class="clearfix" style="padding-top:20px;">
+    <div class="left"><a style="text-align:right" class="right ajax-link" href="{{router.url_for('@manageStatistics?type=monthly&page='~(page-1))}}">« Last year</a></div>
+    <div class="right"><a style="text-align:right" class="right ajax-link" href="{{router.url_for('@manageStatistics?type=monthly&page='~(page+1))}}">Next year »</a></div>
+</div>
+<div id="container" style="width: 100%; height: 400px"></div>

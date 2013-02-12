@@ -1,0 +1,41 @@
+{% import "/forms/forms.twig" as forms %}
+
+{% if form.errors %}
+	<div class="error_box">
+		<ul>
+                    <li><strong>Error</strong></li>
+            {% for error in form.errors %}
+                    <li>{% for serror in error %}{{serror}}<br />{% else %}{{error}}{% endfor %}</li>
+            {% endfor %}
+                        </ul>
+	</div>
+{% endif %}
+{% if form.success %}
+	<div class="infotip"><strong>Success</strong><br /><br />Donnation received successfully</div>
+{% else %}
+            {% if not userObj.isAuthenticated %}
+            <div style="padding-top:50px;">
+                To continue you need to be logged in to WinMaWeb.<br /><br />
+                If you already have an account please <a href="/login" id="login" title="Login">click here to login</a><br /><br />
+                If you don't have an account <a href="/request-membership" id="request-membership" title="Request membership">click here to request memebership</a>
+            </div>
+            {% else %}
+                
+            
+<form enctype="multipart/form-data" action="{{router.url_for('@charityProfile?charity_slug='~charity.slug~'&donate=true')}}" method="post">
+	<div class="form-global clearfix">
+                <div class="clearfix">
+                <div class="label"><label for="donation">Amount:</label></div>
+                <div class="input">
+                    {{ forms.input('donation', form.values.donation) }}
+                    {{ forms.errors(form.errors.donation) }}
+                </div>
+                </div>
+	</div>
+	<div class="form-global clearfix">
+		<div class=" label label_big"><label>&nbsp;</label></div>
+		<div class="left"><input type="submit" class="g-button g-button-submit modal-submit" value="Donate" /></div>
+	</div>
+</form>
+            {% endif %}
+            {% endif %}

@@ -1,0 +1,47 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+<h1>Manage categories</h1>
+<div style="text-align: right">
+<a href="{{router.url_for('@manageCategory?action=add&parent_id=1')}}" rel="" class="g-button g-button-share modal-user" style="padding:2px;height:15px;line-height:15px;">Add Category</a>
+</div>
+<br /><br />
+
+<ul id="sortable1" class="adm_list ul_pages sortable ui-sortable" rel="{{router.url_for('@manageCategory?ac=sort&parent_id=1')}}">
+{% for key,page in categories %}
+    <li id="s_pages_{{page.id}}">
+        <div class="yui3-g">
+            <div class="yui3-u-2-3">
+                <div><span class="ui-icon ui-icon-arrowthick-2-n-s" style="display:inline-block;"></span>{{page.name}}</div>
+            </div>
+            <div class="yui3-u-1-3" style="text-align: right">
+                <a href="{{router.url_for('@manageCategory?action=edit&cat_id='~page.id)}}" rel="" class="g-button g-button-share modal-user" style="padding:2px;height:15px;line-height:15px;">Edit</a>
+                <a href="{{router.url_for('@manageCategory?action=add&parent_id='~page.id)}}" rel="" class="g-button g-button-submit modal-user" style="padding:2px;height:15px;line-height:15px;">Add subcategory</a>
+                <a href="{{router.url_for('@manageCategory?ac=del&cat_id='~page.id)}}" rel="" class="g-button g-button-red ajax-del" style="padding:2px;height:15px;line-height:15px;">Delete</a>
+            </div>
+        </div>
+            {% for p2 in page.__children %}
+            {% if loop.first %}<ul id="sortable2" class="adm_list2 ul_pages2 sortable ui-sortable" rel="{{router.url_for('@manageCategory?ac=sort&parent_id='~page.id)}}">{% endif %}
+                <li id="s_pages_{{p2.id}}">
+                    <div class="yui3-g">
+                    <div class="yui3-u-2-3">
+                        <div><span class="ui-icon ui-icon-arrowthick-2-n-s" style="display:inline-block;"></span>{{p2.name}}</div>
+                    </div>
+                    <div class="yui3-u-1-3" style="text-align: right">
+                        <a href="{{router.url_for('@manageCategory?action=edit&cat_id='~p2.id)}}" rel="" class="g-button g-button-share modal-user" style="padding:2px;height:15px;line-height:15px;">Edit</a>
+                        <a href="{{router.url_for('@manageCategory?ac=del&cat_id='~p2.id)}}" rel="" class="g-button g-button-red ajax-del" style="padding:2px;height:15px;line-height:15px;">Delete</a>
+                    </div>
+                    </div>
+                </li>
+            {% if loop.last %}</ul>{% endif %}
+            {% endfor %}
+    </li>
+{% endfor %}
+</ul>
+{% endblock content %}
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'category' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

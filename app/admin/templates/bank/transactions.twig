@@ -1,0 +1,76 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+<h1>Manage Bank</h1>
+<div>
+<a href="{{router.url_for('@manageBank')}}" class="g-button ajax-link">Overall</a>
+<a href="{{router.url_for('@manageBank?view=transactions')}}" class="g-button g-button-submit ajax-link">Transactions</a>
+<a href="{{router.url_for('@manageBank?view=withdraw')}}" class="g-button ajax-link">Withdraw</a>
+<a href="{{router.url_for('@manageBank?view=coupons')}}" class="g-button ajax-link">Vouchers</a>
+</div>
+<br /><br />
+<div style="text-align:right">
+<a href="{{router.url_for('@manageBank?view=transactions&tab=tax')}}" class="g-button{% if tab == 'tax' %} g-button-share{% endif %} ajax-link g-button-small">WMW Shares</a>
+<a href="{{router.url_for('@manageBank?view=transactions&tab=network')}}" class="g-button{% if tab == 'network' %} g-button-share{% endif %} g-button-small ajax-link">Network</a>
+<a href="{{router.url_for('@manageBank?view=transactions&tab=bank')}}" class="g-button{% if tab == 'bank' %} g-button-share{% endif %} g-button-small ajax-link">Bank</a>
+</div>
+<br />
+{% if tab == 'tax' or tab == 'network' %}
+    <div class="info-blue">
+    <p>{% if tab == 'tax'%}In this section you can see all tax received from users that sold an offer, and also all merchant fee{% endif %}
+    {% if tab == 'network'%}In this section you can see all network incoming from users, bank account act as a regualr user when it comes to network transactions, so if the bank user is in the right parent(bank user is the root of the pyramid) as per commission level it will receive money as other users{% endif %}</p>
+    </div>
+    <br /><br />
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+    <div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+        <div class="yui3-u" style="width:150px;">Date</div>
+        <div class="yui3-u" style="width:150px;">User</div>
+        <div class="yui3-u" style="width:150px;">Type</div>
+        <div class="yui3-u" style="width:120px;">Amount</div>
+        <div class="yui3-u" style="width:50px;">Actions</div>
+    </div>
+    {% for transaction in transactions %}
+    <div class="yui3-g" style="padding:10px 0;margin-bottom:0;border:1px solid #3079ed;{% if loop.index%2 %}background:#DDDDDD{% endif %}">
+        <div class="yui3-u" style="width:150px;">{{transaction.created_at}}</div>
+        <div class="yui3-u" style="width:150px;">{% if transaction.Sender.username %}<a href="{{router.url_for('@manageUsersActions?id='~transaction.Sender.id)}}" class="modal-user" title="{{transaction.Sender.username}}">{{transaction.Sender.username}}</a>{% else %} - {% endif %}</div>
+        <div class="yui3-u" style="width:150px;">{{transactionType[transaction.transaction_type]|title}}</div>
+        <div class="yui3-u" style="width:120px;{% if transactionType[transaction.transaction_type] == 'site-fee' %}color:#DD3C10;font-weight: bold{% endif %}">{% if transactionType[transaction.transaction_type] == 'merchant-fee' %}{{(-transaction.full_payment)|currency}} {% else %} {{transaction.full_payment|currency}} {% endif %}</div>
+        <div class="yui3-u" style="width:50px;">&nbsp;</div>
+    </div>
+    {% endfor %}
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+{% endif %}
+    
+{% if tab == 'bank' %}
+    <div class="info-blue">
+    <p>Here you can see withdrawals made to the bank, and transfers from bank virtual wallet to bank wallet</p>
+    </div>
+    <br /><br />
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+    <div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+        <div class="yui3-u" style="width:150px;">Date</div>
+        <div class="yui3-u" style="width:100px;">From</div>
+        <div class="yui3-u" style="width:100px;">To</div>
+        <div class="yui3-u" style="width:150px;">Type</div>
+        <div class="yui3-u" style="width:120px;">Amount</div>
+        <div class="yui3-u" style="width:50px;">Actions</div>
+    </div>
+    {% for transaction in transactions %}
+    <div class="yui3-g" style="padding:10px 0;margin-bottom:0;border:1px solid #3079ed;{% if loop.index%2 %}background:#DDDDDD{% endif %}">
+        <div class="yui3-u" style="width:150px;">{{transaction.created_at}}</div>
+        <div class="yui3-u" style="width:100px;">{% if transactionType[transaction.transaction_type] == 'transfer-to-wallet' %}Bank Virtual wallet{% endif %}{% if transactionType[transaction.transaction_type] == 'withdraw' %}Bank Wallet{% endif %}</div>
+        <div class="yui3-u" style="width:100px;">{% if transactionType[transaction.transaction_type] == 'transfer-to-wallet' %}Bank Wallet{% endif %}{% if transactionType[transaction.transaction_type] == 'withdraw' %}Your Account{% endif %}</div>
+        <div class="yui3-u" style="width:150px;">{{transactionType[transaction.transaction_type]|title}}</div>
+        <div class="yui3-u" style="width:120px;{% if transactionType[transaction.transaction_type] == 'site-fee' %}color:#DD3C10;font-weight: bold{% endif %}">{{transaction.full_payment|currency}}</div>
+        <div class="yui3-u" style="width:50px;">&nbsp;</div>
+    </div>
+    {% endfor %}
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+{% endif %}
+{% endblock content %}
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'bank' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

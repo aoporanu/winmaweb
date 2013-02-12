@@ -1,0 +1,56 @@
+Category:
+  Category_1:
+    name: Category
+    children:
+      Category_2:
+        name: Categorie 1
+        children:
+          Category_3:
+            name: Subcategorie 1-1
+          Category_4:
+            name: Subcategorie 1-2
+          Category_5:
+            name: Subcategorie 1-3
+          Category_6:
+            name: Subcategorie 1-4
+          Category_7:
+            name: Subcategorie 1-5
+      Category_8:
+        name: Categorie 2
+        children:
+          Category_9:
+            name: Subcategorie 2-1
+          Category_10:
+            name: Subcategorie 2-2
+          Category_11:
+            name: Subcategorie 2-3
+          Category_12:
+            name: Subcategorie 2-4
+          Category_13:
+            name: Subcategorie 2-5
+      Category_14:
+        name: Categorie 3
+        children:
+          Category_15:
+            name: Subcategorie 3-1
+          Category_16:
+            name: Subcategorie 3-2
+          Category_17:
+            name: Subcategorie 3-3
+          Category_18:
+            name: Subcategorie 3-4
+          Category_19:
+            name: Subcategorie 3-5
+      Category_20:
+        name: Categorie 4
+        children:
+          Category_21:
+            name: Subcategorie 4-1
+          Category_22:
+            name: Subcategorie 4-2
+          Category_23:
+            name: Subcategorie 4-3
+          Category_24:
+            name: Subcategorie 4-4
+          Category_25:
+            name: Subcategorie 4-5

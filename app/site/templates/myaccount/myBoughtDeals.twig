@@ -1,0 +1,70 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block css %}
+	{% if not app.ajax %}
+		{% include "myaccount/css.twig" %}
+	{% endif %}
+{% endblock css %}
+{% block js %}
+	{% if not app.ajax %}
+		{% include "myaccount/js.twig" %}
+	{% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<h1>My Bought Deals</h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		<a href="{{router.url_for('@myAccountMyBoughtDeals')}}" class="g-button g-button-submit ajax-link" style="min-width:10px;">My Bought Deals</a>
+		<a href="{{router.url_for('@myAccountMyVouchers')}}" class="g-button ajax-link" style="min-width:10px;">My Vouchers</a>
+		<br /><br />
+		<div class="info-blue">
+			<p>
+				In My Bought Deals Section you may view all of the purchases you have made through WinMaWeb.<br />
+				{% if userObj.hasRole('SHOP') %}
+					<br />In addition, Merchants may view their verification and test transaction here.  This small transfer is done to verify that the merchant's financial information is both correct and functional.
+				{% endif %}
+			</p>
+		</div>
+		<br />
+		<div class="info-blue">
+			<p>The blue colored deal you bought means that the deal offer is not yet active. Check the deal offer to see how many more need to be purchased until the deal is on</p>
+		</div>
+		<br /><br />
+		<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+		<div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+			<div class="yui3-u" style="width:80px;">Date</div>
+			<div class="yui3-u" style="width:100px;">Product</div>
+			<div class="yui3-u" style="width:50px;text-align:center">Qty</div>
+			<div class="yui3-u" style="width:100px;">From</div>
+			<div class="yui3-u" style="width:100px;">Type</div>
+			<div class="yui3-u" style="width:100px;">Cost</div>
+			<div class="yui3-u" style="width:50px;">Actions</div>
+		</div>
+		{% for transaction in transactions %}
+			<div class="yui3-g" style="padding:5px 0;margin-bottom:2px;border-bottom:1px solid #3079ed;{% if transaction.Product.sold < transaction.Product.min_sold %} color: blue;{% endif %}{% if transaction.status == -1 %}color:red{% endif %}">
+				<div class="yui3-u" style="width:80px;">{{transaction.created_at}}</div>
+				<div class="yui3-u" style="width:100px;">{% if transaction.product_name %}{{transaction.product_name}}{% else %} - {% endif %}</div>
+				<div class="yui3-u" style="width:50px;text-align:center">{% if transaction.quantity %}{{transaction.quantity}}{% else %} - {% endif %}</div>
+				<div class="yui3-u" style="width:100px;">{% if transaction.Receiver.username and transaction.transaction_type != '8' and transaction.transaction_type != '55'  %}{{transaction.Receiver.username}}{% else %} You {% endif %}</div>
+				<div class="yui3-u" style="width:100px;">
+					{% if transaction.transaction_type == '1' or transaction.transaction_type == '80' %}Deal Purchase(from {% if transaction.transaction_type == '80' %}WMW Credits{% endif %}{% if transaction.transaction_type == '1' %}wallet{% endif %}){% if transaction.Product.sold < transaction.Product.min_sold %} (Deal will become active after {{transaction.Product.min_sold - transaction.Product.sold}} more are purchased){% endif %}{% else %}{{transactionType[transaction.transaction_type]|title}}{% endif %}{% if transaction.status == -1 %} (Refunded){% endif %}
+				</div>
+				<div class="yui3-u" style="width:100px;{% if transactionType[transaction.transaction_type] == 'deposit' %}color:#29691d;font-weight: bold{% endif %}"><strong>{{transaction.full_payment|currency}}</strong></div>
+				<div class="yui3-u" style="width:50px;">
+					<a href="{{router.url_for('@myAccountCouponDetails?coupon_id='~transaction.cid)}}" class="g-button g-button-share modal-normal" title="Voucher Details"  style="padding:2px;height:15px;line-height:15px;">Voucher</a>
+					{#<a href="{{router.url_for('@myAccountTransactionDetails?trans_id='~transaction.id)}}" class="g-button g-button-share modal-normal" title="Transaction Details"  style="padding:2px;height:15px;line-height:15px;">Transaction</a>#}
+				</div>
+			</div>
+		{% endfor %}
+		<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+	</div>
+	<div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+	{% if not app.ajax %}
+		{% set ma_menu = 'myBoughtDeals' %}
+		{% include "myaccount/menu.twig" %}
+	{% endif %}
+{% endblock right_side %}

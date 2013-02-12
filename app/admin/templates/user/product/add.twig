@@ -1,0 +1,91 @@
+{% extends imgajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block content %}
+{% if form.errors %}
+    <div class="error_box"><strong>There were errors - please verify all fields for errors</strong></div>
+{% endif %}
+{% if form.success %}
+    <div class="infotip"><strong>Success</strong><br /><br />Product added successfully</div>
+{% endif %}
+<form enctype="application/x-www-form-urlencoded" rel="{{router.url_for('@manageUsersActions?id='~userId~'&tab=products')}}" action="{{router.url_for('@manageUsersActions?id='~userId~'&tab=products&ac=add')}}" method="post">
+    <div class="form-global clearfix">
+        <div class="label"><label for="name">Offer name:</label></div>
+        <div class="input input_big">
+            {{ forms.input('name', form.values.name) }}
+            {{ forms.errors(form.errors.name) }}
+        </div>
+        <div class="label"><label for="producer_price">Suplier price $:</label></div>
+        <div class="input input_big">
+            {{ forms.input('producer_price', form.values.producer_price) }}
+            {{ forms.errors(form.errors.producer_price) }}
+        </div>
+        <div class="label"><label for="discount">Discount %:</label></div>
+        <div class="input input_big">
+            {{ forms.input('discount', form.values.discount) }}
+            {{ forms.errors(form.errors.discount) }}
+        </div>
+        <div class="label"><label>Your price:</label></div>
+        <div class="input input_big" style="padding:4px;" id="product_price">0 $</div>
+        <div class="label"><label for="stock">Stock:</label></div>
+        <div class="input input_big">
+            {{ forms.input('stock', form.values.stock) }}
+            {{ forms.errors(form.errors.stock) }}
+        </div>
+        <div class="label"><label for="category">Category:</label></div>
+        <div class="input input_big">
+            {{ forms.select('category', form.categories.options, form.values.category) }}
+            {{ forms.errors(form.errors.category) }}
+        </div>
+        <div class="label"><label for="subcategory">Sub-Category:</label></div>
+        <div class="input input_big">
+            {{ forms.select('subcategory', form.subcategories.options, form.values.subcategory) }}
+            {{ forms.errors(form.errors.subcategory) }}
+        </div>
+        <div class="label"></div>
+        <div class="input input_big">
+        <div style="color:#666">Server time is {{now|date()}} if you want to show your product imediately you need to set the start time as the server time</div>
+        </div>
+        <div class="label"><label for="start_time">Start time:</label></div>
+        <div class="input input_big">
+            {{ forms.input('start_time', form.values.start_time) }}
+            {{ forms.errors(form.errors.start_time) }}
+        </div>
+        <div class="label"><label for="end_time">End time:</label></div>
+        <div class="input input_big">
+            {{ forms.input('end_time', form.values.end_time) }}
+            {{ forms.errors(form.errors.end_time) }}
+        </div>
+        <input type='hidden' name='isajaxrequest' id='isajaxrequest' value='0' />
+        <div class="label"><label for="photo">Photo:</label></div>
+        <div class="input input_big">
+            <input name="photo" type="file" id="photo" />
+            {{ forms.errors(form.errors.photo) }}
+        </div>
+        <div class="label"><label for="tags">Tags:</label></div>
+        <div class="input input_big">
+            {{ forms.input('tags', form.values.tags) }}
+            {{ forms.errors(form.errors.tags) }}
+        </div>
+        <div class="label"><label for="terms">Offer terms:</label></div>
+        <div class="input input_big">
+            {{ forms.textarea('terms', form.values.terms) }}
+            {{ forms.errors(form.errors.terms) }}
+        </div>
+        <div class="label"><label for="short_description">Short description:</label></div>
+        <div class="input input_big">
+            {{ forms.textarea('short_description', form.values.short_description) }}
+            {{ forms.errors(form.errors.short_description) }}
+        </div>
+        <div class="label"><label for="description">Description:</label></div>
+        <div class="input input_big">
+            {{ forms.textarea_editor('description', form.values.description) }}
+            {{ forms.errors(form.errors.description) }}
+        </div>
+    </div>
+    <div class="form-global clearfix">
+        <div class="label"><label>&nbsp;</label></div>
+        <div class="left"><input type="submit" class="g-button g-button-submit modal-submit-product" value="Add" /></div>
+    </div>
+</form>
+{% endblock content %}

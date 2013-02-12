@@ -1,0 +1,134 @@
+{{ma_menu}}
+<h1 class="text-right">My Account</h1>
+<ul class="ma_menu">
+	<li class="sub{% if ma_menu == 'memberSection' or ma_menu == 'myBoughtDeals' or ma_menu == 'myWMWCredits' or ma_menu == 'myMoney' or ma_menu == 'network' or ma_menu == 'buildMyNetwork' or ma_menu == 'editAccount' or ma_menu == 'photo' or ma_menu == 'chpass' or ma_menu == 'becomeAnAgent' or ma_menu == 'contract' %} sub_open{% endif %}">
+		<a href="{{router.url_for('@myAccount')}}"{% if ma_menu == 'memberSection' %} class="selected"{% endif %}>Member Section</a>
+		<a href="#" class="right tog" style="display: block;width:30px;height:30px;margin-top:-7px;margin-right:-5px;">&nbsp;</a>
+		<ul class="sub_menu2{% if ma_menu == 'memberSection' or ma_menu == 'myBoughtDeals' or ma_menu == 'myWMWCredits' or ma_menu == 'myMoney' or ma_menu == 'network' or ma_menu == 'buildMyNetwork' or ma_menu == 'editAccount' or ma_menu == 'photo' or ma_menu == 'chpass' or ma_menu == 'becomeAnAgent' or ma_menu == 'contract' %}{% else %} inv{% endif %}">
+			<li class="first"><a href="{{router.url_for('@myAccountMyBoughtDeals')}}"{% if ma_menu == 'myBoughtDeals' %} class="selected"{% endif %}>My Bought Deals</a></li>
+			<li><a href="{{router.url_for('@myAccountMyWMWCredits')}}"{% if ma_menu == 'myWMWCredits' %} class="selected"{% endif %}>My WMW Credits</a></li>
+			<li><a href="{{router.url_for('@myAccountMyMoney')}}"{% if ma_menu == 'myMoney' %} class="selected"{% endif %}>My Money</a></li>
+			
+			<li class="sub{% if ma_menu == 'network' or ma_menu == 'buildMyNetwork' %} sub_open{% endif %}">
+				<a href="{{router.url_for('@myAccountMyNetwork')}}" class="acc">My Network</a>
+				<a href="#" class="right tog" style="display: block;width:30px;height:30px;margin-top:-7px;margin-right:-5px;">&nbsp;</a>
+				<ul class="sub_menu3{% if ma_menu == 'network' or ma_menu == 'buildMyNetwork' %}{% else %} inv{% endif %}">
+					<li class="first"><a href="{{router.url_for('@myAccountNetworkStatistics')}}"{% if ma_menu == 'network' %} class="selected"{% endif %}>Network Statistics</a></li>
+					<li><a href="{{router.url_for('@myAccountViewMyNetwork')}}" class="modal-refvisual">View My Network</a></li>
+					<li class="last"><a href="{{router.url_for('@myAccountBuildMyNetwork')}}"{% if ma_menu == 'buildMyNetwork' %} class="selected"{% endif %}>Build My Network</a></li>
+				</ul>
+			</li>
+			
+			<li class="{% if userObj.getUser().get('agent_request_step') == 100 and userObj.getUser().get('request_step') == 100 %}last {% endif %}sub{% if ma_menu == 'editAccount' or ma_menu == 'photo' or ma_menu == 'chpass' %} sub_open{% endif %}">
+				<a href="{{router.url_for('@myAccountEdit')}}" class="acc{% if ma_menu == 'editAccount' %} selected{% endif %}">Edit Account</a>
+				<a href="#" class="right tog" style="display: block;width:30px;height:30px;margin-top:-7px;margin-right:-5px;">&nbsp;</a>
+				<ul class="sub_menu3{% if ma_menu == 'editAccount' or ma_menu == 'photo' or ma_menu == 'chpass' %}{% else %} inv{% endif %}">
+					<li class="first"><a href="{{router.url_for('@myAccountEdit?ac=photo')}}" {% if ma_menu == 'photo' %} class="selected"{% endif %}>Add Photo</a></li>
+					<li class="last"><a href="{{router.url_for('@myAccountchPass')}}"{% if ma_menu == 'chpass' %} class="selected"{% endif %}>Change Password</a></li>
+				</ul>
+			</li>
+			{% if userObj.getUser().get('agent_request_step') != 100 %}
+				<li{% if userObj.getUser().get('request_step') == 100 %} class="last"{% endif %}><a href="{{router.url_for('@myAccountBecomeAnAgent')}}"{% if ma_menu == 'becomeAnAgent' %} class="selected"{% endif %}>Become an Agent</a></li>
+			{% endif %}
+			{% if userObj.getUser().get('request_step') != 100 %}
+				<li class="last"><a href="{{router.url_for('@myAccountBecomeMerchant')}}"{% if ma_menu == 'contract' %} class="selected"{% endif %}>Become a Merchant</a></li>
+			{% endif %}
+		</ul>
+	</li>
+	
+	{% if userObj.getUser().get('agent_request_step') != 100 %}
+	<li><span class="disabled">Agent Section</span></li>
+	{% endif %}
+	{% if userObj.getUser().get('agent_request_step') == 100 %}
+	<li class="sub{% if ma_menu == 'myproducts' or ma_menu == 'agentCommision' %} sub_open{% endif %}">
+		<a href="{{router.url_for('@myProducts')}}" class="acc">Agent Section</a>
+		<a href="#" class="right tog" style="display: block;width:30px;height:30px;margin-top:-7px;margin-right:-5px;">&nbsp;</a>
+		<ul class="sub_menu2{% if ma_menu == 'myproducts' or ma_menu == 'agentCommision' %}{% else %} inv{% endif %}">
+			<li class="first"><a href="{{router.url_for('@myProducts')}}"{% if ma_menu == 'myproducts' %} class="selected"{% endif %}>My Deal Offers</a></li>
+			<li class="last"><a href="{{router.url_for('@myAccountAgentCommision')}}"{% if ma_menu == 'agentCommision' %} class="selected"{% endif %}>Agent Commision</a></li>
+		</ul>
+	</li>
+	
+		
+	{% endif %}
+	{% if userObj.getUser().get('request_step') != 100 %}
+	<li><span class="disabled">Merchant Section</span></li>
+	{% endif %}
+	{% if userObj.getUser().get('request_step') == 100 %}
+	<li class="sub{% if ma_menu == 'soldVouchers' or ma_menu == 'cashInVouchers' %} sub_open{% endif %}">
+		<a href="{{router.url_for('@myAccountSoldVouchers')}}" class="acc">Merchant Section</a>
+		<a href="#" class="right tog" style="display: block;width:30px;height:30px;margin-top:-7px;margin-right:-5px;">&nbsp;</a>
+		<ul class="sub_menu2{% if ma_menu == 'soldVouchers' or ma_menu == 'cashInVouchers' %}{% else %} inv{% endif %}">
+			<li class="first"><a href="{{router.url_for('@myAccountSoldVouchers')}}"{% if ma_menu == 'soldVouchers' %} class="selected"{% endif %}>Sold Vouchers</a></li>
+			<li class="last"><a href="{{router.url_for('@myAccountCashInVouchers')}}"{% if ma_menu == 'cashInVouchers' %} class="selected"{% endif %}>Cash In Vouchers</a></li>
+		</ul>
+	</li>
+	{% endif %}
+	
+	
+	
+	
+	<li></li>
+	<li></li>
+	<li></li>
+	
+	
+	
+	
+	<li><a href="{{router.url_for('@myAccount')}}"{% if ma_menu == 'overview' %} class="selected"{% endif %}>Overview</a></li>
+	{#<li><a href="{{router.url_for('@myAccountWinWin')}}"{% if ma_menu == 'winwin' %} class="selected"{% endif %}>Win-Win Marketing</a></li>#}
+	{% if userObj.hasRole('SHOP') or userObj.hasRole('AGENT') %}
+		<li><a href="{{router.url_for('@myProducts')}}"{% if ma_menu == 'myproducts' %} class="selected"{% endif %}>My Offers</a></li>
+	{% endif %}
+	{#<li><a href="/my-account/transactions-withdraws">Transactions / Withdraws</a></li>
+	<li><a href="/my-account/send-invitations">Send invitations</a></li>
+	<li><a href="/my-account/my-deals">My deals</a></li>#}
+	<li class="sub{% if ma_menu == 'transactions' %} sub_open{% endif %}">
+		<a href="{{router.url_for('@myAccountTransactions')}}" class="acc{% if ma_menu == 'transactions' %} selected{% endif %}">Transactions</a>
+		<a href="#" class="right tog" style="display: block;width:30px;height:30px;margin-top:-7px;margin-right:-5px;">&nbsp;</a>
+		<ul class="sub_menu2{% if ma_menu == 'transactions' %}{% else %} inv{% endif %}">
+			<li class="first"><a href="{{router.url_for('@myAccountTransactions')}}">Sent</a></li>
+			<li><a href="{{router.url_for('@myAccountTransactions?view=received')}}">Received</a></li>
+			<li><a href="{{router.url_for('@myAccountTransactions?view=network')}}">Network</a></li>
+			<li><a href="{{router.url_for('@myAccountTransactions?view=wallet')}}">My Wallet</a></li>
+			{% if userObj.getUser().get('is_do') == 1 %}
+				<li><a href="{{router.url_for('@myAccountTransactions?view=coupons')}}">My Vouchers</a></li>
+                                <li><a href="{{router.url_for('@myAccountTransactions?view=all_vouchers')}}">Sold Vouchers</a></li>
+				<li class="last"><a href="{{router.url_for('@myAccountTransactions?view=cash_in_vouchers')}}">Cash In Vouchers</a></li>
+			{% else %}
+				<li class="last"><a href="{{router.url_for('@myAccountTransactions?view=coupons')}}">My Vouchers</a></li>
+			{% endif %}
+		</ul>
+	</li>
+	<li><a href="{{router.url_for('@myAccountWithdraw')}}"{% if ma_menu == 'withdraw' %} class="selected"{% endif %}>Withdrawal Request</a></li>
+	<li><a href="{{router.url_for('@myAccountDeposit')}}"{% if ma_menu == 'deposit' %} class="selected"{% endif %}>Deposit</a></li>
+	<li><a href="{{router.url_for('@myAccountReferrals')}}"{% if ma_menu == 'myreferrals' %} class="selected"{% endif %}>My Network</a></li>
+	<li class="sub{% if ma_menu == 'myreferrals' or ma_menu == 'ref_id' %} sub_open{% endif %}">
+		<a href="{{router.url_for('@myAccountRef')}}" class="acc{% if ma_menu == 'ref_id' %} selected{% endif %}">Build My Network</a>
+		<a href="#" class="right tog" style="display: block;width:30px;height:30px;margin-top:-7px;margin-right:-5px;">&nbsp;</a>
+		<ul class="sub_menu2{% if ma_menu == 'ref_id' %}{% else %} inv{% endif %}">
+			<li class="first"><a href="{{router.url_for('@myAccountRef')}}">My Referral ID</a></li>
+			<li><a href="{{router.url_for('@myAccountSendEmail')}}">Send E-mails</a></li>
+			<li><a href="{{router.url_for('@myAccountSentInvitations')}}">Sent Invitations</a></li>
+			<li class="last"><a href="{{router.url_for('@myAccountAcceptedInvitations')}}">Accepted Invitations</a></li>
+		</ul>
+	</li>
+	<li class="sub{% if ma_menu == 'editaccount' or ma_menu == 'edit_company' %} sub_open{% endif %}">
+		<a href="{{router.url_for('@myAccountEdit')}}" class="acc{% if ma_menu == 'editaccount' %} selected{% endif %}">Edit Account</a>
+		<a href="#" class="right tog" style="display: block;width:30px;height:30px;margin-top:-7px;margin-right:-5px;">&nbsp;</a>
+		<ul class="sub_menu2{% if ma_menu == 'editaccount' or ma_menu == 'edit_company' %}{% else %} inv{% endif %}">
+			{#<li class="first"><a href="{{router.url_for('@myAccountEdit')}}" {% if ma_menu == 'editaccount' %} class="selected"{% endif %}>Edit</a></li>#}
+			<li class="first"><a href="{{router.url_for('@myAccountEdit?ac=photo')}}" {% if ma_menu == 'photo' %} class="selected"{% endif %}>Add Photo</a></li>
+			<li class=""><a href="{{router.url_for('@myAccountchPass')}}"{% if ma_menu == 'chpass' %} class="selected"{% endif %}>Change Password</a></li>
+                        {% if userObj.getUser().get('is_do') == 1 %}
+                        <li class="last"><a href="{{router.url_for('@myAccountEditCompany')}}"{% if ma_menu == 'edit_company' %} class="selected"{% endif %}>Edit Company Details</a></li>
+                        {% endif %}
+		</ul>
+	</li>
+	{% if userObj.hasRole('USER') and userObj.getUser().get('is_do') == 0 %}
+		<li><a href="{{router.url_for('@myAccountContract')}}"{% if ma_menu == 'contract' %} class="selected"{% endif %}>Request Merchant Account</a></li>
+	{% endif %}
+	{% if userObj.hasRole('USER') and not userObj.hasRole('AGENT') %}
+		<li><a href="{{router.url_for('@myAccountAgent')}}"{% if ma_menu == 'agent' %} class="selected"{% endif %}>Request Agent Account</a></li>
+	{% endif %}
+</ul>

@@ -1,0 +1,38 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+<div style="float: left;">
+<h1>Merchant requests <a href="{{router.url_for('@manageMerchants?ac=activation')}}" class="g-button {% if activation == 'on' %}g-button-share{% else %}g-button-red{% endif %} ajax-link-nourl">{{activation|title}}</a></h1>
+</div>
+{#<div style="float: left; padding-left: 30px;">
+<h1>Agent requests <a href="{{router.url_for('@manageMerchants?ac=agent_activation')}}" class="g-button {% if agent_activation == 'on' %}g-button-share{% else %}g-button-red{% endif %} ajax-link-nourl">{{agent_activation|title}}</a></h1>
+</div>#}
+<div style="clear: both;"></div>
+    <a href="{{router.url_for('@manageMerchants')}}" class="g-button{% if activeMenu == '' %} g-button-share{% endif %} ajax-link">Merchants</a>
+    <a href="{{router.url_for('@manageMerchants?show=request')}}" class="g-button{% if activeMenu == 'request' %} g-button-share{% endif %} ajax-link">Merchant Requests</a>
+{#    <a href="{{router.url_for('@manageMerchantsContract')}}" class="g-button g-button-red modal-user" title="Contract">Upload Contract</a> {% if cfile %}<em><a href="{{cfile}}" target="_blank">Download current contract</a></em>{% else %}<em>No contract uploaded!</em>{% endif %}#}
+    <a href="{{router.url_for('@manageMerchants?show=agents')}}" class="g-button{% if activeMenu == 'agents' %} g-button-share{% endif %} ajax-link">Agents</a>
+		<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+    <table cellspacing="0" cellpadding="0" border="0" style="width: 100%">
+        <tr class="th-class alt-row">
+            {#<th style="width: 50px;"><a class="href-link  arrow-up " href="#">id</a></th>#}
+            <th style="width: 300px;"><a class="href-link " href="#">username</a></th>
+            <th style="width: 300px;"><a class="href-link " href="#">email</a></th>
+            <th align="center" style="width: 60px;">action</th>
+        </tr>
+    {% for user in users %}
+        <tr{% if loop.index is divisibleby(2) %} class="tr-even"{% else %} class="tr-odd"{% endif %}>
+            <td style="padding:5px;">{{user.username}}</td>
+            <td style="padding:5px;">{{user.email}}</td>
+            <td style="padding:5px;"><a href="{{router.url_for('@manageUsersActions?id='~user.id)}}" class="g-button g-button-share modal-user g-button-small" title="{{user.username}} actions">actions</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+{% endblock content %}
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'merchants' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

@@ -1,0 +1,312 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block css %}
+    {% if not app.ajax %}
+        {% include "myaccount/css.twig" %}
+    {% endif %}
+{% endblock css %}
+{% block js %}
+    {% if not app.ajax %}
+        {% include "myaccount/js.twig" %}
+    {% endif %}
+{% endblock js %}
+
+{% block content_page %}
+    <h1>Transactions <a title="Help" style="font-size: 11px" class="help-link" href="#">help</a><div class="inv help-message">{{helpObj.getHelp(2).content|raw}}</div></h1>
+    <div class="ma_top"></div>
+    <div class="ma_content">
+        <a href="{{router.url_for('@myAccountTransactions')}}" class="g-button{% if not view  %} g-button-submit{% endif %} ajax-link" style="min-width:10px;">Sent</a>
+        <a href="{{router.url_for('@myAccountTransactions?view=received')}}" class="g-button {% if view == 'received'  %} g-button-submit{% endif %} ajax-link" style="min-width:10px;">Received</a>
+        <a href="{{router.url_for('@myAccountTransactions?view=network')}}" class="g-button {% if view == 'network'  %} g-button-submit{% endif %} ajax-link" style="min-width:10px;">Network</a>
+        <a href="{{router.url_for('@myAccountTransactions?view=wallet')}}" class="g-button {% if view == 'wallet'  %} g-button-submit{% endif %} ajax-link" style="min-width:10px;">My Wallet</a>
+        <a href="{{router.url_for('@myAccountTransactions?view=coupons')}}" class="g-button {% if view == 'coupons'  %} g-button-submit{% else %} {% endif %} ajax-link" style="min-width:10px;">My Vouchers</a>
+        
+				{% if userObj.getUser().get('is_do') == 1 %}
+        <a href="{{router.url_for('@myAccountTransactions?view=all_vouchers')}}" class="g-button {% if view == 'all_vouchers'  %} g-button-submit{% else %}{% endif %} ajax-link" style="min-width:10px;">Sold Vouchers</a>
+					<a href="{{router.url_for('@myAccountTransactions?view=cash_in_vouchers')}}" class="g-button {% if view == 'cash_in_vouchers'  %} g-button-submit{% endif %} ajax-link" style="min-width:10px;">Cash In Vouchers</a>
+				{% endif %}
+        <br /><br />
+				
+				{% if view == 'cash_in_vouchers'%}
+					{% import "/forms/forms.twig" as forms %}
+					{% if userObj.getUser().get('is_do') == 1 %}
+						<br /><br />
+						<form enctype="application/x-www-form-urlencoded" action="{{router.url_for('@myAccountTransactions?view=cash_in_vouchers')}}" method="post">
+								<div class="form-global clearfix">
+								<div class="label"><label for="coupon_code">Voucher Code:</label></div>
+								<div class="input input_big">
+								{{ forms.input('coupon_code', form.values.coupon_code) }}
+								{{ forms.errors(form.errors.coupon_code) }}
+								</div>
+								</div>
+								<div class="form-global clearfix">
+										<div class="label"><label>&nbsp;</label></div>
+										<div class="left"><input type="submit" class="g-button g-button-submit" value="Submit" /></div>
+								</div>
+						</form>
+					{% endif %}
+                                        <a href="{{router.url_for('@myAccountTransactions?view=cash_in_vouchers&format=csv')}}" class="g-button g-button-share">Download CSV</a>
+					<br/><br/>
+					<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+            <div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+                <div class="yui3-u" style="width:80px;">Created</div>
+                <div class="yui3-u" style="width:80px;">Expires</div>
+                <div class="yui3-u" style="width:100px;">Product</div>
+                <div class="yui3-u" style="width:80px;text-align:center">Buyer</div>
+                <div class="yui3-u" style="width:60px;">Cost</div>
+                <div class="yui3-u" style="width:60px;">Your Share</div>
+                <div class="yui3-u" style="width:140px;">Actions</div>
+            </div>
+            {% for transaction in transactions %}
+            <div class="yui3-g" style="padding:5px 0;margin-bottom:2px;border-bottom:1px solid #3079ed">
+                <div class="yui3-u" style="width:80px;">{{transaction.created_at}}</div>
+                <div class="yui3-u" style="width:80px;">{{transaction.expire_at}}</div>
+                <div class="yui3-u" style="width:100px;">{% if transaction.name %}{{transaction.name}}{% else %} - {% endif %}</div>
+                <div class="yui3-u" style="width:80px;text-align:center">{{transaction.Transaction.Sender.first_name}} {{transaction.Transaction.Sender.last_name}}{% if transaction.Friend %} (<strong>For friend:</strong> {{transaction.Friend.first_name}} {{transaction.Friend.last_name}}){% endif %}</div>
+                <div class="yui3-u" style="width:60px;"><strong>{{transaction.price|currency}}</strong></div>
+                <div class="yui3-u" style="width:60px;"><strong>{{transaction.merchant_share.full_payment|currency}}</strong></div>
+                <div class="yui3-u" style="width:140px;">
+                    <a href="{{router.url_for('@myAccountCouponDetails?coupon_id='~transaction.id)}}" class="g-button {% if transaction.friend == 0 %}g-button-share{% else %}g-button-submit{% endif %} modal-normal" title="Voucher Details"  style="padding:2px;height:15px;line-height:15px;">{% if transaction.friend == 0 %}Voucher{% else %}Gift Voucher{% endif %}</a>
+                    <a href="{{router.url_for('@myAccountCouponTransactionDetails?trans_id='~transaction.transaction_id)}}" class="g-button g-button-share modal-normal" title="Transaction Details"  style="padding:2px;height:15px;line-height:15px;">Transaction</a>
+                </div>
+            </div>
+            {% endfor %}
+            <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+				{% endif %}
+				
+        {% if view == 'coupons' %}
+            <div class="info-blue">
+            <p>In this Transactions: Vouchers Section you may view all the of the vouchers you have purchased from WinMaWeb.  
+                Once a Voucher is redeemed or has expired then it will no longer be available for use.<br /><br />
+                Under Actions you may select the Voucher button to download the Pdf file and print it for use, or you may select the Transactions button to view transaction details.</p>
+            </div>
+            <br /><br />
+            <a href="{{router.url_for('@myAccountTransactions?view=coupons')}}" class="g-button {% if view == 'coupons' and subview == ''  %} g-button-submit{% else %}{% endif %} ajax-link" style="min-width:10px;">My Vouchers</a>
+            <a href="{{router.url_for('@myAccountTransactions?view=coupons&subview=send_gift')}}" class="g-button {% if subview == 'send_gift'  %} g-button-submit{% else %}{% endif %} ajax-link" style="min-width:10px;">Sent Gift Vouchers</a>
+            <a href="{{router.url_for('@myAccountTransactions?view=coupons&subview=received_gift')}}" class="g-button {% if subview == 'received_gift'  %} g-button-submit{% else %}{% endif %} ajax-link" style="min-width:10px;">Received Gift Vouchers</a>
+            <a href="{{router.url_for('@myAccountTransactions?view=coupons&subview=donation')}}" class="g-button {% if subview == 'donation'  %} g-button-submit{% else %}{% endif %} ajax-link" style="min-width:10px;">Donation Vouchers</a>
+            {% if subview == 'donation'  %}<br /><br /><div class="info-blue"><p>Thank you for your donations!</p></div><br />{% endif %}
+            <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+            <div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+                <div class="yui3-u" style="width:90px;">Created</div>
+                <div class="yui3-u" style="width:90px;">Expires</div>
+                <div class="yui3-u" style="width:100px;">Product</div>
+                <div class="yui3-u" style="width:50px;text-align:center">Qty</div>
+                <div class="yui3-u" style="width:120px;">Cost</div>
+                <div class="yui3-u" style="width:150px;">Actions</div>
+            </div>
+            {% for transaction in transactions %}
+            <div class="yui3-g" style="padding:5px 0;margin-bottom:2px;border-bottom:1px solid #3079ed;{% if transaction.verifier_id is not null %}color: #cacaca{% endif %}">
+                <div class="yui3-u" style="width:90px;">{{transaction.created_at}}</div>
+                <div class="yui3-u" style="width:90px;">{{transaction.expire_at}}</div>
+                <div class="yui3-u" style="width:100px;">{% if transaction.name %}{{transaction.name}}{% else %} - {% endif %}</div>
+                <div class="yui3-u" style="width:50px;text-align:center">{% if transaction.quantity %}{{transaction.quantity}}{% else %} - {% endif %}</div>
+                <div class="yui3-u" style="width:120px;"><strong>{{transaction.price|currency}}</strong></div>
+                <div class="yui3-u" style="width:150px;">
+                    
+                    {% if subview == 'send_gift' or subview == ''  %}<a href="{{router.url_for('@myAccountCouponDetails?coupon_id='~transaction.id)}}" class="g-button {% if transaction.friend == 0 %}g-button-share{% else %}g-button-submit{% endif %} modal-normal" title="Voucher Details"  style="padding:2px;height:15px;line-height:15px;">{% if transaction.friend == 0 %}Voucher{% else %}Gift Voucher{% endif %}</a>{% endif %}
+                    {% if subview == 'received_gift'  %}<a href="{{router.url_for('@myAccountCouponDetails?coupon_id='~transaction.id~'&friend='~transaction.friend)}}" class="g-button {% if transaction.friend == 0 %}g-button-share{% else %}g-button-submit{% endif %} modal-normal" title="Voucher Details"  style="padding:2px;height:15px;line-height:15px;">{% if transaction.friend == 0 %}Voucher{% else %}Gift Voucher{% endif %}</a>{% endif %}
+                    {% if subview == '' %}<a href="{{router.url_for('@myAccountTransactionDetails?trans_id='~transaction.transaction_id)}}" class="g-button g-button-share modal-normal" title="Transaction Details"  style="padding:2px;height:15px;line-height:15px;">Transaction</a>{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+        {% endif %}
+            
+            {% if view == 'all_vouchers' %}
+            <a href="{{router.url_for('@myAccountTransactions?view=all_vouchers&format=csv')}}" class="g-button g-button-share">Download CSV</a>
+            <br /><br />
+            <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+            <div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+                <div class="yui3-u" style="width:80px;">Created</div>
+                <div class="yui3-u" style="width:80px;">Expires</div>
+                <div class="yui3-u" style="width:100px;">Product</div>
+                <div class="yui3-u" style="width:80px;text-align:center">Buyer</div>
+                <div class="yui3-u" style="width:100px;">Cost</div>
+                <div class="yui3-u" style="width:150px;">Voucher Number</div>
+            </div>
+            {% for transaction in transactions %}
+            <div class="yui3-g" style="padding:5px 0;margin-bottom:2px;border-bottom:1px solid #3079ed">
+                <div class="yui3-u" style="width:80px;">{{transaction.created_at}}</div>
+                <div class="yui3-u" style="width:80px;">{{transaction.expire_at}}</div>
+                <div class="yui3-u" style="width:100px;">{% if transaction.name %}{{transaction.name}}{% else %} - {% endif %}</div>
+                <div class="yui3-u" style="width:80px;text-align:center">{{transaction.Transaction.Sender.first_name}} {{transaction.Transaction.Sender.last_name}}{% if transaction.Friend %} (<strong>For friend:</strong> {{transaction.Friend.first_name}} {{transaction.Friend.last_name}}){% endif %}</div>
+                <div class="yui3-u" style="width:100px;"><strong>{{transaction.price|currency}}</strong></div>
+                <div class="yui3-u" style="width:150px;">
+                {{transaction.code2}}
+                </div>
+            </div>
+            {% endfor %}
+            <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+        {% endif %}
+            
+        {% if view == 'wallet' %}
+            <div class="info-blue">
+            <p style="border:1px solid #3079ed">
+                In Transactions: My Wallet section you may view the deposits you have made to your My Wallet as well as any credit transfers from your <img src="/images/logo_final.png" width="20"  /> Account to your My Wallet.{#<br />
+                All money you received here, will get in your wallet.#}
+            </p>
+            </div>
+            <br />
+            <span style="font-size:16px;">Your <img src="/images/logo_final.png" width="20"  /> Account balance is: {{app.user.virtual_wallet|currency}}</span>
+            <br /><br />
+            {#{% if app.user.virtual_wallet > 0 %}
+                {% if transfer %}
+                    <a href="{{router.url_for('@myAccountTransactions?view=wallet&ac=transfer')}}" class="g-button g-button-submit ajax-confirm" title="Are you sure you want to make a transfer from your WMW Account to your My Wallet??" style="padding:2px;height:15px;line-height:15px;">Transfer from <img src="/images/logo_final.png" width="20"  /> account into My Wallet</a>
+                {% else %}
+                    <div class="info-blue">
+                        <p>In order full transfer from your <img src="/images/logo_final.png" width="20"  /> Account to your My Wallet you need to spend on the site at least {{howmuch|currency}} on WinMaWeb by buying deals or donating to a charity.<br />
+                            You currently spent {{spent|currency}}
+                        </p>
+                    </div>
+                {% endif %}
+            {% endif %}#}
+            <br /><br />
+            <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+            <div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+                <div class="yui3-u" style="width:80px;">Date</div>
+                <div class="yui3-u" style="width:150px;">From</div>
+                <div class="yui3-u" style="width:100px;">To</div>
+                <div class="yui3-u" style="width:80px;">Type</div>
+                <div class="yui3-u" style="width:120px;">Amount</div>
+                <div class="yui3-u" style="width:50px;">Actions</div>
+            </div>
+            {% for transaction in transactions %}
+            <div class="yui3-g" style="padding:5px 0;margin-bottom:2px;border-bottom:1px solid #3079ed">
+                <div class="yui3-u" style="width:80px;">{{transaction.created_at}}</div>
+                <div class="yui3-u" style="width:150px;">{% if transactionType[transaction.transaction_type] == 'deposit' %}Paypal{% endif %}{% if transactionType[transaction.transaction_type] == 'transfer-to-wallet'  %}<img src="/images/logo_final.png" width="20"  /> Account{% endif %}{% if transactionType[transaction.transaction_type] == 'withdraw'  %}My Wallet{% endif %}{% if transactionType[transaction.transaction_type] == 'withdraw-giro'  %}My Wallet{% endif %}{% if transactionType[transaction.transaction_type] == 'deposit-giro'  %}GIRO{% endif %}</div>
+                <div class="yui3-u" style="width:100px;">{% if transactionType[transaction.transaction_type] == 'withdraw' %}Paypal{% else %}{% if transactionType[transaction.transaction_type] == 'withdraw-giro' %}GIRO{% else %}My Wallet{% endif %}{% endif %}</div>
+                <div class="yui3-u" style="width:80px;">{{transactionType[transaction.transaction_type]|title}}</div>
+                <div class="yui3-u" style="width:120px;"><strong>{{transaction.full_payment|currency}}</strong></div>
+                <div class="yui3-u" style="width:50px;"><a href="{{router.url_for('@myAccountTransactionDetails?trans_id='~transaction.id)}}" class="g-button g-button-share modal-normal" title="Transaction Details"  style="padding:2px;height:15px;line-height:15px;">View</a></div>
+            </div>
+            {% endfor %}
+            <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+        {% endif %}
+        {% if view == 'network' %}
+            <div class="info-blue">
+            <p>In the Transactions: Network Transactions Section you may view all the purchases made by the members in your 5th Tier.  All the commissions you receive are automatically deposited to your WinMaWeb Account.
+            </p>
+            </div>
+            <br /><br />
+            <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+            <div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+                <div class="yui3-u" style="width:80px;">Date</div>
+                <div class="yui3-u" style="width:100px;">Product</div>
+                <div class="yui3-u" style="width:50px;text-align:center">Qty</div>
+                {#<div class="yui3-u" style="width:100px;">Purchased by</div>#}
+                <div class="yui3-u" style="width:80px;">Type</div>
+                <div class="yui3-u" style="width:120px;">Amount</div>
+                <div class="yui3-u" style="width:50px;">Actions</div>
+            </div>
+            {% for transaction in transactions %}
+            <div class="yui3-g" style="padding:5px 0;margin-bottom:2px;border-bottom:1px solid #3079ed">
+                <div class="yui3-u" style="width:80px;">{{transaction.created_at}}</div>
+                <div class="yui3-u" style="width:100px;">{% if transaction.product_name %}{{transaction.product_name}}{% else %} - {% endif %}</div>
+                <div class="yui3-u" style="width:50px;text-align:center">{% if transaction.quantity %}{{transaction.quantity}}{% else %} - {% endif %}</div>
+                {#<div class="yui3-u" style="width:100px;">{% if transaction.Sender.username and transactionType[transaction.transaction_type] == 'sell' %}{{transaction.Sender.username}}{% else %} - {% endif %}</div>#}
+                <div class="yui3-u" style="width:80px;">{% if transactionType[transaction.transaction_type] == 'level-commission' %} 5th Tier Commission {% else %}{{transactionType[transaction.transaction_type]|title}}{% endif %}</div>
+                <div class="yui3-u" style="width:120px;{% if transactionType[transaction.transaction_type] == 'site-fee' %}color:#DD3C10;font-weight: bold{% endif %}"><strong>{{transaction.full_payment|currency}}</strong></div>
+                <div class="yui3-u" style="width:50px;"><a href="{{router.url_for('@myAccountTransactionDetails?trans_id='~transaction.id)}}" class="g-button g-button-share modal-normal" title="Transaction Details"  style="padding:2px;height:15px;line-height:15px;">Transaction</a></div>
+            </div>
+            {% endfor %}
+            <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+        {% endif %}
+        {% if view == 'received' %}
+            {#% import "/forms/forms.twig" as forms %#}
+            <div class="info-blue">
+            <p>In the Transactions: Received Transactions Section you may view all of the commissions on deals which you have received from merchants.  You will receive commissions on deals from merchants you have brought to WinMaWeb.  Merchants you have brought to WinMaWeb will submit your referral ID when posting their deals on the site.
+            </p>
+            </div>
+						
+            {#% if userObj.getUser().get('is_do') == 1 %}
+            <br /><br />
+            <form enctype="application/x-www-form-urlencoded" action="{{router.url_for('@myAccountTransactions?view=received')}}" method="post">
+                <div class="form-global clearfix">
+                <div class="label"><label for="coupon_code">Coupon code:</label></div>
+                <div class="input input_big">
+                {{ forms.input('coupon_code', form.values.coupon_code) }}
+                {{ forms.errors(form.errors.coupon_code) }}
+                </div>
+                </div>
+                <div class="form-global clearfix">
+                    <div class="label"><label>&nbsp;</label></div>
+                    <div class="left"><input type="submit" class="g-button g-button-submit ajax-submit" value="Submit" /></div>
+                </div>
+            </form>
+            {% endif %#}
+
+            <br /><br />
+            <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+            <div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+                <div class="yui3-u" style="width:80px;">Date</div>
+                <div class="yui3-u" style="width:100px;">Product</div>
+                <div class="yui3-u" style="width:50px;text-align:center">Qty</div>
+                {#<div class="yui3-u" style="width:100px;">Buyed by</div>#}
+                <div class="yui3-u" style="width:80px;">Type</div>
+                <div class="yui3-u" style="width:120px;">Commission</div>
+                <div class="yui3-u" style="width:50px;">Actions</div>
+            </div>
+            {% for transaction in transactions %}
+            <div class="yui3-g" style="padding:5px 0;margin-bottom:2px;border-bottom:1px solid #3079ed">
+                <div class="yui3-u" style="width:80px;">{{transaction.created_at}}</div>
+                <div class="yui3-u" style="width:100px;">{% if transaction.product_name %}{{transaction.product_name}}{% else %} - {% endif %}</div>
+                <div class="yui3-u" style="width:50px;text-align:center">{% if transaction.quantity %}{{transaction.quantity}}{% else %} - {% endif %}</div>
+                {#<div class="yui3-u" style="width:100px;">{% if transaction.Sender.username and transactionType[transaction.transaction_type] == 'sell' %}{{transaction.Sender.username}}{% else %} - {% endif %}</div>#}
+                {#<div class="yui3-u" style="width:80px;">{% if transactionType[transaction.transaction_type] == 'do-share-do-receive' %}Coupon money{% else %}{{transactionType[transaction.transaction_type]|title}}{% endif %}</div>#}
+								<div class="yui3-u" style="width:80px;">{% if transactionType[transaction.transaction_type] == 'do-share-do-receive' %}Coupon money{% elseif transactionType[transaction.transaction_type] == 'merchant-commission' %}Agent-Commission{% else %}{{transactionType[transaction.transaction_type]|title}}{% endif %}</div>
+                <div class="yui3-u" style="width:120px;{% if transactionType[transaction.transaction_type] == 'site-fee' %}color:#DD3C10;font-weight: bold{% endif %}"><strong>{{transaction.full_payment|currency}}</strong></div>
+                <div class="yui3-u" style="width:50px;"><a href="{{router.url_for('@myAccountTransactionDetails?trans_id='~transaction.id)}}" class="g-button g-button-share modal-normal" title="Transaction Details"  style="padding:2px;height:15px;line-height:15px;">Transaction</a></div>
+            </div>
+            {% endfor %}
+            <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+        {% endif %}
+        {% if not view %}
+        <div class="info-blue">
+            <p>In the Transactions: Sent Transactions Section you may view all of the purchases you have made through WinMaWeb.<br />
+            {% if userObj.hasRole('SHOP') %}
+                <br />In addition, Merchants may view their verification and test transaction here.  This small transfer is done to verify that the merchant's financial information is both correct and functional.
+            {% endif %}
+            </p>
+        </div>
+            <br />
+        <div class="info-blue">
+            <p>The blue colored deal you bought means that the deal offer is not yet active. Check the deal offer to see how many more need to be purchased until the deal is on</p>
+        </div>
+        <br /><br />
+        <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+        <div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+            <div class="yui3-u" style="width:80px;">Date</div>
+            <div class="yui3-u" style="width:100px;">Product</div>
+            <div class="yui3-u" style="width:50px;text-align:center">Qty</div>
+            <div class="yui3-u" style="width:100px;">From</div>
+            <div class="yui3-u" style="width:100px;">Type</div>
+            <div class="yui3-u" style="width:100px;">Cost</div>
+            <div class="yui3-u" style="width:50px;">Actions</div>
+        </div>
+        {% for transaction in transactions %}
+        <div class="yui3-g" style="padding:5px 0;margin-bottom:2px;border-bottom:1px solid #3079ed;{% if transaction.Product.sold < transaction.Product.min_sold %} color: blue;{% endif %}{% if transaction.status == -1 %}color:red{% endif %}">
+            <div class="yui3-u" style="width:80px;">{{transaction.created_at}}</div>
+            <div class="yui3-u" style="width:100px;">{% if transaction.product_name %}{{transaction.product_name}}{% else %} - {% endif %}</div>
+            <div class="yui3-u" style="width:50px;text-align:center">{% if transaction.quantity %}{{transaction.quantity}}{% else %} - {% endif %}</div>
+            {#<div class="yui3-u" style="width:100px;">{% if transaction.Receiver.username and transactionType[transaction.transaction_type] != 'merchant-fee' %}{{transaction.Receiver.username}}{% else %} - {% endif %}</div>#}
+						<div class="yui3-u" style="width:100px;">{% if transaction.Receiver.username and transaction.transaction_type != '8' and transaction.transaction_type != '55'  %}{{transaction.Receiver.username}}{% else %} You {% endif %}</div>
+            <div class="yui3-u" style="width:100px;">
+                {% if transaction.transaction_type == '1' or transaction.transaction_type == '80' %}Deal Purchase(from {% if transaction.transaction_type == '80' %}WMW Credits{% endif %}{% if transaction.transaction_type == '1' %}wallet{% endif %}){% if transaction.Product.sold < transaction.Product.min_sold %} (Deal will become active after {{transaction.Product.min_sold - transaction.Product.sold}} more are purchased){% endif %}{% else %}{{transactionType[transaction.transaction_type]|title}}{% endif %}{% if transaction.status == -1 %} (Refunded){% endif %}
+                {#{% if transaction.transaction_type == '80' and transaction.transaction_type != '1' %}Deal Purchase(from wmw account){% if transaction.Product.sold < transaction.Product.min_sold %} (Deal will become active after {{transaction.Product.min_sold - transaction.Product.sold}} more are purchased){% endif %}{% else %}{{transactionType[transaction.transaction_type]|title}}{% endif %}{% if transaction.status == -1 %} (Refunded){% endif %}#}</div>
+            <div class="yui3-u" style="width:100px;{% if transactionType[transaction.transaction_type] == 'deposit' %}color:#29691d;font-weight: bold{% endif %}"><strong>{{transaction.full_payment|currency}}</strong></div>
+            <div class="yui3-u" style="width:50px;"><a href="{{router.url_for('@myAccountTransactionDetails?trans_id='~transaction.id)}}" class="g-button g-button-share modal-normal" title="Transaction Details"  style="padding:2px;height:15px;line-height:15px;">Transaction</a></div>
+        </div>
+        {% endfor %}
+        <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+        {% endif %}
+    </div>
+    <div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+    {% if not app.ajax %}
+        {% set ma_menu = 'transactions' %}
+        {% include "myaccount/menu.twig" %}
+    {% endif %}
+{% endblock right_side %}

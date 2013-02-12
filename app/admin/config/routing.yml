@@ -1,0 +1,245 @@
+home:
+  url:  /
+  param: 
+    module: default
+    action: index
+
+newsletter:
+  url:  /newsletter
+  param: 
+    module: page
+    action: newsletter
+
+manageUsers:
+  url:  /users
+  param: 
+    module: user
+    action: show
+
+manageUsersActions:
+  url:  /users/actions/:id
+  param: 
+    module: user
+    action: actions
+  requirements:
+    id: \d+
+
+adminUserTransactionDetails:
+  url:  /users/actions/:id/:trans_id
+  param: 
+    module: user
+    action: transactionDetail
+  requirements:
+    id: \d+
+    trans_id: \d+
+
+manageMerchants:
+  url:  /merchants
+  param: 
+    module: merchant
+    action: index
+
+manageMerchantsContract:
+  url:  /merchants/contract
+  param: 
+    module: merchant
+    action: contract
+
+manageCommissions:
+  url:  /commissions
+  param: 
+    module: merchant
+    action: commission
+
+managePages:
+  url:  /pages
+  param: 
+    module: page
+    action: show
+
+managePagesEdit:
+  url:  /pages/edit/:id
+  param: 
+    module: page
+    action: edit
+  requirements:
+    id: \d+
+
+manageTransactions:
+  url:  /transactions
+  param:
+    module: transaction
+    action: withdraw
+
+manageTransactionsDetail:
+  url:  /transactions/details
+  param:
+    module: transaction
+    action: details
+
+manageTransactionsMATA:
+  url:  /transactions/deposit
+  param:
+    module: transaction
+    action: deposit
+
+manageStatistics:
+  url:  /statistics/:action
+  param:
+    module: statistic
+    action: user
+
+manageBank:
+  url:  /bank
+  param:
+    module: bank
+    action: index
+
+manageCategory:
+  url:  /category/:action
+  param:
+    module: category
+    action: show
+
+manageProducts:
+  url: /products
+  param: 
+    module: product
+    action: show
+
+manageProducts:
+  url: /deal-offers
+  param: 
+    module: product
+    action: show
+    
+editProductsGallery:
+  url:  /products/gallery/:id
+  param: 
+    module: product
+    action: gallery
+  requirements:
+    id: \d+
+
+getSubcategories:
+  url:  /get/subcategories
+  param: 
+    module: default
+    action: getSubcategory
+
+getLiveWallet:
+  url:  /live/bank-wallet
+  param: 
+    module: bank
+    action: liveWallet
+
+charity:
+  url:  /charity
+  param: 
+    module: charity
+    action: show
+    
+charityAdd:
+  url:  /charity/add
+  param: 
+    module: charity
+    action: add    
+
+charityEdit:
+  url:  /charity/edit/:id
+  param: 
+    module: charity
+    action: edit  
+  requirements:
+    id: \d+
+    
+charityGallery:
+  url:  /charity/gallery/:id
+  param: 
+    module: charity
+    action: gallery  
+  requirements:
+    id: \d+    
+
+reports:
+  url:  /reports
+  param: 
+    module: reports
+    action: show  
+
+reportsMerchant:
+  url:  /reports/merchant/:id
+  param: 
+    module: reports
+    action: merchant  
+  requirements:
+    id: \d+
+    
+reportsAgent:
+  url:  /reports/agent/:id
+  param: 
+    module: reports
+    action: agent  
+  requirements:
+    id: \d+
+
+reportsUser:
+  url:  /reports/user/:id
+  param: 
+    module: reports
+    action: user  
+  requirements:
+    id: \d+    
+    
+reportsProduct:
+  url:  /reports/product/:id
+  param: 
+    module: reports
+    action: product  
+  requirements:
+    id: \d+        
+
+reportsAllAgents:
+  url:  /reports/all-agents
+  param: 
+    module: reports
+    action: allAgents     
+
+reportsAllMerchants:
+  url:  /reports/all-merchants
+  param: 
+    module: reports
+    action: allMerchants    
+    
+reportsBank:
+  url:  /reports/bank
+  param: 
+    module: reports
+    action: bank     
+
+help:
+  url:  /help
+  param: 
+    module: page
+    action: help  
+
+helpEdit:
+  url:  /help/edit/:id
+  param: 
+    module: page
+    action: helpEdit      
+    
+something:
+  url:  /:module/:action/:name/:name2
+  param: 
+    module: default
+    action: index  
+
+myNetwork:
+  url:  /my-network
+  param: 
+    module: default
+    action: my_network
+ 
+default:
+  url:   /:module/:action

@@ -1,0 +1,51 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block css %}
+    {% if not app.ajax %}
+        {% include "myaccount/css.twig" %}
+    {% endif %}
+{% endblock css %}
+{% block js %}
+    {% if not app.ajax %}
+        {% include "myaccount/js.twig" %}
+    {% endif %}
+{% endblock js %}
+
+{% block content_page %}
+<h1>Sold Vouchers</h1>
+<div class="ma_top"></div>
+<div class="ma_content">
+	<a href="{{router.url_for('@myAccountSoldVouchers?format=csv')}}" class="g-button g-button-share">Download CSV</a>
+	<br /><br />
+            <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+            <div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+                <div class="yui3-u" style="width:80px;">Created</div>
+                <div class="yui3-u" style="width:80px;">Expires</div>
+                <div class="yui3-u" style="width:100px;">Product</div>
+                <div class="yui3-u" style="width:80px;text-align:center">Buyer</div>
+                <div class="yui3-u" style="width:100px;">Cost</div>
+                <div class="yui3-u" style="width:150px;">Voucher Number</div>
+            </div>
+            {% for transaction in transactions %}
+            <div class="yui3-g" style="padding:5px 0;margin-bottom:2px;border-bottom:1px solid #3079ed">
+                <div class="yui3-u" style="width:80px;">{{transaction.created_at}}</div>
+                <div class="yui3-u" style="width:80px;">{{transaction.expire_at}}</div>
+                <div class="yui3-u" style="width:100px;">{% if transaction.name %}{{transaction.name}}{% else %} - {% endif %}</div>
+                <div class="yui3-u" style="width:80px;text-align:center">{{transaction.Transaction.Sender.first_name}} {{transaction.Transaction.Sender.last_name}}{% if transaction.Friend %} (<strong>For friend:</strong> {{transaction.Friend.first_name}} {{transaction.Friend.last_name}}){% endif %}</div>
+                <div class="yui3-u" style="width:100px;"><strong>{{transaction.price|currency}}</strong></div>
+                <div class="yui3-u" style="width:150px;">
+                {{transaction.code2}}
+                </div>
+            </div>
+            {% endfor %}
+            <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+	</div>
+    <div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+    {% if not app.ajax %}
+        {% set ma_menu = 'soldVouchers' %}
+        {% include "myaccount/menu.twig" %}
+    {% endif %}
+{% endblock right_side %}

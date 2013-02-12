@@ -1,0 +1,25 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteBase /
+IndexIgnore *
+
+#RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^iphone/login$ iphone/login.php [QSA,L]
+
+#RewriteRule ^admin/(.*)$ admin.php [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+</IfModule>
+
+#RewriteCond %{HTTP_HOST} ^winmaweb.com$ [nc]
+#RewriteRule ^(.*)$ "https\:\/\/www\.winmaweb\.com/" [r=301,nc]
+
+
+#RewriteCond %{SERVER_PORT} !443
+#RewriteRule (.*) https:\/\/winmaweb\.com/ [R]
+
+#RewriteCond %{HTTP_HOST} ^www.winmaweb.com$ [nc]
+#RewriteRule (.*) https:\/\/winmaweb\.com/ [R]

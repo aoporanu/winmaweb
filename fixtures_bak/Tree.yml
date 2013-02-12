@@ -1,0 +1,81 @@
+Tree:
+  Tree_1:
+    name: Pages
+    meta_title: null
+    meta_content: null
+    content: null
+    root_id: '1'
+    lft: '1'
+    rgt: '16'
+    level: '0'
+    slug: pages
+  Tree_2:
+    name: Static
+    meta_title: null
+    meta_content: null
+    content: null
+    root_id: '1'
+    lft: '2'
+    rgt: '15'
+    level: '1'
+    slug: static
+  Tree_3:
+    name: 'Right - dont forget'
+    meta_title: null
+    meta_content: null
+    content: null
+    root_id: '1'
+    lft: '13'
+    rgt: '14'
+    level: '2'
+    slug: right-dont-forget
+  Tree_4:
+    name: 'Footer - about us'
+    meta_title: null
+    meta_content: null
+    content: null
+    root_id: '1'
+    lft: '11'
+    rgt: '12'
+    level: '2'
+    slug: footer-about-us
+  Tree_5:
+    name: FAQ
+    meta_title: null
+    meta_content: null
+    content: null
+    root_id: '1'
+    lft: '9'
+    rgt: '10'
+    level: '2'
+    slug: faq
+  Tree_6:
+    name: 'Contact us'
+    meta_title: null
+    meta_content: null
+    content: null
+    root_id: '1'
+    lft: '7'
+    rgt: '8'
+    level: '2'
+    slug: contact-us
+  Tree_7:
+    name: 'How its working'
+    meta_title: null
+    meta_content: null
+    content: null
+    root_id: '1'
+    lft: '5'
+    rgt: '6'
+    level: '2'
+    slug: how-its-working
+  Tree_8:
+    name: 'About us'
+    meta_title: null
+    meta_content: null
+    content: null
+    root_id: '1'
+    lft: '3'
+    rgt: '4'
+    level: '2'
+    slug: about-us

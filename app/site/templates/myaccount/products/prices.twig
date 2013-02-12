@@ -1,0 +1,19 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content_page %}
+<ul>
+    {% for price in product.ProductPrice %}
+    <li style="padding:10px;border-bottom:1px solid #cacaca">
+        <div style="font-weight:bold;padding:5px;">&bull; Name: {{price.name}}</div>
+        <div style="padding:5px;">&bull; Price: {{price.price}}$</div>
+        <div style="padding:5px;">&bull; Suplier Price: {{price.suplier_price}}$</div>
+        <div style="padding:5px;">&bull; Discount: {{price.discount}}%</div>
+        <div style="padding:5px;">&bull; Money save: {{price.money_save}}$</div>
+        <div style="padding:5px;">&bull; Sold: {{price.sold}}</div>
+        <div style="padding:5px;">&bull; Stock: {{price.stock}}</div>
+    </li>
+    {% else %}
+    <li>No price</li>
+    {% endfor %}
+</ul>
+{% endblock content_page %}

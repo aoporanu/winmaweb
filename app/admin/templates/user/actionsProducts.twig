@@ -1,0 +1,60 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+{% set actionsMenu = 'products' %}
+{% include "user/actionsMenu.twig" %}
+
+<div style="padding-top:20px;">
+<a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=products&ac=add&page='~page~'')}}" class="g-button g-button-submit modal-addprod">Add offer</a>
+<ul class="pagination-modal clearfix">{{ pagination|raw }}</ul>
+<ul class="ma_products">
+{% for product in products %}
+        <li{% if loop.last %} class="last"{% endif %}>
+            <div class="yui3-g">
+                <div class="yui3-u-1-4">
+                    {% if product.ProductMedia.0 %}
+                    <div style="width:120px;height:67px;"><img src="{{product.ProductMedia.0.dir}}/thumb120x67/{{product.ProductMedia.0.file_name}}_{{product.ProductMedia.0.id}}.{{product.ProductMedia.0.ext}}" width="120" height="67" style="border:2px solid #fff;padding:1px;" /></div>
+                    {% else %}
+                    <div style="width:120px;height:67px;border:2px solid #fff;padding:1px;">No image</div>
+                    {% endif %}
+                </div>
+                <div class="yui3-u-3-4">
+                    <div class="yui3-g">
+                        <div class="yui3-u-3-4">
+                            <h2>{{product.name}}</h2>
+                            {#<div style="height:40px;">{{product.short_description}}</div>#}
+                            <div class="yui3-g">
+                                <div class="yui3-u-1-2">
+                                    <div>Suplier price: <span style="font-weight:bold">{{product.suplier_price}}$</span></div>
+                                </div>
+                                <div class="yui3-u-1-2">
+                                    <div>Discount: <span style="font-weight:bold">{{product.discount}}%</span></div>
+                                </div>
+                            </div>
+                            <div class="yui3-g">
+                                <div class="yui3-u-1-2">
+                                    <div>Save: <span style="font-weight:bold">{{product.money_save}}$</span></div>
+                                </div>
+                                <div class="yui3-u-1-2">
+                                    <div style="color: #992a1b;font-size: 16px;">Price: <span style="font-weight:bold">{{(product.suplier_price-product.money_save)}}$</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="yui3-u-1-4">
+                            <ul class="ma-product-settings">
+                            <li><a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=products&prod_id='~product.id~'&ac=gallery&page='~page~'')}}" class="modal-prodgal">Gallery</a></li>
+                            <li><a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=products&prod_id='~product.id~'&ac=edit&page='~page~'')}}" class="modal-addprod">Edit</a></li>
+                            <li><a href="{{router.url_for('@manageUsersActions?id='~userId~'&tab=products&prod_id='~product.id~'&ac=delete&page='~page~'')}}" rel="{{router.url_for('@manageUsersActions?id='~userId~'&tab=products&page='~page)}}" class="ajax-modal-del">Delete</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    {% else %}
+    <li class="last">You do not have any offers added</li>
+{% endfor %}
+</ul>
+<ul class="pagination-modal clearfix">{{ pagination|raw }}</ul>
+</div>
+{% endblock content %}

@@ -1,0 +1,20 @@
+Tree:
+  Tree_1:
+    name: Pages
+    children:
+      Tree_2:
+        name: Static
+        children:
+          Tree_3:
+            name: 'About us'
+          Tree_4:
+            name: 'How its working'
+          Tree_5:
+            name: 'Contact us'
+          Tree_6:
+            name: 'FAQ'
+          Tree_7:
+            name: 'Footer - about us'         
+          Tree_8:
+            name: 'Right - dont forget'   
+          

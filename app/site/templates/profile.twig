@@ -1,0 +1,32 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block css %}
+	{% if not app.ajax %}
+		{% include "myaccount/css.twig" %}
+	{% endif %}
+{% endblock css %}
+{% block js %}
+	{% if not app.ajax %}
+		{% include "myaccount/js.twig" %}
+	{% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<h1>{{ user.username }}'s Profile</h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		{% include "profile_box.twig" %}
+	</div>
+	<div class="ma_bottom"></div>
+{% endblock content_page %}
+{% block right_side %}
+	{% if logged %}
+		{% if not app.ajax %}
+			{% set ma_menu = 'memberSection' %}
+			{% include "myaccount/menu.twig" %}
+		{% endif %}
+	{% else %}
+		{% import "/forms/forms.twig" as forms %}
+		{% include "right_side.twig" %}
+	{% endif %}
+{% endblock right_side %}

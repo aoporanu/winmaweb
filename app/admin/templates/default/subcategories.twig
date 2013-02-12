@@ -1,0 +1,5 @@
+{% for subcategory in subcategories %}
+    <option value="{{subcategory.id}}">{{subcategory.name}}</option>
+{% else %}
+    <option value="-1">No subcategory</option>
+{% endfor %}

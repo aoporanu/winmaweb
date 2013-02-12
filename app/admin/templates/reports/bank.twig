@@ -1,0 +1,57 @@
+{% import "/forms/forms.twig" as forms %}
+
+<form enctype="application/x-www-form-urlencoded" action="{{router.url_for('@reportsBank')}}" method="get">
+    <div class="form-global clearfix">
+        <div class="clearfix">
+            <div class=" label label_big"><label for="start_time">Start date:</label></div>
+            <div class="input">
+                {{ forms.input('start_time', start_time) }}
+                {{ forms.errors(form.errors.start_time) }}
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class=" label label_big"><label for="end_time">End date:</label></div>
+            <div class="input">
+                {{ forms.input('end_time', end_time) }}
+                {{ forms.errors(form.errors.end_time) }}
+            </div>
+        </div>
+        <div class="form-global clearfix">
+            <div class=" label label_big"><label>&nbsp;</label></div>
+            <div class="left"><input type="submit" class="g-button g-button-submit modal-submit-product" value="search" /></div>
+        </div>
+    </div>
+</form>
+
+<div style="padding:10px;">
+    <div style="font-size: 16px">Total Sent to Bank: <span style="color: #388700">${{total}}</span></div>
+    <div style="font-size: 16px">Total Pending: <span style="color: #335E9B">${{total_pending}}</span></div>
+</div>
+<a href="{{router.url_for('@reportsBank?format=csv')}}" class="g-button g-button-share">Download CVS</a>
+<ul class="pagination-modal clearfix">{{ pagination|raw }}</ul>
+<table>
+    <tr style="border-bottom:2px dashed #00008b">
+        <th style="width:400px">Amount</th>
+        <th style="width:300px">Transaction Type</th>
+        <th style="width:200px">Date</th>
+    </tr>
+    {% for transaction in transactions %}
+    <tr style="border-bottom:1px dashed #000080;">
+        <td style="padding:5px;" colspan="3">
+            <table>
+                <tr>
+                    <td style="width:400px">
+                        {% if transaction.status == 1 %}<div class="label2 label-info">Pending</div>{% endif %}
+                         ${{transaction.full_payment}}<br />
+                    </td>
+                    <td style="padding:5px;width:300px">
+                        {{types[transaction.transaction_type]}}
+                    </td>
+                    <td style="width:200px">{{transaction.created_at|date}}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<ul class="pagination-modal clearfix">{{ pagination|raw }}</ul>

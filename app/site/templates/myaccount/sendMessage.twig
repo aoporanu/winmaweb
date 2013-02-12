@@ -1,0 +1,82 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+{% block css %}
+	{% if not app.ajax %}
+		{% include "myaccount/css.twig" %}
+	{% endif %}
+	<style>
+		.ma_bottom {
+		    background: url("/images/site/myaccount_bottom.png") no-repeat scroll 0 0 transparent;
+		    height: 9px;
+		    width: 623px;
+		}
+	</style>
+{% endblock css %}
+{% block js %}
+	{% if not app.ajax %}
+		{% include "myaccount/js.twig" %}
+	{% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<h1>My Messages</h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		<a href="{{router.url_for('@myAccountMyMessages')}}" class="g-button ajax-link" style="min-width:10px;">Send Message</a>
+		<a href="{{router.url_for('@myAccountMySentMessages')}}" class="g-button g-button-submit ajax-link" style="min-width:10px;">My Sent Messages</a>
+		<a href="{{router.url_for('@myAccountMyReceivedMessages')}}" class="g-button g-button-submit ajax-link" style="min-width:10px;">My Received Messages</a>
+		<br />
+		<br />
+		<div class="info-blue">
+			<p>
+				In the Messenger section you can view your sent and received messages and send new messages to other users
+			</p>
+		</div>
+		<br /><br />
+		{% if form.errors %}
+		    <div class="error_box"><strong>There were errors - please verify all fields for errors</strong></div>
+		{% endif %}
+		{% if form.success %}
+		    <div class="infotip"><strong>Success</strong><br /><br />Sent message to the selected user</div>
+		{% endif %}
+		<form enctype="application/x-www-form-urlencoded" action="{{router.url_for('@myAccountMyMessages')}}" method="post">
+			<div class="form-global clearfix">
+				<div class="label"><label for="users">User Name:</label></div>
+				<div class="input input_big">
+					{{ forms.input('users', forms.values.users) }}
+					{{ forms.errors(forms.errors.users) }}
+				</div>
+				<div class="label"><label for="body">Message:</label></div>
+				<div class="input input_big">
+					{{ forms.textarea('body', forms.values.body) }}
+					{{ forms.errors(forms.errors.body) }}
+				</div>
+				<div class="form-global clearfix">
+						<div class="label"><label>&nbsp;</label></div>
+						<div class="left"><input type="submit" class="g-button g-button-submit" value="Send Message" /></div>
+				</div>
+			</div>
+		</form>
+       <br />
+       <br />
+	</div>
+	<!--
+		autocomplete appendto doesn't work as in the docs.
+	-->
+	<div style="background: url(/images/site/myaccount_bottom.png) no-repeat scroll 0 0 transparent;height: 9px;width: 623px;"></div>
+	<script>
+		$(function () {
+				$.getJSON('autocomplete-user', function(data) {
+					$('#users').autocomplete({
+						source: data
+					});
+				});
+		});
+	</script>
+{% endblock content_page %}
+
+{% block right_side %}
+	{% if not app.ajax %}
+		{% include "myaccount/menu.twig" %}
+	{% endif %}
+{% endblock right_side %}

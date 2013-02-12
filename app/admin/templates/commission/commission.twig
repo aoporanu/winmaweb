@@ -1,0 +1,96 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+<h1>Manage Commissions</h1>
+<div class="yui3-g">
+    <div class="yui3-u-1-3">
+    <h2 style="font-size:14px;font-weight: bold;padding-bottom:10px;">Manage commission levels</h2>
+    <a href="{{router.url_for('@manageCommissions?ac=add_level')}}" class="g-button g-button-share g-button-small modal-user">Add level</a>
+    <br /><br /><br />
+    <ul>
+    {% for node in tree %}
+        <li style="padding:5px;background: #E6E4DF;margin-bottom: 2px;">
+        <div class="yui3-g">
+            <div class="yui3-u-1-3"><strong>Level {{loop.index}}:</strong></div>
+            <div class="yui3-u-1-3"><span style="color: #29691d">{{node.commission}}%</span></div>
+            <div class="yui3-u-1-3">
+                <a href="{{router.url_for('@manageCommissions?ac=edit_level&id='~node.id)}}" class="modal-user" title="Level {{loop.index}}" style="color: #2B6FB6">Edit</a> | 
+                <a href="{{router.url_for('@manageCommissions?ac=del_level&id='~node.id)}}" class="ajax-confirm" title="Are you sure you want to delete this level commission?" style="color:#A1040B">Delete</a>
+            </div>
+        </div>
+        </li>
+    {% endfor %}
+    </ul>
+    </div>
+    
+    <div class="yui3-u-2-3" style="">
+        <div style="margin-left:20px;">
+            <h2 style="font-size:14px;font-weight: bold;padding-bottom:10px;">Manage global commissions</h2>
+            <br /><br /><br />
+            <ul>
+                {#<li style="padding:5px;background: #E6E4DF;margin-bottom: 2px;">
+                <div class="yui3-g">
+                    <div class="yui3-u-1-3"><strong>Factor:</strong></div>
+                    <div class="yui3-u-1-3"><span style="color: #29691d">{{tax}}%</span></div>
+                    <div class="yui3-u-1-3" style="text-align:right">
+                        <a href="{{router.url_for('@manageCommissions?ac=edit_sc&m=tax')}}" class="modal-user" title="Factor" style="color: #2B6FB6">Edit</a>
+                    </div>
+                </div>
+                </li>#}
+                <li style="padding:5px;background: #E6E4DF;margin-bottom: 2px;">
+                <div class="yui3-g">
+                    <div class="yui3-u-1-3"><strong>Minimum spend fee:</strong></div>
+                    <div class="yui3-u-1-3"><span style="color: #29691d">{{spend}}%</span></div>
+                    <div class="yui3-u-1-3" style="text-align:right">
+                        <a href="{{router.url_for('@manageCommissions?ac=edit_sc&m=sfee')}}" class="modal-user" title="Minimum spend fee" style="color: #2B6FB6">Edit</a>
+                    </div>
+                </div>
+                </li>
+                <li style="padding:5px;background: #E6E4DF;margin-bottom: 2px;">
+                <div class="yui3-g">
+                    <div class="yui3-u-1-3"><strong>Merchant verify fee:</strong></div>
+                    <div class="yui3-u-1-3"><span style="color: #29691d">{{merchant|currency}}</span></div>
+                    <div class="yui3-u-1-3" style="text-align:right">
+                        <a href="{{router.url_for('@manageCommissions?ac=edit_sc&m=mfee')}}" class="modal-user" title="Merchant fee" style="color: #2B6FB6">Edit</a>
+                    </div>
+                </div>
+                </li>
+                <li style="padding:5px;background: #E6E4DF;margin-bottom: 2px;">
+                <div class="yui3-g">
+                    <div class="yui3-u-1-3"><strong>Agent commission:</strong></div>
+                    <div class="yui3-u-1-3"><span style="color: #29691d">{{oc}}%</span></div>
+                    <div class="yui3-u-1-3" style="text-align:right">
+                        <a href="{{router.url_for('@manageCommissions?ac=edit_sc&m=oc')}}" class="modal-user" title="Merchant commission" style="color: #2B6FB6">Edit</a>
+                    </div>
+                </div>
+                </li>
+                <li style="padding:5px;background: #E6E4DF;margin-bottom: 2px;">
+                <div class="yui3-g">
+                    <div class="yui3-u-1-3"><strong>Paypal Fee:</strong></div>
+                    <div class="yui3-u-1-3"><span style="color: #29691d">{{pf}}%</span></div>
+                    <div class="yui3-u-1-3" style="text-align:right">
+                        <a href="{{router.url_for('@manageCommissions?ac=edit_sc&m=pf')}}" class="modal-user" title="Paypal Fee" style="color: #2B6FB6">Edit</a>
+                    </div>
+                </div>
+                </li>
+                <li style="padding:5px;background: #E6E4DF;margin-bottom: 2px;">
+                <div class="yui3-g">
+                    <div class="yui3-u-1-3"><strong>Payout Delay:</strong></div>
+                    <div class="yui3-u-1-3"><span style="color: #29691d">{{d}} days</span></div>
+                    <div class="yui3-u-1-3" style="text-align:right">
+                        <a href="{{router.url_for('@manageCommissions?ac=edit_sc&m=d')}}" class="modal-user" title="Paypal Fee" style="color: #2B6FB6">Edit</a>
+                    </div>
+                </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'commission' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

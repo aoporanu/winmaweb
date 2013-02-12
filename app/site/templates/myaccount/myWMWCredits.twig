@@ -1,0 +1,53 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block css %}
+	{% if not app.ajax %}
+		{% include "myaccount/css.twig" %}
+	{% endif %}
+{% endblock css %}
+{% block js %}
+	{% if not app.ajax %}
+		{% include "myaccount/js.twig" %}
+	{% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<h1>My WMW Credits</h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		<div class="info-blue">
+			<p>In the WMW Credits page you may view all the purchases made by the members in your 5th Tier.  All the commissions you receive are automatically deposited to your WinMaWeb Account.</p>
+		</div>
+		<br /><br />
+		<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+		<div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+			<div class="yui3-u" style="width:80px;">Date</div>
+			<div class="yui3-u" style="width:100px;">Product</div>
+			<div class="yui3-u" style="width:50px;text-align:center">Qty</div>
+			{#<div class="yui3-u" style="width:100px;">Purchased by</div>#}
+			<div class="yui3-u" style="width:80px;">Type</div>
+			<div class="yui3-u" style="width:120px;">Amount</div>
+			<div class="yui3-u" style="width:120px;">Product Price</div>
+		</div>
+		{% for transaction in transactions %}
+			<div class="yui3-g" style="padding:5px 0;margin-bottom:2px;border-bottom:1px solid #3079ed">
+				<div class="yui3-u" style="width:80px;">{{transaction.created_at}}</div>
+				<div class="yui3-u" style="width:100px;">{% if transaction.product_name %}{{transaction.product_name}}{% else %} - {% endif %}</div>
+				<div class="yui3-u" style="width:50px;text-align:center">{% if transaction.quantity %}{{transaction.quantity}}{% else %} - {% endif %}</div>
+				{#<div class="yui3-u" style="width:100px;">{% if transaction.Sender.username and transactionType[transaction.transaction_type] == 'sell' %}{{transaction.Sender.username}}{% else %} - {% endif %}</div>#}
+				<div class="yui3-u" style="width:80px;">{% if transactionType[transaction.transaction_type] == 'level-commission' %} 5th Tier Commission {% else %}{{transactionType[transaction.transaction_type]|title}}{% endif %}</div>
+				<div class="yui3-u" style="width:120px;{% if transactionType[transaction.transaction_type] == 'site-fee' %}color:#DD3C10;font-weight: bold{% endif %}"><strong>{{transaction.full_payment|currency}}</strong></div>
+				<div class="yui3-u" style="width:120px;">{{ transaction.product_price|currency }}</div>
+			</div>
+		{% endfor %}
+		<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+	</div>
+	<div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+	{% if not app.ajax %}
+		{% set ma_menu = 'myWMWCredits' %}
+		{% include "myaccount/menu.twig" %}
+	{% endif %}
+{% endblock right_side %}

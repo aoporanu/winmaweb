@@ -1,0 +1,43 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+{% set actionsMenu = 'request' %}
+{% include "user/actionsMenu.twig" %}
+
+<div style="padding-top:20px;">
+    {% if user.request_step == '3' %}
+        <div class="error_box"><strong>You approved the request, after user will pay the fixed fee his account will become automaticaly an merchant account!<br /> <a href="{{router.url_for('@manageUsersActions?id='~user.id~'&tab=general&ac=cr_req')}}" class="ajax-modal-confirm" title="Are you sure you want to update this account to a merchant account?">Click to create a merchant account now</a></strong></div>
+    {% endif %}
+    <dl>
+        <dt>Contract</dt>
+        <dd><a href="{{pdf}}" target="_blank">Download contract</a></dd>
+        <dt>Company name:</dt>
+        <dd>{{user.company_name}}</dd>
+        <dt>Vat number:</dt>
+        <dd>{{user.vat_number}}</dd>
+        <dt>Merchant account requested at:</dt>
+        <dd>{{user.mrequest_at|date("M d Y H:i:s")}}</dd>
+        <dt>Name:</dt>
+        <dd>{{user.first_name|title}} {{user.last_name|title}}</dd>
+        <dt>Phone:</dt>
+        <dd>{{user.phone}}</dd>
+        <dt>Username:</dt>
+        <dd>{{user.username}}</dd>
+        <dt>Email:</dt>
+        <dd>{{user.email}}</dd>
+        <dt>Refferer:</dt>
+        <dd>{% if ref %}<a href="{{router.url_for('@manageUsersActions?id='~ref.id)}}" class="modal-user" title="{{ref.username}} actions">{{ref.username}}</a> ({{ref.first_name|title}} {{ref.last_name|title}}){% else %}Not reffered by anyone{% endif %}</dd>
+        <dt>Created at:</dt>
+        <dd>{{user.created_at|date("M d Y H:i:s")}}</dd>
+        <dt>Activated at:</dt>
+        <dd>{% if user.activated_at %}{{user.activated_at|date("M d Y H:i:s")}}{% else %} - {% endif %}</dd>
+        <dt>Last login:</dt>
+        <dd>{% if user.last_login %}{{user.last_login|date("M d Y H:i:s")}}{% else %} never {% endif %}</dd>
+    </dl>
+    {% if user.request_step == '2'%}
+    <a href="{{router.url_for('@manageUsersActions?id='~user.id~'&tab=general&ac=app_req')}}" class="g-button g-button-submit ajax-modal-confirm" title="Are you sure you want to approve this request?">Click to approve request</a>
+    <a href="{{router.url_for('@manageUsersActions?id='~user.id~'&tab=general&ac=dapp_req')}}" class="g-button g-button-red ajax-modal-confirm" title="Are you sure you want to disapprove this request?">Click to disapprove request</a>
+    {% endif %}
+    
+</div>
+{% endblock content %}

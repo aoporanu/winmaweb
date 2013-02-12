@@ -1,0 +1,13 @@
+SiteConfig:
+  SiteConfig_1:
+    config_name: merchant_request
+    config_value: on
+  SiteConfig_2:
+    config_name: site_fee
+    config_value: '5'
+  SiteConfig_3:
+    config_name: spend_fee
+    config_value: '200'
+  SiteConfig_4:
+    config_name: merchant_fee
+    config_value: '100'

@@ -1,0 +1,36 @@
+{% extends imgajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block css %}
+    {% if not imgajax %}
+        {% include "myaccount/css.twig" %}
+    {% endif %}
+{% endblock css %}
+{% block js %}
+    {% if not imgajax %}
+        {% include "myaccount/js.twig" %}
+    {% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<h1>RequestAgent Account <a title="Help" style="font-size: 11px" class="help-link" href="#">help</a><div class="inv help-message">{{helpObj.getHelp(10).content|raw}}</div></h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		<ul class="steps clearfix">
+				<li class="steps_bg steps_done clearfix"><div class="no left">1</div><div class="left">Information</div></li>
+				<li class="steps_bg steps_active clearfix"><div class="no left">2</div><div class="left">Review</div></li>
+				<li class="steps_bg steps_undone clearfix"><div class="no left">3</div><div class="left">Payment</div></li>
+		</ul>
+		<div class="info-blue">
+				<p>Thank you for agent account request. An administrator will review your request and if everything is ok you will receive an email and you will be able to pay the fixed fee and your account will be upgraded automaticaly to an agent account.</p>
+		</div>
+	</div>
+  <div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+    {% if not imgajax %}
+        {% set ma_menu = 'agent' %}
+        {% include "myaccount/menu.twig" %}
+    {% endif %}
+{% endblock right_side %}

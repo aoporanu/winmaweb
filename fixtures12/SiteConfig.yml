@@ -1,0 +1,5 @@
+SiteConfig:
+  SiteConfig_1:
+    config_name: merchant_request
+    config_value: on
+

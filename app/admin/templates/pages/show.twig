@@ -1,0 +1,26 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+<h1>manage pages</h1>
+    <table cellspacing="0" cellpadding="0" border="0" style="width: 100%">
+        <tr class="th-class alt-row">
+            {#<th style="width: 50px;"><a class="href-link  arrow-up " href="#">id</a></th>#}
+            <th style="width: 300px;"><a class="href-link " href="#">page</a></th>
+            <th style="width: 300px;"><a class="href-link " href="#"></a></th>
+            <th align="center" style="width: 60px;">action</th>
+        </tr>
+    {% for key,page in pages %}
+        <tr{% if loop.index is divisibleby(2) %} class="tr-even"{% else %} class="tr-odd"{% endif %}>
+            <td>{{page.name}}</td>
+            <td>&nbsp;</td>
+            <td><a href="{{router.url_for('@managePagesEdit?id='~key)}}" class="g-button g-button-share modal-user" title="{{page.name}} edit">edit</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock content %}
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'pages' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

@@ -1,0 +1,87 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block css %}
+    {% if not app.ajax %}
+        {% include "myaccount/css.twig" %}
+    {% endif %}
+{% endblock css %}
+{% block js %}
+    {% if not app.ajax %}
+        {% include "myaccount/js.twig" %}
+    {% endif %}
+{% endblock js %}
+
+{% block content_page %}
+    <h1>Deposit</h1>
+    <div class="ma_top"></div>
+    <div class="ma_content">
+				<a href="{{router.url_for('@myAccountMyMoney')}}" class="g-button ajax-link" style="min-width:10px;">My Money</a>
+				<a href="{{router.url_for('@myAccountWithdraw')}}" class="g-button ajax-link" style="min-width:10px;">Withdraw</a>
+				<a href="{{router.url_for('@myAccountDeposit')}}" class="g-button g-button-submit ajax-link" style="min-width:10px;">Deposit</a>
+				<br/><br/>
+        <a href="{{router.url_for('@myAccountDeposit')}}" class="g-button{% if not view  %} g-button-submit{% endif %} ajax-link">Paypal</a>
+        <a href="{{router.url_for('@myAccountDeposit?view=giro')}}" class="g-button {% if view == 'giro'  %} g-button-submit{% endif %} ajax-link">GIRO</a>
+        <br /><br />
+        {#<div class="info-blue"><p>My Wallet: {{app.user.wallet|currency}}</p></div>#}
+        <br />
+        
+        {% if form.errors %}
+            <br /><div class="error_box"><strong>There were errors - please verify all fields for errors</strong></div>
+        {% endif %}
+        {% if form.success %}
+            <div class="infotip"><strong>Success</strong><br /><br />Deposit amount added successfully to your wallet</div>
+        {% endif %}
+        {#<form enctype="application/x-www-form-urlencoded" action="{{router.url_for('@myAccountDeposit')}}" method="post">
+							<div class="form-global clearfix">
+                <div class="label"><label for="val">Deposit amount:</label></div>
+                <div class="input input_big">
+                    {{ forms.input('val', form.values.val) }}
+                    {{ forms.errors(form.errors.val) }}
+                </div>
+            </div>
+            <div class="form-global clearfix">
+                <div class="label"><label>&nbsp;</label></div>
+                <div class="left"><input type="submit" class="g-button g-button-submit ajax-submit" value="Deposit" /></div>
+            </div>
+				</form>#}
+				{#<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">#}
+			<div style="display: none;">
+				<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+            <div class="form-global clearfix">
+                <div class="label"><label for="val">Deposit amount:</label></div>
+                <div class="input input_big">
+									{{ forms.input('amount', form.values.val) }}
+                </div>
+            </div>
+            <div class="form-global clearfix">
+                <div class="label"><label>&nbsp;</label></div>
+								<div class="left"><input type="submit" class="g-button g-button-submit" value="Deposit" /></div>
+            </div>
+						<input type="hidden" name="cmd" value="_xclick" />
+						<input type="hidden" name="currency_code" value="SGD" />
+						{#<input type="hidden" name="business" value="radu.d_1336565634_biz@digitaldreamsdesign.net" />#}
+						<input type="hidden" name="business" value="info@winmaweb.com" />
+						<input type="hidden" name="item_name" value="WinMaWeb Deposit" />
+						<input type="hidden" name="item_number" value="{{user_id}}" />
+						{#<input type="hidden" name="notify_url" value="http://82.77.174.213:92/payment/paypalIPN" />#}
+						{#<input type="hidden" name="notify_url" value="http://www.winmaweb.com/payment/depositpaypal" />#}
+						{#<input type="hidden" name="notify_url" value="https://www.winmaweb.com/payment/paypal" />#}
+						<input type="hidden" name="notify_url" value="https://winmaweb.com/payment/paypal" />
+						{#<input type="hidden" name="notify_url" value="http://82.77.174.213:92/paypal_ipn.php" />#}
+						{#<input type="hidden" name="notify_url" value="http://www.winmaweb.com/paypal_ipn.php" />#}
+						{#<input type="hidden" name="return_url" value="http://82.77.174.213:92/my-account/deposit" />#}
+						{#<input type="hidden" name="return_url" value="https://www.winmaweb.com/my-account/deposit" />#}
+						<input type="hidden" name="return_url" value="https://winmaweb.com/my-account/deposit" />
+        </form>
+			</div>
+    </div>
+    <div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+    {% if not app.ajax %}
+        {% set ma_menu = 'myMoney' %}
+        {% include "myaccount/menu.twig" %}
+    {% endif %}
+{% endblock right_side %}

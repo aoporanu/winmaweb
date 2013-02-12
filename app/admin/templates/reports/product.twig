@@ -1,0 +1,110 @@
+{% import "/forms/forms.twig" as forms %}
+
+<form enctype="application/x-www-form-urlencoded" action="{{router.url_for('@reportsProduct?id='~product.id)}}" method="get">
+    <div class="form-global clearfix">
+        <div class="clearfix">
+            <div class=" label label_big"><label for="start_time">Start date:</label></div>
+            <div class="input">
+                {{ forms.input('start_time', start_time) }}
+                {{ forms.errors(form.errors.start_time) }}
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class=" label label_big"><label for="end_time">End date:</label></div>
+            <div class="input">
+                {{ forms.input('end_time', end_time) }}
+                {{ forms.errors(form.errors.end_time) }}
+            </div>
+        </div>
+        <div class="form-global clearfix">
+            <div class=" label label_big"><label>&nbsp;</label></div>
+            <div class="left"><input type="submit" class="g-button g-button-submit modal-submit-product" value="search" /></div>
+        </div>
+    </div>
+</form>
+<a href="{{router.url_for('@reportsProduct?format=csv&id='~merchant.id)}}" class="g-button g-button-share">Download CVS</a>
+<ul class="pagination-modal clearfix">{{ pagination|raw }}</ul>
+<table>
+    <tr style="border-bottom:2px dashed #00008b">
+        <th style="width:400px">Product</th>
+        <th style="width:300px">Bought By</th>
+        <th style="width:200px">Date</th>
+    </tr>
+    {% for transaction in transactions %}
+    <tr style="border-bottom:4px dashed #000080;">
+        <td style="padding:5px;" colspan="3">
+            <table>
+                <tr>
+                    <td style="width:400px">
+                        {% if transaction.status == 1 %}<div class="label2 label-important">Pending - {% if transaction.Product.sold < transaction.Product.min_sold %}{{transaction.Product.min_sold-transaction.Product.sold}} more deals need to be sold, until deal become active{% endif %}</div>{% endif %}
+                        {% if transaction.status == -1 %}<div class="label2 label-warning">Refunded</div>{% endif %}
+                        Name: {{transaction.product_name}}<br />
+                        Price: ${{transaction.product_price}}
+                    </td>
+                    <td style="width:300px">
+                        ({{transaction.Sender.ref_id}}) {{transaction.Sender.first_name}}, {{transaction.Sender.last_name}}
+                    </td>
+                    <td style="width:200px">{{transaction.created_at|date}}</td>
+                </tr>
+                {% if transaction.status == 0 %}
+                    {% if transaction.merchant_share %}
+                    <tr>
+                        <td style="padding:5px 0 5px 15px;font-weight:bold;border-top:1px dotted #005580" colspan="3">Merchant Share Sub-Transaction{% if transaction.merchant_share.status == 2 %}<span class="label2 label-info">Redeemd by Coupon</span>{% endif %}{% if transaction.merchant_share.status == 1 %}<span class="label2 label-info">Merchant Not Yet Redeemd the Coupon</span>{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px 0 5px 15px;">
+                            Merchant receive: ${{transaction.merchant_share.full_payment}}
+                        </td>
+                        <td style="padding:5px;">
+                            Merchant Name: {{transaction.merchant_share.Receiver.first_name}} {{transaction.merchant_share.Receiver.last_name}} ({{transaction.merchant_share.Receiver.ref_id}})
+                        </td>
+                        <td>{{transaction.merchant_share.created_at|date}}</td>
+                    </tr>
+                    {% endif %}
+                    {% if transaction.agent_share %}
+                    <tr>
+                        <td style="padding:5px 0 5px 15px;font-weight:bold;border-top:1px dotted #005580" colspan="3">Agent Share Sub-Transaction{% if transaction.agent_share.status == 1 %}<span class="label2 label-info">Pending</span>{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px 0 5px 15px;">
+                            Agent receive: ${{transaction.agent_share.full_payment}}
+                        </td>
+                        <td style="padding:5px;">
+                            Agent Name: {{transaction.agent_share.Receiver.first_name}} {{transaction.agent_share.Receiver.last_name}} ({{transaction.agent_share.Receiver.ref_id}})
+                        </td>
+                        <td>{{transaction.agent_share.created_at|date}}</td>
+                    </tr>
+                    {% endif %}
+                    {% if transaction.bank_share %}
+                    <tr>
+                        <td style="padding:5px 0 5px 15px;font-weight:bold;border-top:1px dotted #005580" colspan="3">Bank Share Sub-Transaction{% if transaction.bank_share.status == 1 %}<span class="label2 label-info">Pending</span>{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px 0 5px 15px;">
+                            Bank receive: ${{transaction.bank_share.full_payment}}
+                        </td>
+                        <td style="padding:5px;"></td>
+                        <td>{{transaction.bank_share.created_at|date}}</td>
+                    </tr>
+                    {% endif %}
+                    {% if transaction.level %}
+                    <tr>
+                        <td style="padding:5px 0 5px 15px;font-weight:bold;border-top:1px dotted #005580" colspan="3">5Th Level Sub-Transaction{% if transaction.level.status == 1 %}<span class="label2 label-info">Pending</span>{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px 0 5px 15px;">
+                            User receive: ${{transaction.level.full_payment}}
+                        </td>
+                        <td style="padding:5px;">
+                            User Name: {{transaction.level.Receiver.first_name}} {{transaction.level.Receiver.last_name}} ({{transaction.level.Receiver.ref_id}})
+                        </td>
+                        <td>{{transaction.level.created_at|date}}</td>
+                    </tr>
+                    {% endif %}
+                {% endif %}
+            </table>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<ul class="pagination-modal clearfix">{{ pagination|raw }}</ul>

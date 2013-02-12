@@ -1,0 +1,61 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block css %}
+    {% if not app.ajax %}
+        {% include "myaccount/css.twig" %}
+    {% endif %}
+{% endblock css %}
+{% block js %}
+    {% if not app.ajax %}
+        {% include "myaccount/js.twig" %}
+    {% endif %}
+{% endblock js %}
+
+{% block content_page %}
+    <h1>My Network <a title="Help" style="font-size: 11px" class="help-link" href="#">help</a><div class="inv help-message">{{helpObj.getHelp(5).content|raw}}</div></h1>
+    <div class="ma_top"></div>
+    <div class="ma_content">
+        <a href="{{router.url_for('@myAccountReferralsxxx')}}" class="g-button g-button-share modal-refvisual">View My Network</a>
+        <br /><br />
+        {% for d in descendents %}
+            {% if loop.first %}
+            Network Statistics:
+            <br /><br />
+            <div style="border-bottom:2px solid #cacaca;">
+            <div class="clearfix">
+                <div class="left strong" style="width:100px"># of Members</div><div class="left strong center" style="width:150px">in Tier</div><div class="left strong center" style="width:150px">Total in Your Network</div>
+            </div>
+            </div>
+            {% endif %}
+            {% set total = total + d.no %}
+            <div class="clearfix" style="padding: 5px 0">
+            <div class="left" style="width:100px">Tier {{d.level}}</div> <div class="left center" style="width:150px">{{d.no}}</div><div class="left center" style="width:150px">{{total}}</div>
+            </div>
+        {% endfor %}
+        {#This dates are only for testing<br /> 
+        Get all descendents (for 4 levels depth, level is a variable it can be any number)
+        {% for desc in descendents %}
+            <br />{{desc.treeitem}} ID {{desc.id}} 
+        {% endfor %}
+            <br /><br />
+        Get all Ascendents (for 4 level, levels is a variable it can be any number)
+        {% for asc in ascendents %}
+            <br />id: {{asc._id}}
+        {% endfor %}
+            <br /><br />
+        Get all Ascendents and Descendents (for 4 level up and down, level is a variable it can be any number)
+        {% for ad in asc_desc %}
+            <br />{% if app.user.id == ad.id %}<strong>{% endif %}{{ad.treeitem}}{% if app.user.id == ad.id %} <- this is you</strong>{% endif %}
+        {% endfor %}#}
+        
+    </div>
+    <div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+    {% if not app.ajax %}
+        {#% set ma_menu = 'myreferrals' %#}
+				{% set ma_menu = 'network' %}
+        {% include "myaccount/menu.twig" %}
+    {% endif %}
+{% endblock right_side %}

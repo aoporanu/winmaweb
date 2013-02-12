@@ -1,0 +1,31 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block css %}
+    {% if not app.ajax %}
+        {% include "myaccount/css.twig" %}
+    {% endif %}
+{% endblock css %}
+{% block js %}
+    {% if not app.ajax %}
+        {% include "myaccount/js.twig" %}
+    {% endif %}
+{% endblock js %}
+
+{% block content_page %}
+    <h1>Win Win Marketing</h1>
+    <div class="ma_top"></div>
+    <div class="ma_content">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis sem dolor, vel vestibulum ligula. Cras quam sapien, consequat a congue quis, vehicula sed eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu quam nisi, eu pharetra elit. 
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis sem dolor, vel vestibulum ligula. Cras quam sapien, consequat a congue quis, vehicula sed eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu quam nisi, eu pharetra elit. 
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis sem dolor, vel vestibulum ligula. Cras quam sapien, consequat a congue quis, vehicula sed eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu quam nisi, eu pharetra elit. 
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis sem dolor, vel vestibulum ligula. Cras quam sapien, consequat a congue quis, vehicula sed eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu quam nisi, eu pharetra elit. 
+    </div>
+    <div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+    {% if not app.ajax %}
+        {% set ma_menu = 'winwin' %}
+        {% include "myaccount/menu.twig" %}
+    {% endif %}
+{% endblock right_side %}

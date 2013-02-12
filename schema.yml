@@ -1,0 +1,551 @@
+User:
+  actAs: [Timestampable]
+  columns:
+    parent_id: 
+      type: integer
+      default: '0'
+    is_active:
+      type: integer(1)
+      default: '0'
+    is_banned:
+      type: integer(1)
+      default: '0'
+    is_do:
+      type: integer(1)
+      default: '0'
+    is_super_admin:
+      type: integer(1)
+      default: '0'
+    request_step:
+      type: integer(2)
+      default: '0'
+    ref_id: string(50)
+    username:
+      type: string(255)
+    password:
+      type: string(255)
+    email:
+      type: string(255)
+    phone: string(255)
+    first_name: string(255)
+    last_name: string(255)
+    company_name: string(255)
+    vat_number: string(255)
+    acl:
+      type: object
+    paypal_email: string(255)
+    wallet: 
+      type: double
+      default: 0
+    virtual_wallet: 
+      type: double
+      default: 0
+    last_emails_sent: datetime
+    activated_at: datetime
+    last_login: datetime
+    mrequest_at: datetime
+    mrequest_approved_at: datetime
+    code: string(255)
+    pass_req_at: datetime
+  relations:
+    Roles:
+      class: Role
+      refClass: UserRole
+      foreignAlias: Users
+      onDelete: CASCADE
+  indexes:
+    parentindex:
+      fields: [parent_id]
+    emailindex:
+      fields: [email]
+      type: unique
+    usernameindex:
+      fields: [username]
+      type: unique
+    refidindex:
+      fields: [ref_id]
+      type: unique
+    bannedindex:
+      fields: [is_banned]
+    doindex:
+      fields: [is_do]
+    refidindex:
+      fields: [code]
+      type: unique
+
+Role:
+  columns:
+    name: string(255)
+
+UserRole:
+  columns:
+    user_id:
+      type: integer
+      primary: true
+    role_id:
+      type: integer
+      primary: true
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      onDelete: CASCADE
+    Role:
+      local: role_id
+      foreign: id
+      onDelete: CASCADE
+
+UserMedia:
+  columns:
+    user_id: integer
+    main:
+      type: integer(1)
+      default: 0
+    file_name: string(255)
+    dir: string(255)
+    type:
+      type: enum
+      values: [image, video, pdf, doc, docx]
+      default: image
+    ext: string(10)
+  relations:
+   User:
+     local: user_id
+     foreign: id
+     onDelete: CASCADE
+
+UserSentEmails:
+  columns:
+    user_id:
+      type: integer
+      primary: true
+    email:
+      type: string(255)
+      primary: true
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      foreignType: one
+      onDelete: CASCADE
+#  indexes:
+#    unqindex:
+#      fields: [user_id, email]
+#      type: unique
+      
+Country:
+  actAs: [Geographical]
+  columns:
+    name: string(255)
+    code: string(2)
+    continent: string(2)
+
+UserAddress:
+  actAs: [Geographical]
+  columns:
+    user_id: integer
+    address: string(1000)
+    city: string(255)
+    county: string(255)
+    postcode: string(255)
+    country_id: integer
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      foreignType: one
+      onDelete: CASCADE
+    Country:
+      local: country_id
+      foreign: id
+      foreignType: one
+      
+#products
+Product:
+  actAs:
+    Timestampable:
+    Sluggable:
+      unique: true
+      fields: [name]
+      uniqueBy: [user_id]
+      canUpdate: true
+  columns:
+    user_id: integer
+    category_id: integer
+    company_id: integer
+    name: string(255)
+    short_description:  string(1000)
+    description:  string(1000)
+    terms:  string(1000)
+    starttime: datetime
+    endtime:  datetime
+    sold:
+      type: integer
+      default:  0
+    min_sold:
+      type: integer
+      default:  1
+    max_buy:
+      type: integer
+      default:  1
+    factor:
+      type: integer
+      default: 0
+    status:
+      type: integer
+      default: 0
+    is_active:
+      type: integer
+      default: 0
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      #foreignType: many
+      onDelete: CASCADE
+    Company:
+      local: company_id
+      foreign: id
+      #foreignType: many
+      onDelete: CASCADE
+    Category:
+      local: category_id
+      foreign: id
+      foreignType: one
+      onDelete: 'SET NULL'
+  indexes:
+    statusindex:
+      fields: [status]
+    createdindex:
+      fields: [created_at, is_active]
+
+Company:
+  columns:
+    user_id: integer
+    name: string(255)
+    vat: string(255)
+    phone: string(255)
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      #foreignType: many
+      onDelete: CASCADE
+
+CompanyAddress:
+  actAs: [Geographical]
+  columns:
+    company_id: integer
+    address: string(1000)
+    city: string(255)
+    county: string(255)
+    postcode: string(255)
+    country_id: integer
+  relations:
+    Company:
+      local: company_id
+      foreign: id
+      foreignType: one
+      onDelete: CASCADE
+    Country:
+      local: country_id
+      foreign: id
+      foreignType: one
+
+ProductPrice:
+  columns:
+    product_id: integer
+    name: string(255)
+    suplier_price: double
+    discount:  integer
+    money_save: double
+    price: double
+    expire_at: date
+    stock: 
+      type:  integer
+      default: 1
+    sold:
+      type: integer
+      default:  0
+  relations:
+   Product:
+     local: product_id
+     foreign: id
+     onDelete: CASCADE
+  
+ProductMedia:
+  columns:
+    product_id: integer
+    main:
+      type: integer(1)
+      default: 0
+    file_name: string(255)
+    dir: string(255)
+    type:
+      type: enum
+      values: [image, video, pdf, doc, docx]
+      default: image
+    ext: string(10)
+  relations:
+   Product:
+     local: product_id
+     foreign: id
+     onDelete: CASCADE
+     
+Category:
+  actAs:
+    NestedSet:
+    Sluggable:
+      unique: true
+      fields: [name]
+      uniqueBy: [lft, rgt, level]
+      canUpdate: true
+  columns:
+    name: string(255)
+    
+Tag:
+  actAs:
+    Sluggable:
+      unique: true
+      fields: [name]
+      canUpdate: true
+  columns:
+    name: string(255)
+  relations:
+    Products:
+      foreignAlias: Products
+      class: Product
+      refClass: ProductTags
+    Pages:
+      foreignAlias: Pages
+      class: Tree
+      refClass: PageTags
+      
+ProductTags:
+  columns:
+    product_id:
+      type: integer
+      primary: true
+    tag_id:
+      type: integer
+      primary: true
+  relations:
+    Product:
+      foreignAlias: ProductTags
+      onDelete: CASCADE
+    Tag:
+      foreignAlias: ProductTags
+      onDelete: CASCADE
+      
+Tree:
+  actAs:
+    NestedSet:
+      hasManyRoots: true
+      rootColumnName: root_id
+    Sluggable:
+      unique: true
+      fields: [name]
+      uniqueBy: [lft, rgt, level, root_id]
+      canUpdate: true
+  columns:
+    name: string(255)
+    meta_title: string(255)
+    meta_content: string(1000)
+    content: string(1000)
+    
+PageTags:
+  columns:
+    tree_id:
+      type: integer
+      primary: true
+    tag_id:
+      type: integer
+      primary: true
+  relations:
+    Tree:
+      foreignAlias: PageTags
+      onDelete: CASCADE
+    Tag:
+      foreignAlias: PageTags
+      onDelete: CASCADE
+      
+SiteConfig:
+  columns:
+    config_name: string(255)
+    config_value: string(255)
+  indexes:
+    confignameindex:
+      fields: [config_name]
+      type: unique
+    config_valueindex:
+      fields: [config_value]
+    
+Level:
+  actAs:
+    NestedSet:
+  columns:
+    commission: string(255)
+    
+Transaction:
+  actAs:  [Timestampable]
+  columns:
+    parent_id: 
+      type: integer
+      default: 0
+    transaction_type:
+      type: integer(1)
+      default: 0
+    sender_id: integer
+    receiver_id: integer
+    product_id: integer
+    product_name: string(255)
+    product_price: double
+    quantity: integer
+    full_payment: 
+      type: double
+      default: 0
+    status: 
+      type: integer(1)
+      default: 0
+    action:
+      type: integer(1)
+      default: 0
+    hint: string(255)
+    paypal_txn_id: string(255)
+    paypal_parent_txn_id: string(255)
+    paypal_txn_type: string(255)
+    paypal_payment_status: string(255)
+    paypal_pending_reason: string(255)
+    paypal_payment_date: string(255)
+    paypal_mc_gross: string(255)
+    paypal_mc_currency: string(255)
+    paypal: string(1000)
+  relations:
+    Product:
+      local: product_id
+      foreign: id
+      foreignType: one
+      onDelete: 'SET NULL'
+    Sender:
+      class: User
+      local: sender_id
+      foreign: id
+      foreignType: one
+      onDelete: 'SET NULL'
+    Receiver:
+      class: User
+      local: receiver_id
+      foreign: id
+      foreignType: one
+      onDelete: 'SET NULL'
+  indexes:
+    parentindex:
+      fields: [parent_id]
+    paypaltxnindex:
+      fields: [paypal_txn_id]
+      type: unique
+    transactiontypeindex:
+      fields: [transaction_type]
+#Payment:
+#  actAs:  [Timestampable]
+#  columns:
+#    b_id: integer
+#    transstatus: string(255)
+#    ammount: double
+#    currency: string(255)
+#  relations:
+#    Baught:
+#      local: b_id
+#      foreign: id
+#      foreignType: one
+#      onDelete: CASCADE
+
+WithdrawRequest:
+  actAs:  [Timestampable]
+  columns:
+    user_id:  integer
+    status: integer(1)
+    amount: double
+    reason: string(1000)
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      onDelete: CASCADE
+  indexes:
+    statusindex:
+      fields: [status]
+      
+Coupon:
+  actAs: [Timestampable]
+  columns:
+    transaction_id:  integer
+    owner_id:  integer
+    verifier_id:  integer
+    name: string(255)
+    email: string(255)
+    msg: string(1000)
+    quantity: integer
+    price: double
+    code: string(255)
+    expire_at: datetime
+    status: integer(1)
+    friend: 
+      type: integer(1)
+      default: 0
+  relations:
+    Owner:
+      class: User
+      foreignType: one
+      local: owner_id
+      foreign: id
+      onDelete: 'SET NULL'
+    Verifier:
+      class: User
+      foreignType: one
+      local: verifier_id
+      foreign: id
+      onDelete: 'SET NULL'
+    Transaction:
+      local: transaction_id
+      foreign: id
+      onDelete: CASCADE
+  indexes:
+    codeindex:
+      fields: [code]
+      type: unique
+    statusindex:
+      fields: [status]
+    friendindex:
+      fields: friend
+      
+Question:
+  columns:
+    user_id: integer
+    product_id: integer
+    type: integer(1)
+    question: string(1000)
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      onDelete: CASCADE
+    Product:
+      local: product_id
+      foreign: id
+      onDelete: CASCADE
+     
+Answer:
+  columns:
+    user_id: integer
+    question_id: integer
+    answer: string(1000)
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      onDelete: CASCADE
+    Question:
+      local: question_id
+      foreign: id
+      onDelete: CASCADE

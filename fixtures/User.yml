@@ -1,0 +1,13 @@
+User:
+  User_1:
+    username: admin
+    password: 123456
+    email:  admin@test.com
+    is_active: 1
+    Roles:  [Role_3]
+  User_2:
+    username: root
+    password: 1
+    email:  root@test.com
+    is_active: 1
+    Roles:  [Role_1]

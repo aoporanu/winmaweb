@@ -1,0 +1,574 @@
+home:
+  url:  /
+  param: 
+    module: default
+    action: index
+fpass:
+  url:  /forgot-password
+  param: 
+    module: default
+    action: fpass
+
+chpass:
+  url:  /ch-pass/:code
+  param: 
+    module: default
+    action: chpass
+    
+search:
+  url:  /search
+  param: 
+    module: default
+    action: search
+
+tag:
+  url:	/tag/:term
+  param:
+    module: default
+    action: tag
+
+alldeals:
+  url:  /all-deals
+  param: 
+    module: default
+    action: alldeals
+    
+recentdeals:
+  url:  /recent-deals
+  param: 
+    module: default
+    action: recentdeals
+
+charityProfile:
+  url:  /charity/:charity_slug.html
+  param: 
+    module: default
+    action: charitypage
+
+charities:
+  url:  /charities
+  param: 
+    module: default
+    action: charities
+
+productProfile:
+  url:  /:user_slug/:product_slug.html
+  param: 
+    module: default
+    action: productpage
+    
+confirmDeal:
+  url: /confirm-deal/:id
+  param:
+    module: product
+    action: confirmDeal
+  requirements:
+    id: \d+
+
+requestMembership:
+  url:  /request-membership
+  param: 
+    module: default
+    action: requestMembership
+
+userActivate:
+  url:  /user/activate/:code
+  param: 
+    module: default
+    action: userActivate
+
+login:
+  url:  /login
+  param: 
+    module: default
+    action: login
+
+logout:
+  url:  /logout
+  param: 
+    module: default
+    action: logout
+
+#my account
+myAccount:
+  url:  /my-account
+  param: 
+    module: myAccount
+    action: memberSection
+
+myAccountMyBoughtDeals:
+  url:  /my-account/my-bought-deals
+  param: 
+    module: myAccount
+    action: myBoughtDeals
+
+myAccountMyVouchers:
+  url:  /my-account/my-vouchers
+  param: 
+    module: myAccount
+    action: myVouchers
+
+myAccountReceivedGiftVouchers:
+  url:  /my-account/received-gift-vouchers
+  param: 
+    module: myAccount
+    action: receivedGiftVouchers
+
+myAccountMyWMWCredits:
+  url:  /my-account/my-wmw-credits
+  param: 
+    module: myAccount
+    action: myWMWCredits
+
+myAccountMyMoney:
+  url:  /my-account/my-money
+  param: 
+    module: myAccount
+    action: myMoney
+
+myAccountMyNetwork:
+  url:  /my-account/my-network
+  param: 
+    module: myAccount
+    action: myNetwork
+
+myAccountNetworkStatistics:
+  url:  /my-account/network-statistics
+  param: 
+    module: myAccount
+    action: myNetwork
+
+myAccountViewMyNetwork:
+  url:  /my-account/view-my-network
+  param: 
+    module: myAccount
+    action: viewMyNetwork
+
+myAccountSendMessage:
+  url: /my-account/my-messages
+  param:
+    module: myAccount
+    action: sendMessage
+    
+myAccountGetMessageById:
+  url: /my-account/get-message-by-id/:id
+  param:
+    module: myAccount
+    action: getMessageById
+  requirements:
+    id: \d+
+
+myAccountGetUnreadMessages:
+  url: /my-account/get-unread-messages
+  param:
+    module: myAccount
+    action: getUnreadMessages
+    
+myAccountDeleteMessage:
+  url: /my-account/delete-message/:id
+  param:
+    module: myAccount
+    action: deleteMessage
+  requirements:
+    id: \d+
+    
+myAccountSenderDeleteMessage:
+  url: /my-account/sender-delete-message/:id
+  param:
+    module: myAccount
+    action: senderDeleteMessage
+  requirements:
+    id: \d+
+    
+myAccountReceiverDeleteMessage:
+  url: /my-account/receiver-delete-message/:id
+  param:
+    module: myAccount
+    action: receiverDeleteMessage
+  requirements:
+    id: \d+
+    
+myAccountMyReceivedMessages:
+  url:  /my-account/my-received-messages
+  param:
+    module: myAccount
+    action: receivedMessages
+
+myAccountReceivedMessages:
+  url: /my-account/received-messages
+  param:
+    module: myAccount
+    action: receivedMessages
+
+myAccountSentMessages:
+  url: /my-account/sent-messages
+  param:
+    module: myAccount
+    action: sentMessages
+
+myAccountMyFriends:
+  url: /my-account/my-friends
+  param:
+    module: myAccount
+    action: myFriends
+    
+myAccountListFriendsAction:
+  url: /my-account/list-friends
+  param:
+    module: myAccount
+    action: listFriends
+    
+myAccountListPendingFriends:
+  url: /my-account/list-pending-friends
+  param:
+    module: myAccount
+    action: listPendingFriends
+
+myAccountRemovePendingRequest:
+  url: /my-account/remove-pending-request/:id
+  param:
+    module: myAccount
+    action: removePendingRequest
+  requirements:
+    id: \d+
+
+myAccountApproveFriendRequest:
+  url: /my-account/approve-friend-request/:id
+  param:
+    module: myAccount
+    action: approveFriendRequest
+  requirements:
+    id: \d+
+    
+myAccountMyFriendshipRequests:
+  url: /my-account/my-friendship-requests
+  param:
+    module: myAccount
+    action: myFriendshipRequests
+
+RequestFriendship:
+  url: /request-friendship/:id
+  param:
+    module: default
+    action: requestFriendship
+  requirements:
+    id: \d+
+    
+myAccountRemoveFriend:
+  url: /my-account/remove-friend/:id
+  param:
+    module: myAccount
+    action: removeFriend
+  requirements:
+    id: \d+
+    
+myAccountNewFriendshipRequests:
+  url: /my-account/new-friendship-requests
+  param:
+    module: myAccount
+    action: newFriendshipRequests
+
+
+
+myAccountautocempleteUser:
+  url: /my-account/autocomplete-user
+  param:
+    module: myAccount
+    action: autocompleteUser
+
+myAccountGetMerchantDeals:
+  url: /my-account/get-my-deals
+  param:
+    module: product
+    action: getMerchantDeals
+
+myAccountBuildMyNetwork:
+  url:  /my-account/build-my-network
+  param: 
+    module: myAccount
+    action: buildMyNetwork
+
+myAccountBecomeAnAgent:
+  url:  /my-account/become-an-agent
+  param: 
+    module: myAccount
+    action: becomeAnAgent
+
+myAccountAgentCommision:
+  url:  /my-account/agent-commision
+  param: 
+    module: myAccount
+    action: agentCommision
+
+myAccountBecomeMerchant:
+  url:  /my-account/become-merchant
+  param: 
+    module: myAccount
+    action: contract
+
+myAccountSoldVouchers:
+  url:  /my-account/sold-vouchers
+  param: 
+    module: myAccount
+    action: soldVouchers
+
+myAccountCashInVouchers:
+  url:  /my-account/cash-in-vouchers
+  param: 
+    module: myAccount
+    action: cashInVouchers
+
+myAccountWinWin:
+  url:  /my-account/win-win-marketing
+  param: 
+    module: myAccount
+    action: winwin
+
+myAccountEdit:
+  url:  /my-account/edit-account
+  param: 
+    module: myAccount
+    action: edit
+
+myAccountchPass:
+  url:  /my-account/change-password
+  param: 
+    module: myAccount
+    action: chPass
+    
+myProducts:
+  url:  /my-account/my-offers
+  param: 
+    module: product
+    action: show
+
+myProductsGet:
+  url:  /my-account/my-offers/getsubc
+  param: 
+    module: product
+    action: getSubcategory
+    
+myProductsAdd:
+  url:  /my-account/my-offers/add
+  param: 
+    module: product
+    action: add
+
+myProductsEdit:
+  url:  /my-account/my-offers/edit/:id
+  param: 
+    module: product
+    action: edit
+  requirements:
+    id: \d+
+
+myProductsGallery:
+  url:  /my-account/my-offers/gallery/:id
+  param: 
+    module: product
+    action: gallery
+  requirements:
+    id: \d+
+    
+myProductsShowOnProfile:
+  url: /my-account/show-on-profile/:id
+  param:
+    module: product
+    action: showOnProfile
+  requirements:
+    id: \d+
+    
+confirmDeal:
+  url: /confirm-deal/:id
+  param:
+    module: product
+    action: confirmDeal
+  requirements:
+    id: \d+
+    
+myProductsDelete:
+  url:  /my-account/my-offers/delete/:id
+  param: 
+    module: product
+    action: show
+    ac: delete
+  requirements:
+    id: \d+
+    
+myAccountReferrals:
+  url:  /my-account/organization-panel
+  param: 
+    module: myAccount
+    action: myref
+
+myAccountReferralsxxx:
+  url:  /my-account/organization-panel/my-network
+  param: 
+    module: myAccount
+    action: myrefxxx
+
+myAccountGetSubTree:
+  url:  /my-account/getSubTree
+  param: 
+    module: myAccount
+    action: getSubTree
+    
+myAccountRef:
+  url:  /my-account/my-referral-id
+  param: 
+    module: myAccount
+    action: myrefid
+
+myAccountSendEmail:
+  url:  /my-account/my-referral-id/send-emails
+  param: 
+    module: myAccount
+    action: sendemails
+
+myAccountSentInvitations:
+  url:  /my-account/my-referral-id/sent-invitations
+  param: 
+    module: myAccount
+    action: sentinvitations
+
+myAccountAcceptedInvitations:
+  url:  /my-account/my-referral-id/accepted-invitations
+  param: 
+    module: myAccount
+    action: acceptedinvitations
+    
+myAccountContract:
+  url:  /my-account/contract
+  param: 
+    module: myAccount
+    action: contract    
+
+paymentShopCart:
+  url: /shopping-cart
+  param:
+    module: payment
+    action: shopCart
+
+#paypalIPN:
+#  url: /payment/depositpaypal
+#  param:
+#    module: transaction
+#    action: depositPaypal
+
+paypalIPN:
+  url: /payment/depositpaypal
+  param:
+    module: payment
+    action: paypalIPN
+    
+paymentpaypalIPN:
+  url: /payment/paypal
+  param:
+    module: payment
+    action: paypalIPN
+
+myAccountCouponDetails:
+  url:  /my-account/coupon/detail/:coupon_id
+  param: 
+    module: transaction
+    action: couponDetail
+  requirements:
+    coupon_id: \d+ 
+
+myAccountTransactionDetails:
+  url:  /my-account/transactions/detail/:trans_id
+  param: 
+    module: transaction
+    action: detail
+  requirements:
+    trans_id: \d+ 
+    
+myAccountCouponTransactionDetails:
+  url:  /my-account/coupon-transaction/detail/:trans_id
+  param: 
+    module: transaction
+    action: couponTransactionDetail
+  requirements:
+    trans_id: \d+ 
+    
+myAccountTransactions:
+  url:  /my-account/transactions
+  param: 
+    module: transaction
+    action: show
+
+myAccountWithdraw:
+  url:  /my-account/withdraw
+  param: 
+    module: transaction
+    action: withdraw
+
+myAccountDeposit:
+  url:  /my-account/deposit
+  param: 
+    module: transaction
+    action: deposit
+
+getTags:
+  url:  /get-tags
+  param: 
+    module: default
+    action: gettags
+    
+contact:
+  url: /contact-us
+  param: 
+    module: default
+    action: contact
+    
+pages:
+  url: /:slug
+  param: 
+    module: default
+    action: page
+
+profileView:
+  url: /profile/:slug
+  param: 
+    module: default
+    action: profile
+
+myAccountAgent:
+  url:  /my-account/agent
+  param: 
+    module: myAccount
+    action: agent
+
+myAccountContractDownload:
+  url:  /my-account/contract/download
+  param: 
+    module: myAccount
+    action: contractDownload
+
+addMerchantToAgent:
+  url:  /my-account/add-merchant
+  param: 
+    module: myAccount
+    action: addMerchantToAgent
+ 
+myAccountEditCompany:
+  url:  /my-account/edit/company
+  param: 
+    module: myAccount
+    action: editCompany
+
+isUsedEmail:
+  url: /is-valid-email/
+  param:
+    module: default
+    action: isUsedEmail
+    
+getMyReferrals:
+  url: /my-account/get-my-referrals/:refid
+  param:
+    module: myAccount
+    action: getMyReferrals
+  requirements:
+    refid: \d+
+#default:
+#  url:   /:module/:action

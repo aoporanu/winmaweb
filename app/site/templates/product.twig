@@ -1,0 +1,277 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout_product.twig" %}
+
+{% block page_title %}{{product.name}} :: DailyDeals{% endblock %}
+{% block seo %}
+    <meta name="description" content="{{product.name}} price {{product.price}}$ ,{{product.short_description}}" />
+    <meta name="keywords" content="{% spaceless %}{% for tag in product.ProductTags %}{{tag.Tag.name}}{% if loop.last %}{% else %},{% endif %}{% endfor %},price {{product.price}}$,discount {{product.discount}}%,you save {{product.money_save}}${% endspaceless %}" />
+    {% endblock %}
+{% block js %}
+    <script type="text/javascript" src="/js/jquery.countdown.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>
+    <script type="text/javascript" src="/js/slides.min.jquery.js"></script>
+    <script type="text/javascript" src="/js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="/js/product.js"></script>
+    
+		<script type="text/javascript">
+    function initialize() {
+          var latLng = new google.maps.LatLng(1.2940447772307804, 103.830810546875);;
+          var mlatLng = {% if product.ProductAddress.latitude != 0 or product.ProductAddress.longitude != 0 %}new google.maps.LatLng({{product.ProductAddress.latitude}}, {{product.ProductAddress.longitude}}){%else%}latLng{% endif %}
+
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 14,
+            center: mlatLng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          });
+          var marker = new google.maps.Marker({
+            position: mlatLng,
+            {% if product.ProductAddress.latitude != 0 or product.ProductAddress.longitude != 0 %}
+            map:map,            
+            {% endif %}
+            draggable: false
+          });
+      
+    }
+    function loadScript() {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "https://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+      document.body.appendChild(script);
+    }
+  
+    
+    // Onload handler to fire off the app.
+    {% if not ajax %}
+        window.onload = loadScript;
+    //google.maps.event.addDomListener(window, 'load', initialize);
+    {% else %}
+        $(function() {
+            loadScript();
+            //initialize();
+        });
+    {% endif %}
+</script>
+{% endblock js %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/css/ui-lightness/jquery-ui-1.8.16.custom.css" />
+    <link rel="stylesheet" type="text/css" href="/css/prettyPhoto.css" />
+{% endblock css %}
+{% block content_page %}
+    <div class="p-container">
+			{% if product.status == 2 and product.merchant_user_id == app.user.id %}
+				<form action="/{{product.User.username}}/{{product.slug}}.html" method="post">
+					<input type="hidden" name="confirm_product" value="1" />
+					<span style="font-size: 18px;">This product is not confirmed. <input type="submit" id="confirm_now" value="Confirm now" /></span>
+				</form>
+			{% endif %}
+        <h1>{{product.name}}</h1>
+        <div class="p-shortdesc">{{product.short_description}}</div>
+        <div class="yui3-g">
+            <div class="yui3-u-3-5">
+                <div class="p-top_left">
+                    <div id="slides_container">
+											<div id="slides">
+												<div class="slides_container">
+												{% for image in product.ProductMedia %}
+														<a href="{{image.dir}}/{{image.file_name}}_{{image.id}}.{{image.ext}}" rel="prettyPhoto[]" title=""><img src="{{image.dir}}/thumb610x290/{{image.file_name}}_{{image.id}}.{{image.ext}}" width="610" height="290" /></a>
+												{% endfor %}
+												</div>
+											</div>
+                    </div>
+                <br />
+                <!-- AddThis Button BEGIN -->
+                <div class="addthis_toolbox addthis_default_style ">
+                <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+                <a class="addthis_button_tweet"></a>
+                <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+                <a class="addthis_counter addthis_pill_style"></a>
+                </div>
+                <script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4ec2a51b78f841f4"></script>
+                <!-- AddThis Button END -->
+                </div>
+                <ul class="nav nav-tabs">
+                    <li {% if tab == '' %}class="active"{% endif %}>
+                        <a href="/{{product.User.username}}/{{product.slug}}.html">Description</a>
+                    </li>
+                    {# <li {% if tab == 'questions' %}class="active"{% endif %}>
+                        <a href="/{{product.User.username}}/{{product.slug}}.html?tab=questions">Questions</a>
+                    </li> #}
+										<li style="float: right; padding-top: 8px;">Offered by:<a href="/profile/{{product.User.username }}" style="color:#2F5BB7;text-decoration:none; padding: 0px; display: inline;">{{ product.User.username }}</a></li>
+                </ul>
+								<div>
+                {% if tab == '' %}
+                    {#{bbcode.p(product.description, 1)|raw}#}
+										<div class="descr_raw">{{bbcode.p(product.description, 1)|raw}}</div>
+										<div class="p-terms">{{product.terms|nl2br}}</div>
+										{#<div class="p-username">Offered by:<a href="/profile/{{product.User.username }}" style="color:#2F5BB7;text-decoration:none;">{{ product.User.username }}</a></div>#}
+                {% endif %}
+                {% if tab == 'questions' %}
+                    {% if app.user %}<a href="/{{product.User.username}}/{{product.slug}}.html?tab=add" class="g-button g-button-small g-button-submit modal-pp">Add question</a>{% endif %}
+                    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+                    {% for question in questions %}
+                    <div style="margin: 15px 0;border-bottom:1px solid #cacaca;">
+                        <div style="">By: {{question.User.first_name}}</div>
+                        <div style="padding:5px 0 10px 10px;"><span class="label2 label-info">question</span> {{question.question|nl2br}}</div>
+                        {% if question.Answer %}
+                        {% for answer in question.Answer %}
+                        <div style="margin: 10px 0 0 15px;padding-top:5px;border-top:1px solid #cacaca;">
+                            <div style="">By: {{answer.User.first_name}}</div>
+                            <div style="padding:5px 0 10px 10px;"><span class="label2 label-important">answer</span> {{answer.answer|nl2br}}</div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+                {% endif %}
+								</div>		
+            </div>
+        </div>
+    </div>
+<br /><br />
+{% for product in similar %}
+{% if loop.first %}
+<ul class="products_list">
+    <li><h3 class="cssfonts--26">Similar offers</h3></li>
+{% endif %}
+    {% include 'inc/productList.twig' %}
+{% if loop.last %}</ul>{% endif %}
+{% endfor %}
+<script type="text/javascript">
+    $('#confirm_now').click(function() {
+       $.post('/confirm-deal/'+{{ product.id }} );
+    });
+    $('#slides .slides_container').css('display', 'block');
+    $('.nav-tabs li a:hover').last().css('border', '0 none');
+    $('#confirm_now').addClass('g-button g-button-submit');
+</script>
+{% endblock content_page %}
+
+{% block right_side %}
+		<div class="p-top">
+				<div class="prod-timer clearfix" style="padding:5px;">
+					<div class="center strong cssfonts--20" style="color: #7E7E7E">Deal Ends In</div>
+					{#<div class="p-pbar" id="progressbar"></div>#}
+					<div class="p_timer_content"><span>{{product.endtime|date('Y/m/d H:i')}}</span><span>{{product.starttime|date('Y/m/d H:i')}}</span></div>
+				</div>
+				<div class="discount">
+					<span>Discount</span> 
+					<h5>{{product.ProductPrice.0.discount}}%</h5>
+				</div>
+				<div class="product-content">
+					<div class="blog-right-dwo"><span>Value</span> <p>{{product.ProductPrice.0.suplier_price|currency}}</p></div>
+					<div class="blog-right-dwo"><span>Price</span> <p>{{product.ProductPrice.0.price|currency}}</p></div>
+					<div class="clearfix"></div>
+				</div>
+				{% if product.ProductPrice.0.sold == product.ProductPrice.0.stock %}
+					<div class="blog-right-button">
+						{#<a href="{{router.url_for('@productProfile?user_slug='~product.User.username~'&product_slug='~product.slug~'&options=true')}}" class="modal-pp">#}
+							<div class="button_buy">
+								<div class="blog-right-grey-left"></div>
+								<div class="blog-right-grey-center">Buy</div>
+								<div class="blog-right-grey-right"></div>
+							</div>
+						{#</a>#}
+					</div>
+					<div style="clear: both;"></div>
+					<div style="margin: 0px 25px;padding-top:2px;"><img src="/images/site/gift_grey.png" width="59" height="60" /><div style="cursor: default; line-height:60px;display:block;color:#cccccc;font-weight:bold;font-size: 16px;text-decoration: none;padding-right:5px;" class="right">Buy For A Friend</div></div>
+				{% else %}
+					<div class="blog-right-button">
+						<a href="{{router.url_for('@productProfile?user_slug='~product.User.username~'&product_slug='~product.slug~'&options=true')}}" class="modal-pp">
+							<div class="button_buy">
+								<div class="blog-right-left"></div>
+								<div class="blog-right-center">Buy</div>
+								<div class="blog-right-right"></div>
+							</div>
+						</a>
+					</div>
+					<div style="clear: both;"></div>
+					<div style="margin: 0px 25px;padding-top:2px;"><a href="{{router.url_for('@productProfile?user_slug='~product.User.username~'&product_slug='~product.slug~'&options=true&friend=1')}}" class="modal-pp"><img src="/images/site/gift.png" width="59" height="60" /></a><a style="line-height:60px;display:block;color:#368592;font-weight:bold;font-size: 16px;text-decoration: none;padding-right:5px;" href="{{router.url_for('@productProfile?user_slug='~product.User.username~'&product_slug='~product.slug~'&options=true&friend=1')}}" class="right modal-pp">Buy For A Friend</a></div>
+				{% endif %}
+				<div style="clear: both;"></div>
+				<div class="prod-box-content">
+					{% if product.sold >= 0 %}<div style="padding-top:5px;text-align:center;font-weight:bold;font-size: 17px;color:#A7A7A7">{{product.sold}} Offer(s) Bought</div>{% endif %}
+					{% if product.sold >= product.min_sold %}{# deal is active #}
+						{% set percent = product.ProductPrice.0.sold*100//product.ProductPrice.0.stock %}
+						{% if product.ProductPrice.0.sold*100%product.ProductPrice.0.stock >= 5 %}
+						{% set percent = percent + 1 %}
+						{% endif %}
+						<div style="width: 200px;">
+							<div id="progress1" class="progress">
+								<span style="width: {{percent}}%;">
+									<b>{{percent}}%</b>
+								</span>
+							</div>
+						</div>
+						{% if product.ProductPrice.0.sold == product.ProductPrice.0.stock %}
+							<div style="padding-top:5px;text-align:center;font-weight:bold;font-size: 17px;color:#A7A7A7">Sorry, but that deal offer is already sold out.</div>
+						{% else %}
+							<div style="padding-top:5px;text-align:center;font-weight:bold;font-size: 17px;color:#A7A7A7">Deal is active</div>
+						{% endif %}
+					{% else %}{# deal is not active yet #}
+						{% set percent = product.sold*100//product.min_sold %}
+						{% if product.sold*100%product.min_sold >= 5 %}
+							{% set percent = percent + 1 %}
+						{% endif %}
+						{#% set percent = 100 - percent %#}
+						<div style="width: 200px;">
+							<div id="progress1" class="progress">
+								<span style="width: {{percent}}%;">
+									<b>{{percent}}%</b>
+								</span>
+							</div>
+						</div>
+						<div style="padding-top:5px; width: 230px; margin-left: -15px; text-align:center;font-weight:bold;font-size: 17px;color:#A7A7A7">{{product.min_sold - product.sold}} more and the Deal is ON!</div>
+					{% endif %}
+				</div>
+				
+				{#<div class="yui3-g">
+						<div class="yui3-u-1-3 center strong">${{product.suplier_price}}</div>
+						<div class="yui3-u-1-3 center strong">%{{product.discount}}</div>
+						<div class="yui3-u-1-3 center strong">${{product.money_save}}</div>
+				</div>#}
+		</div>
+		<div class="p-tags">
+				{% for tag in product.ProductTags %}
+						{% if loop.first %}<h3>Tags</h3>{% endif %}
+						{{tag.Tag.name}}{% if loop.last %}{% else %},{% endif %}
+				{% endfor %}
+		</div>
+		<div style="padding-top:10px;padding-left:20px;">
+				<div style="font-weight:bold;font-size: 16px;">Deal's Location</div>
+				<div id="map" align="center" style="width: 210px; height: 200px;margin-top:15px; position: relative;overflow: hidden;padding-left:20px;"></div>
+				<div style="padding-top:10px;">
+						{{product.ProductAddress.address}}, {{product.ProductAddress.county}}, {{product.ProductAddress.city}}, {{product.ProductAddress.postcode}}<br />
+				{{product.phone}}
+				</div>
+		</div>
+
+
+		<div class="right-box-top">
+        <div style="color:#fff;font-size: 16px">Similar products</div>
+    </div>
+    <div class="right-box-content">
+        <div>
+            <ul>
+            {% for product in other %}
+                <li style="padding:5px;border-bottom:1px solid #cacaca">
+                <div class="clearfix">
+                    <a href="/{{product.User.username}}/{{product.slug}}.html"><img src="/images/site/price_tag_view.png" alt="Price_tag_view" /></a>
+                    <a href="/{{product.User.username}}/{{product.slug}}.html">{{product.name}}</a>
+                    {% if product.sold > 0 %}<div style="padding-left:20px;padding-top:10px;line-height:20px;height:20px"><img width="17" height="18" title="" src="/images/site/check_mark.png" alt="" /> {{product.sold}} Offer(s) Bought</div>{% endif %}
+                </div>
+                </li>
+            {% endfor %}
+            </ul>
+                &nbsp;
+        </div>
+    </div>
+    <div class="right-box-bottom">&nbsp;</div>
+    <div class="right-box-top">
+        <div style="color:#fff;font-size: 16px">Watch Us</div>
+    </div>
+    <div class="right-box-content">
+        <div style="text-align:center">
+            <a href="https://www.youtube.com/watch?v=pMCPHVjKQdE" rel="prettyPhoto" title=""><img src="/images/default.jpg" alt="WinMaWeb" width="240" /></a>
+        </div></div>
+    <div class="right-box-bottom">&nbsp;</div>
+{% endblock right_side %}

@@ -1,0 +1,45 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+<h1>Manage transactions</h1>
+    {% set actionsMenu = 'refund' %}
+    {% include "transaction/menu.twig" %}
+    <br /><br />
+    <div class="info-blue">
+        <p>You will need to refund these transactions manualy in your paypal account, as the payment was successfully but something was wrong on the site with the
+            product/service they were buyng, you can see more informations on each transaction
+            <br /><br />
+            Click on refund button to set the transaction as refunded, keep in mind that this is only for internal tracking, you will actualy have to refund the transaction on your paypal account
+        </p>
+    </div>
+    <br /><br />
+    <div style="text-align:right">
+        <a href="{{router.url_for('@manageTransactions')}}" class="g-button{% if not view  %} g-button-submit{% endif %} ajax-link">Refund</a>
+        <a href="{{router.url_for('@manageTransactions?view=history')}}" class="g-button {% if view == 'history' %} g-button-submit{% endif %} ajax-link">History</a></div>
+    <br />
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+    <div class="yui3-g" style="font-weight:bold;font-size:16px;">
+        <div class="yui3-u" style="width:150px;">Paypal txn_id</div>
+        <div class="yui3-u" style="width:150px;">User</div>
+        <div class="yui3-u" style="width:250px;">Message</div>
+        <div class="yui3-u" style="width:100px;">Actions</div>
+    </div>
+    {% for transaction in transactions %}
+    <div class="yui3-g" style="padding:10px;background-color:#C0C0BB ;border-bottom:1px solid #cacaca;">
+        <div class="yui3-u" style="width:150px;">{{transaction.paypal_txn_id}}</div>
+        <div class="yui3-u" style="width:150px;"><a href="{{router.url_for('@manageUsersActions?id='~transaction.byUser.id)}}" class="modal-user" title="{{transaction.byUser.username}}">{{transaction.byUser.username}}</a></div>
+        <div class="yui3-u" style="width:250px;">{{transaction.hint}}</div>
+        <div class="yui3-u" style="width:150px;">
+            <a href="{{router.url_for('@manageTransactionsDetail?id='~transaction.id)}}" rel="" class="g-button g-button-share modal-user" style="padding:2px;height:15px;line-height:15px;">All info</a>
+            {% if transaction.status == -1 and transaction.action != 1 %}<a href="{{router.url_for('@manageTransactions?id='~transaction.id~'&ac=refund')}}" title="Are you sure you want to set this transaction as refunded?Keep in mind that you need to actualy refund this transaction from your paypal account" class="g-button g-button-red ajax-confirm" style="padding:2px;height:15px;line-height:15px;">Refund</a>{% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+{% endblock content %}
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'transactions' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

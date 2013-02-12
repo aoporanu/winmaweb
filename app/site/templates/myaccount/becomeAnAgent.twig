@@ -1,0 +1,117 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block css %}
+	{% if not app.ajax %}
+		{% include "myaccount/css.twig" %}
+	{% endif %}
+{% endblock css %}
+{% block js %}
+	{% if not app.ajax %}
+		{% include "myaccount/js.twig" %}
+	{% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<h1>Become an Agent</h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		{% if form.errors %}
+			<br /><div class="error_box"><strong>There were errors - please verify all fields for errors</strong></div>
+		{% endif %}
+		{% if form.success %}
+			<div class="infotip"><strong>Success</strong><br /><br />Details were updated successfully</div>
+		{% endif %}
+		<form enctype="application/x-www-form-urlencoded" action="{{router.url_for('@myAccountBecomeAnAgent')}}" method="post">
+			<div class="form-global clearfix">
+				<div class="label"><label for="first_name">First Name:</label></div>
+				<div class="input input_big">
+					{{ forms.input('first_name', form.values.first_name) }}
+					{{ forms.errors(form.errors.first_name) }}
+				</div>
+				<div class="label"><label for="last_name">Last Name:</label></div>
+				<div class="input input_big">
+					{{ forms.input('last_name', form.values.last_name) }}
+					{{ forms.errors(form.errors.last_name) }}
+				</div>
+				<div class="label"><label for="phone">Phone:</label></div>
+				<div class="input input_big">
+					{{ forms.input('phone', form.values.phone) }}
+					{{ forms.errors(form.errors.phone) }}
+				</div>
+				<div class="label"><label for="email">E-mail:</label></div>
+				<div class="input input_big">
+					{{ forms.input('email', form.values.email) }}
+					{{ forms.errors(form.errors.email) }}
+				</div>
+				<div class="label"><label for="gender">Gender:</label></div>
+				<div class="input input_big">
+					{{ forms.select('gender', form.gender.options, form.values.gender) }}
+					{{ forms.errors(form.errors.gender) }}
+				</div>
+				<div class="label"><label for="age">Age:</label></div>
+				<div class="input input_big">
+					{#{ forms.input('age', form.values.age) }#}
+					{{ forms.select('age', form.age.options, form.values.age) }}
+					{{ forms.errors(form.errors.age) }}
+				</div>
+			</div>
+			<div class="page_subtitle_wrapper clearfix">
+				<span class="page_subtitle_two">Address</span>
+			</div>
+			<div class="form-global clearfix">
+				<div class="label"><label for="address">Address:</label></div>
+				<div class="input input_big">
+					{{ forms.input('address', form.values.address) }}
+					{{ forms.errors(form.errors.address) }}
+				</div>
+				<div class="label"><label for="city">City:</label></div>
+				<div class="input input_big">
+					{{ forms.input('city', form.values.city) }}
+					{{ forms.errors(form.errors.city) }}
+				</div>
+				<div class="label"><label for="county">Province/County:</label></div>
+				<div class="input input_big">
+					{{ forms.input('county', form.values.county) }}
+					{{ forms.errors(form.errors.county) }}
+				</div>
+				<div class="label"><label for="postcode">Postal Code:</label></div>
+				<div class="input input_big">
+					{{ forms.input('postcode', form.values.postcode) }}
+					{{ forms.errors(form.errors.postcode) }}
+				</div>
+				<div class="label"><label for="country">Country:</label></div>
+				<div class="input input_big">
+					{{ forms.select('country', form.countries.options, form.values.country) }}
+					{{ forms.errors(form.errors.country) }}
+				</div>
+			</div>
+			<div class="page_subtitle_wrapper clearfix"></div>
+			<div class="form-global clearfix">
+				All the fields in the form above has to be filled in, confirm that you have read the Terms and Conditions. Then Click "Make me an Agent"
+				<br/><br/>
+				<div style="float: left; width: 10%;">
+					<input type="checkbox" name="terms" id="terms" style="width: 20px;" value="1" />
+				</div>
+				<div style="float: left; width: 60%;">
+					<a href="/Terms and Conditions.pdf" target="_blank">I have read the Terms and Conditions and hereby certify that my information is correct and truthful.</a>
+				</div>
+				<div style="float: left; width: 30%;">
+					{#<input type="submit" style="background-color: #ed9720; color: #000; cursor: pointer; padding: 10px; border: none;" class="ajax-submit" value="Make me an Agent" />#}
+					<input type="submit" class="g-button g-button-submit ajax-submit" value="Make me an Agent" />
+				</div>
+				<div style="clear: both;"></div>
+				{{ forms.errors(form.errors.terms) }}
+				<br/><br/>
+			</div>
+		</form>
+	</div>
+	<div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+	{% if not app.ajax %}
+		{% set ma_menu = 'becomeAnAgent' %}
+		{% include "myaccount/menu.twig" %}
+	{% endif %}
+{% endblock right_side %}

@@ -1,0 +1,84 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+<h1>Manage Bank</h1>
+<div>
+<a href="{{router.url_for('@manageBank')}}" class="g-button ajax-link">Overall</a>
+<a href="{{router.url_for('@manageBank?view=transactions')}}" class="g-button ajax-link">Transactions</a>
+<a href="{{router.url_for('@manageBank?view=withdraw')}}" class="g-button ajax-link">Withdraw</a>
+<a href="{{router.url_for('@manageBank?view=coupons')}}" class="g-button g-button-submit ajax-link">Vouchers</a>
+</div>
+<br /><br />
+<div style="text-align:right">
+<a href="{{router.url_for('@manageBank?view=coupons&tab=not-verified')}}" class="g-button{% if tab == 'not-verified' %} g-button-share{% endif %} ajax-link g-button-small">Not recovered</a>
+<a href="{{router.url_for('@manageBank?view=coupons&tab=verified')}}" class="g-button{% if tab == 'verified' %} g-button-share{% endif %} g-button-small ajax-link">Recovered</a>
+</div>
+<br />
+{% if tab == 'not-verified' %}
+    <div class="info-blue">
+    <p>In this section you may view all the vouchers that WMW merchants have sold to members (and are not yet recovered) or you may select to view all the vouchers which the merchants have cashed in (recovered.)</p>
+    </div>
+    <br /><br />
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+    <div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+        <div class="yui3-u" style="width:120px;">Created at</div>
+        <div class="yui3-u" style="width:120px;">Expire at</div>
+        <div class="yui3-u" style="width:100px;">Bought by</div>
+        <div class="yui3-u" style="width:150px;">Product</div>
+        <div class="yui3-u" style="width:50px;">Qty</div>
+        <div class="yui3-u" style="width:170px;">Actions</div>
+    </div>
+    {% for coupon in coupons %}
+    <div class="yui3-g" style="padding:10px 0;margin-bottom:0;border:1px solid #3079ed;{% if loop.index%2 %}background:#DDDDDD{% endif %}">
+        <div class="yui3-u" style="width:120px;">{{coupon.created_at|date}}</div>
+        <div class="yui3-u" style="width:120px;">{{coupon.expire_at|date}}</div>
+        <div class="yui3-u" style="width:100px;"><a href="{{router.url_for('@manageUsersActions?id='~coupon.owner_id)}}" class="modal-user" title="{{coupon.Owner.username}}">{{coupon.Owner.username}}</a></div>
+        <div class="yui3-u" style="width:150px;">{{coupon.name}}</div>
+        <div class="yui3-u" style="width:50px;">{{coupon.quantity}}</div>
+        <div class="yui3-u" style="width:170px;">
+            <a href="{{router.url_for('@adminUserTransactionDetails?id='~coupon.owner_id~'&trans_id='~coupon.transaction_id)}}" class="g-button g-button-share modal-user" title="Transaction details"  style="padding:2px;height:15px;line-height:15px;">Transaction</a>
+            <a href="{{router.url_for('@manageBank?view=coupons&tab=not-verified&ac=send-to-bank&id='~coupon.id)}}" class="g-button g-button-share ajax-confirm" title="Are you sure you want to send this coupon money to site bank?The deal owner will not be able to get the coupon money after."  style="padding:2px;height:15px;line-height:15px;">Send to bank</a>
+        </div>
+    </div>
+    {% endfor %}
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+{% endif %}
+
+{% if tab == 'verified' %}
+    <div class="info-blue">
+    <p>In this section you may view all the vouchers that WMW merchants have sold to members (and are not yet recovered) or you may select to view all the vouchers which the merchants have cashed in (recovered.)</p>
+    </div>
+    <br /><br />
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+    <div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+        <div class="yui3-u" style="width:120px;">Created at</div>
+        <div class="yui3-u" style="width:120px;">Expire at</div>
+        <div class="yui3-u" style="width:100px;">Bought by</div>
+        <div class="yui3-u" style="width:100px;">Verified by</div>
+        <div class="yui3-u" style="width:150px;">Product</div>
+        <div class="yui3-u" style="width:50px;">Qty</div>
+        <div class="yui3-u" style="width:70px;">Actions</div>
+    </div>
+    {% for coupon in coupons %}
+    <div class="yui3-g" style="padding:10px 0;margin-bottom:0;border:1px solid #3079ed;{% if loop.index%2 %}background:#DDDDDD{% endif %}">
+        <div class="yui3-u" style="width:120px;">{{coupon.created_at|date}}</div>
+        <div class="yui3-u" style="width:120px;">{{coupon.expire_at|date}}</div>
+        <div class="yui3-u" style="width:100px;"><a href="{{router.url_for('@manageUsersActions?id='~coupon.owner_id)}}" class="modal-user" title="{{coupon.Owner.username}}">{{coupon.Owner.username}}</a></div>
+        <div class="yui3-u" style="width:100px;"><a href="{{router.url_for('@manageUsersActions?id='~coupon.verifier_id)}}" class="modal-user" title="{{coupon.Verifier.username}}">{{coupon.Verifier.username}}</a></div>
+        <div class="yui3-u" style="width:150px;">{{coupon.name}}</div>
+        <div class="yui3-u" style="width:50px;">{{coupon.quantity}}</div>
+        <div class="yui3-u" style="width:70px;">
+            <a href="{{router.url_for('@adminUserTransactionDetails?id='~coupon.owner_id~'&trans_id='~coupon.transaction_id)}}" class="g-button g-button-share modal-user" title="Transaction details"  style="padding:2px;height:15px;line-height:15px;">Transaction</a>
+        </div>
+    </div>
+    {% endfor %}
+    <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+{% endif %}
+
+{% endblock content %}
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'bank' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

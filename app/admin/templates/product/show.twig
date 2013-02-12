@@ -1,0 +1,79 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+    <h1>Deal Offers</h1>
+    <div class="ma_top"></div>
+    <div class="ma_content">
+        <a href="{{router.url_for('@manageProducts')}}" class="g-button {% if show == '' %}g-button-submit {% endif %}ajax-link">Pending</a>
+        <a href="{{router.url_for('@manageProducts?show=accepted')}}" class="g-button {% if show == 'accepted' %}g-button-submit {% endif %}ajax-link">Accepted</a>
+        <a href="{{router.url_for('@manageProducts?show=rejected')}}" class="g-button {% if show == 'rejected' %}g-button-submit {% endif %}ajax-link">Rejected</a>
+        <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+        <ul class="ma_products">
+        {% for product in products %}
+                <li{% if loop.last %} class="last"{% endif %}>
+                    <div class="yui3-g">
+                        <div class="yui3-u-1-4">
+                            {% if product.ProductMedia.0 %}
+                            <div style="width:120px;height:67px;"><img src="{{product.ProductMedia.0.dir}}/thumb120x67/{{product.ProductMedia.0.file_name}}_{{product.ProductMedia.0.id}}.{{product.ProductMedia.0.ext}}" width="120" height="67" style="border:2px solid #fff;padding:1px;" /></div>
+                            {% else %}
+                            <div style="width:120px;height:67px;border:2px solid #fff;padding:1px;">No image</div>
+                            {% endif %}
+														<div><br/><a href="{{router.url_for('@editProductsGallery?id='~product.id)}}" class="modal-prodgal">Edit Gallery</a></div>
+                        </div>
+                        <div class="yui3-u-3-4">
+                            <div class="yui3-g">
+                                <div class="yui3-u-3-4">
+                                    <h2>{{product.name}}</h2>
+                                    {#<div style="height:40px;">{{product.short_description}}</div>#}
+                                    <div style="padding-bottom:10px;">
+                                        {% if product.starttime|date('Y-m-d H:i:s') > "now"|date('Y-m-d H:i:s') %}Start on: 
+                                                <span style="font-weight:bold">{{product.starttime|date('Y-m-d H:i:s')}}</span>{% endif %}
+                                                {% if product.endtime|date('Y-m-d H:i:s') > "now"|date('Y-m-d H:i:s') and product.starttime|date('Y-m-d H:i:s') < "now"|date('Y-m-d H:i:s') %}Expire on: 
+                                                <span style="font-weight:bold">{{product.endtime|date('Y-m-d H:i:s')}}</span>{% endif %}
+                                                {% if product.endtime|date('Y-m-d H:i:s') < "now"|date('Y-m-d H:i:s') %}Expired: 
+                                                <span style="font-weight:bold">{{product.endtime|date('Y-m-d H:i:s')}}</span>{% endif %}
+                                        Status:{% if product.status == 0 %}<span style="color:#23A4FF">pending</span>{% endif %}
+                                        {% if product.status == 1 %}<span style="color:#3d9400">accepted</span> <br />WMW Share Factor %: {{product.factor}}%{% endif %}
+                                        {% if product.status == -1 %}<span style="color:#992a1b">rejected</span>{% endif %}
+                                    </div>
+                                    <div class="yui3-g">
+                                        <div class="yui3-u-1-3">
+                                            <div>
+                                                <div>Sold: <span style="font-weight:bold;color: #992a1b">{{product.sold}}</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="yui3-u-1-3">
+                                            {% if product.is_first %}Product is on First Page{% endif %}
+                                        </div>
+                                       <div class="yui3-u-1-3">
+                                            <div style="color: #992a1b;font-size: 16px;">Added by: <a href="{{router.url_for('@manageUsersActions?id='~product.User.id)}}" class="modal-user">{{product.User.username}}</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="yui3-u-1-4">
+                                    <ul class="ma-product-settings">
+                                    {#<li><a href="{{router.url_for('@manageProducts?ac=gallery&id='~product.id)}}" class="modal-prodgal">Gallery</a></li>#}
+                                    <li><a href="{{router.url_for('@manageProducts?ac=edit&id='~product.id)}}" class="modal-addprod">Edit</a></li>
+                                    {% if show == 'accepted' %}<li><a href="{{router.url_for('@manageProducts?show=accepted&ac=main&id='~product.id)}}" class="ajax-confirm" title="Are you sure?">Set On First Page</a></li>{% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% else %}
+            <li class="last">No offer</li>
+        {% endfor %}
+        </ul>
+        <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+    </div>
+    <div class="ma_bottom"></div>
+
+{% endblock content %}
+
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'products' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

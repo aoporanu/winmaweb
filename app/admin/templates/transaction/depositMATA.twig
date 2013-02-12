@@ -1,0 +1,47 @@
+{% import "/forms/forms.twig" as forms %}
+
+<div class="form-global clearfix">
+    <div class="label label_big"><label for="beneficiary_name">Beneficiary Name:</label></div>
+    <div class="input input_big">
+        {{w.beneficiary_name}}
+    </div>
+    <div class="label label_big"><label for="bank_code">Bank Code:</label></div>
+    <div class="input input_big">
+        {{w.bank_code}}
+    </div>
+    <div class="label label_big"><label for="bank_branch_code">Bank Branch Code:</label></div>
+    <div class="input input_big">
+        {{w.bank_branch_code}}
+    </div>
+    <div class="label label_big"><label for="bank_account_number">Bank Account Number:</label></div>
+    <div class="input input_big">
+        {{w.bank_account_number}}
+    </div>
+    <div class="label label_big"><label for="bank_name">Bank Name:</label></div>
+    <div class="input input_big">
+        {{w.bank_name}}
+    </div>
+    <div class="label label_big"><label for="bank_address">Bank Address:</label></div>
+    <div class="input input_big">
+        {{w.bank_address}}
+    </div>
+</div>
+{% if w.status == 0 %}
+{% if form.success %}
+Success;
+{% else %}
+<form enctype="application/x-www-form-urlencoded" action="{{router.url_for('@manageTransactionsMATA?id='~w.id~'&ac=accept')}}" method="post">
+    <div class="form-global clearfix">
+        <div class="label"><label for="val">Amount:</label></div>
+            <div class="input input_big">
+                {{ forms.input('val', form.values.val) }}
+                {{ forms.errors(form.errors.val) }}
+            </div>
+    </div>
+    <div class="form-global clearfix">
+        <div class="label"><label>&nbsp;</label></div>
+        <div class="left"><input type="submit" class="g-button g-button-submit modal-ajax-submit" value="Accept" /></div>
+    </div>
+</form>
+{% endif %}
+{% endif %}

@@ -1,0 +1,61 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block css %}
+	{% if not app.ajax %}
+		{% include "myaccount/css.twig" %}
+	{% endif %}
+{% endblock css %}
+{% block js %}
+	{% if not app.ajax %}
+		{% include "myaccount/js.twig" %}
+	{% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<h1>Received Gift Vouchers</h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		<a href="{{router.url_for('@myAccountMyBoughtDeals')}}" class="g-button ajax-link" style="min-width:10px;">My Bought Deals</a>
+		<a href="{{router.url_for('@myAccountMyVouchers')}}" class="g-button ajax-link" style="min-width:10px;">My Vouchers</a>
+		<a href="{{router.url_for('@myAccountReceivedGiftVouchers')}}" class="g-button g-button-submit ajax-link" style="min-width:10px;">Received Gift Vouchers</a>
+		<br /><br />
+		<div class="info-blue">
+			<p>
+				Your gift vouchers.<br/>
+				{#Once a Voucher is redeemed or has expired then it will no longer be available for use.<br /><br />#}
+				Under Actions you may select the Voucher button to download the Pdf file and print it for use.
+			</p>
+		</div>
+		<br /><br />
+		<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+		<div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+			<div class="yui3-u" style="width:90px;">Created</div>
+			<div class="yui3-u" style="width:90px;">Expires</div>
+			<div class="yui3-u" style="width:100px;">Product</div>
+			<div class="yui3-u" style="width:50px;text-align:center">Qty</div>
+			<div class="yui3-u" style="width:120px;">Cost</div>
+			<div class="yui3-u" style="width:150px;">Actions</div>
+		</div>
+		{% for transaction in transactions %}
+			<div class="yui3-g" style="padding:5px 0;margin-bottom:2px;border-bottom:1px solid #3079ed;{% if transaction.verifier_id is not null %}color: #cacaca{% endif %}">
+				<div class="yui3-u" style="width:90px;">{{transaction.created_at}}</div>
+				<div class="yui3-u" style="width:90px;">{{transaction.expire_at}}</div>
+				<div class="yui3-u" style="width:100px;">{% if transaction.name %}{{transaction.name}}{% else %} - {% endif %}</div>
+				<div class="yui3-u" style="width:50px;text-align:center">{% if transaction.quantity %}{{transaction.quantity}}{% else %} - {% endif %}</div>
+				<div class="yui3-u" style="width:120px;"><strong>{{transaction.price|currency}}</strong></div>
+				<div class="yui3-u" style="width:150px;">
+					<a href="{{router.url_for('@myAccountCouponDetails?coupon_id='~transaction.id~'&friend='~transaction.friend)}}" class="g-button {% if transaction.friend == 0 %}g-button-share{% else %}g-button-submit{% endif %} modal-normal" title="Voucher Details"  style="padding:2px;height:15px;line-height:15px;">{% if transaction.friend == 0 %}Voucher{% else %}Gift Voucher{% endif %}</a>
+				</div>
+			</div>
+		{% endfor %}
+		<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+	</div>
+	<div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+	{% if not app.ajax %}
+		{% set ma_menu = 'myBoughtDeals' %}
+		{% include "myaccount/menu.twig" %}
+	{% endif %}
+{% endblock right_side %}

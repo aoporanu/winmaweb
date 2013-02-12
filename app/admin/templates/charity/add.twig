@@ -1,0 +1,193 @@
+{% extends imgajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block content %}
+{% if err == 1212 %}
+    <div class="error_box"><strong>1</strong>
+    </div>
+{% else %}
+{% if form.errors %}
+	<div class="error_box"><strong>There were errors - please verify all fields for errors</strong>
+		{% if err_img %}<br />{{err_img}}{% endif %}
+	</div>
+{% endif %}
+{% if form.success %}
+	<div class="infotip"><strong>Success</strong><br /><br />Product added successfully</div>
+{% endif %}
+<script type="text/javascript">
+    function updateMarkerPosition(latLng) {
+      document.getElementById('g_lat').value=latLng.lat();
+      document.getElementById('g_lng').value=latLng.lng();
+    }
+    function initialize() {
+          var latLng = new google.maps.LatLng(1.2940447772307804, 103.830810546875);
+          var mlatLng = {% if form.values.g_lat != 0 or form.values.g_lng != 0 %}new google.maps.LatLng({{form.values.g_lat}}, {{form.values.g_lng}}){%else%}latLng{% endif %}
+
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 5,
+            center: mlatLng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          });
+          
+          var marker = new google.maps.Marker({
+            position: mlatLng,
+            title: 'Drag to your campsite location',
+            {% if form.values.g_lat != 0 or form.values.g_lng != 0 %}
+            map:map,            
+            {% endif %}
+            draggable: true
+          });
+      //var infoWindow = new google.maps.InfoWindow;
+
+      // Update current position info.
+
+      google.maps.event.addListener(map, 'click', function(event) {
+        marker.setMap(map);
+        marker.setPosition(event.latLng);
+        map.setCenter(marker.getPosition());
+        updateMarkerPosition(marker.getPosition());
+      });
+      
+      // Add dragging event listeners.
+      google.maps.event.addListener(marker, 'click', function() {
+
+      });
+
+      google.maps.event.addListener(marker, 'drag', function() {
+      });
+
+      google.maps.event.addListener(marker, 'dragend', function() {
+        map.setCenter(marker.getPosition());
+        updateMarkerPosition(marker.getPosition());
+      });
+    }
+    function loadScript() {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+      document.body.appendChild(script);
+    }
+  
+    
+    // Onload handler to fire off the app.
+    {% if not imgajax %}
+        window.onload = loadScript;
+    //google.maps.event.addDomListener(window, 'load', initialize);
+    {% else %}
+        $(function() {
+            loadScript();
+            //initialize();
+        });
+    {% endif %}
+</script>
+<form enctype="multipart/form-data" action="{{router.url_for('@charityAdd')}}" method="post">
+	<div class="form-global clearfix">
+		<div class="clearfix">
+			<div class=" label label_big"><label for="name">Name of Charity Offer:</label></div>
+			<div class="input">
+				{{ forms.input('name', form.values.name) }}
+				{{ forms.errors(form.errors.name) }}
+			</div>
+		</div>
+                
+                
+            <div class="page_subtitle_wrapper clearfix">
+                <span class="page_subtitle_two">Charity Location</span>
+            </div>
+                <div class="inv">
+                    {#<input type="hidden" name="isajaxrequest" value="1" />#}
+                    {{ forms.input('g_lat', form.values.g_lat, 'hidden') }}
+                    {{ forms.input('g_lng', form.values.g_lng, 'hidden') }}
+                </div>
+            <div class="clearfix">
+                <div class="label label_big"><label for="address">Address:</label></div>
+                <div class="input">
+                    {{ forms.input('address', form.values.address) }}
+                    {{ forms.errors(form.errors.address) }}
+                </div>
+                </div><div class="clearfix">
+                <div class="label label_big"><label for="city">City:</label></div>
+                <div class="input">
+                    {{ forms.input('city', form.values.city) }}
+                    {{ forms.errors(form.errors.city) }}
+                </div></div><div class="clearfix">
+                <div class="label label_big"><label for="county">Province/County:</label></div>
+                <div class="input">
+                    {{ forms.input('county', form.values.county) }}
+                    {{ forms.errors(form.errors.county) }}
+                </div></div><div class="clearfix">
+                <div class="label label_big"><label for="postcode">Postal Code:</label></div>
+                <div class="input">
+                    {{ forms.input('postcode', form.values.postcode) }}
+                    {{ forms.errors(form.errors.postcode) }}
+                </div></div><div class="clearfix">
+                <div class="label label_big"><label for="country">Country:</label></div>
+                <div class="input">
+                    {{ forms.select('country', form.countries.options, form.values.country) }}
+                    {{ forms.errors(form.errors.country) }}
+                </div>
+            </div>
+            <div class="clearfix">
+                <div style="width:600px">Add a marker exactly where the charity is located, please zoom in and double click the map where you'd like the marker to be. </div>
+                <div id="map" align="center" style="width: 600px; height: 300px;margin-top:15px; position: relative;overflow: hidden;"></div>
+            </div>
+                <br /><br />
+                
+                
+		<div class="clearfix">
+			<div class=" label label_big"><label for="start_time">Start time:</label></div>
+			<div class="input">
+				{{ forms.input('start_time', form.values.start_time) }}
+				{{ forms.errors(form.errors.start_time) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big"></div>
+			<div class="input">
+				<div style="color:#666">Server time is {{now|date()}} if you want to show your product imediately you need to set the start time as the server time</div>
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big"><label for="end_time">End time:</label></div>
+			<div class="input">
+				{{ forms.input('end_time', form.values.end_time) }}
+				{{ forms.errors(form.errors.end_time) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<input type='hidden' name='isajaxrequest' id='isajaxrequest' value='0' />
+			<div class=" label label_big"><label for="photo123">Photo:</label></div>
+			<div class="input">
+				<input name="photo123" type="file" id="photo123" />
+				{{ forms.errors(form.errors.photo123) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big"><label for="terms">Offer terms:</label></div>
+			<div class="input">
+				{{ forms.textarea('terms', form.values.terms) }}
+				{{ forms.errors(form.errors.terms) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big"><label for="short_description">Short description:</label></div>
+			<div class="input">
+				{{ forms.textarea('short_description', form.values.short_description) }}
+				{{ forms.errors(form.errors.short_description) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big"><label for="description">Description:</label></div>
+			<div class="input">
+				{{ forms.textarea_editor('description', form.values.description) }}
+				{{ forms.errors(form.errors.description) }}
+			</div>
+		</div>
+	</div>
+	<div class="form-global clearfix">
+		<div class=" label label_big"><label>&nbsp;</label></div>
+		<div class="left"><input type="submit" class="g-button g-button-submit modal-submit-product" value="Add" /></div>
+	</div>
+</form>
+{% endif %}
+{% endblock content %}

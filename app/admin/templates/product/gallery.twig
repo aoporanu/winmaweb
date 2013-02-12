@@ -1,0 +1,36 @@
+{% import "/forms/forms.twig" as forms %}
+
+{% if form.errors %}
+    <div class="error_box"><strong>There were errors - please verify all fields for errors</strong></div>
+{% endif %}
+{% if form.success %}
+    <div class="infotip"><strong>Success</strong><br /><br />Product added successfully</div>
+{% endif %}
+<form enctype="application/x-www-form-urlencoded" action="{{router.url_for('@editProductsGallery?id='~product.id)}}" method="post">
+    <div class="form-global clearfix">
+        <input type='hidden' name='isajaxrequest' id='isajaxrequest' value='0' />
+        <div class="label"><label for="photo">Photo:</label></div>
+        <div class="input input_big">
+            <input name="photo" type="file" id="photo" />
+            {{ forms.errors(form.errors.photo) }}
+        </div>
+    </div>
+    <div class="form-global clearfix">
+        <div class="label"><label>&nbsp;</label></div>
+        <div class="left"><input type="submit" class="g-button g-button-submit modal-submit-product" value="Add" /></div>
+    </div>
+</form>
+<br />
+<div class="info-blue">
+    <p>Image with red border is the main image, click on "Set as main" to select another main image.</p>
+</div>
+<div class="clearfix">
+{% for image in product.ProductMedia %}
+    <div style="width:120px;height:90px;margin:10px;" class="left">
+        <img src="{{image.dir}}/thumb120x67/{{image.file_name}}_{{image.id}}.{{image.ext}}" width="120" height="67" style="border:2px solid {% if image.main == 1 %}red{% else %}#cacaca{% endif %};padding:1px;" />
+        <a href="{{router.url_for('@editProductsGallery?id='~product.id~'&ac=crop&pic_id='~image.id)}}" class="modal-crop-image" title="Image Crop">Crop</a> | <a href="{{router.url_for('@editProductsGallery?id='~product.id~'&ac=main&pic_id='~image.id)}}" class="modal-ajax-link">Set as main</a> | <a href="{{router.url_for('@editProductsGallery?id='~product.id~'&ac=delete&pic_id='~image.id)}}" class="modal-ajax-link">Delete</a>
+    </div>
+{% else %}
+        No image
+{% endfor %}
+</div>

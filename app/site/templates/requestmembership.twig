@@ -1,0 +1,623 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout_register.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% if not app.ajax %}
+	{% block css %}
+		<link href="css/site/subscribe_steps.css" media="screen" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="/css/ui-lightness/jquery-ui-1.8.16.custom.css" />
+		<link rel="stylesheet" type="text/css" href="/css/prettyPhoto.css" />
+	{% endblock css %}
+	
+	{% block content_page_register %}
+		<div class="p-container">
+			{% if product %}
+				<h1>{{product.name}}</h1>
+				<div class="p-shortdesc">{{product.short_description}}</div>
+				<div class="yui3-g">
+					<div class="yui3-u-3-5">
+						<div class="p-top_left">
+							<div id="slides_container">
+								<div id="slides">
+									<div class="slides_container">
+										{% for image in product.ProductMedia %}
+											<a href="{{image.dir}}/{{image.file_name}}_{{image.id}}.{{image.ext}}" rel="prettyPhoto[]" title=""><img src="{{image.dir}}/thumb380x237/{{image.file_name}}_{{image.id}}.{{image.ext}}" width="610" height="290" /></a>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+							<br />
+							<!-- AddThis Button BEGIN -->
+							<div class="addthis_toolbox addthis_default_style ">
+								<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+								<a class="addthis_button_tweet"></a>
+								<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+								<a class="addthis_counter addthis_pill_style"></a>
+							</div>
+							<script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4ec2a51b78f841f4"></script>
+							<!-- AddThis Button END -->
+						</div>
+						<ul class="nav nav-tabs">
+							<li {% if tab == '' %}class="active"{% endif %}>
+								<a href="/{{product.User.username}}/{{product.slug}}.html">Description</a>
+							</li>
+							<li {% if tab == 'questions' %}class="active"{% endif %}>
+								<a href="/{{product.User.username}}/{{product.slug}}.html?tab=questions">Questions</a>
+							</li>
+						</ul>
+						<div>
+							<div class="descr_raw">{{bbcode.p(product.description, 1)|raw}}</div>
+							<div class="p-terms">{{product.terms|nl2br}}</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+		<br /><br />
+		{% for product in similar %}
+			{% if loop.first %}
+				<ul class="products_list">
+					<li><h3 class="cssfonts--26">Similar offers</h3></li>
+			{% endif %}
+			{% include 'inc/productList.twig' %}
+			{% if loop.last %}</ul>{% endif %}
+		{% endfor %}
+		<div id="register-intro">
+		<form action="/request-membership" class="groupon_form alt" id="new_subscription" name="frmRegister"  method="post">
+			<div style="margin:0;padding:0"><input name="authenticity_token" type="hidden" value="QwekLo4OSqeYPgA1QTlT81S5CmDoiHcwfllghBCDmwA=" /></div>
+			{% if form.success %}
+				<div class="step_zero form_step" data-bhw="video">
+					<div class="page_content clearfix">
+						<div class="step"></div>
+						<fieldset>
+							<div class="input_three_steps">
+								<div class="modal-title p_none">
+									<h3 name="step0">Register
+										<div class="right"><a class="modal-close" href="#">X</a></div>
+									</h3>
+								</div>
+								<br/><br/>
+								<div class="infotip"><strong>Success</strong>
+									<br /><br />Please go to your E-mail account and open the WinMaWeb E-mail and then click on the link it contains to activate your account.
+									<br/>
+									{#<a href="/user/activate/{{refid}}">/user/activate/{{refid}}</a>#}
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+				<script type="text/javascript">
+					setTimeout(function() {
+						$('.page_content').hide();
+					}, 7000);
+				</script>
+			{% else %}
+				<div class="step_zero form_step" data-bhw="video">
+					<div class="page_content clearfix" id="stepumasii1">
+						<div class="step"></div>
+						<fieldset>
+							<div class="input_three_steps">
+								<div class="modal-title p_none">
+									<h3 name="step0">Register
+										<div class="right"><a class="modal-close" href="#">X</a></div>
+									</h3>
+								</div>
+								<div class="header_three_steps">
+									Before you register your free account with WinMaWeb, please hit <img src="/images/play-icon.png" width="23" /> and have a quick look at our 3 minute introduction movie.
+								</div>
+								{% if form.errors or form.globalErrors%}
+									<div class="error_box">
+										<strong>Please check if the information you provided was enough. Our Web-Site requires that all fields be completed.</strong>
+										{{ forms.errors(form.globalErrors) }}
+									</div>
+								{% endif %}
+							</div>
+							<div class="video"><iframe width="450" height="255" src="https://www.youtube.com/embed/pMCPHVjKQdE?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe></div>
+						</fieldset>
+						<div class="button_container">
+							<div class="button_sub buttons">
+								<div class="small-button">
+									<a href="#step0" class="button continue" data-bhw="videoContinue" id="step_zero" onclick="$('.video').html('<iframe width=\'450\' height=\'255\' src=\'https://www.youtube.com/embed/pMCPHVjKQdE?rel=0&autoplay=0\' frameborder=\'0\' allowfullscreen></iframe>'); return false;">
+										<div class="button_see">
+											<div class="small-left"></div>
+											<div class="small-center">Skip</div>
+											<div class="small-right"></div>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div style="clear: both;"></div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+			<div class="step_one form_step" data-bhw="SubscriptionConfirmEmail">
+				<div class="page_content clearfix" id="stepumasii2">
+					<fieldset>
+						<div class="input_three_steps">
+							<div class="modal-title p_none">
+								<h3 name="step1">Step 1
+									<div class="right"><a class="modal-close" href="#">X</a></div>
+								</h3>
+							</div>
+							<div class="form-global form-reg clearfix">
+								<div class="label"><label for="email">E-mail:</label></div>
+								<div class="input f_input_big">
+									{{ forms.input('email', form.values.email) }}
+									<div id="email_error">{{ forms.errors(form.errors.email) }}</div>
+								</div>
+								<div class="clear"></div>
+								<div class="label"><label for="referral">Referral id:</label></div>
+								<div class="input f_input_big">
+									{{ forms.input('referral', form.values.referral) }}
+									{{ forms.errors(form.errors.referral) }}
+									<br /><em style="color:#000">You must provide a Referral ID from an existing member in order to register.</em>
+								</div>
+								<div style="clear: both;"></div>
+							</div>
+						</div>
+					</fieldset>
+					<div class="button_container" style="width: 320px;">
+						<div class='button_sub buttons'>
+							<div class="small-button">
+								<a href="#step1" class="button continue" data-bhw="SubscriptionConfirmEmailContinue" id="step_one" onclick="return false;">
+									<div class="button_see">
+										<div class="small-left"></div>
+										<div class="small-center">Next</div>
+										<div class="small-right"></div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="step_two form_step" data-bhw="SubscriptionConfirmUser">
+				<div class="page_content clearfix" id="stepumasii3">
+					<fieldset>
+						<div class="input_three_steps">
+							<div class="modal-title p_none">
+								<h3 name="step2">Step 2
+									<div class="right"><a class="modal-close" href="#">X</a></div>
+								</h3>
+							</div>
+							<div class="form-global form-reg clearfix">
+								<div class="label"><label for="reg_username">Username:</label></div>
+								<div class="input f_input_big">
+									{{ forms.input('reg_username', form.values.reg_username) }}
+									{{ forms.errors(form.errors.reg_username) }}
+								</div>
+								<div class="clear"></div>
+								<div class="label"><label for="reg_password">Password:</label></div>
+								<div class="input f_input_big">
+									{{ forms.input('reg_password', '', 'password') }}
+									{{ forms.errors(form.errors.reg_password) }}
+								</div>
+								<div style="clear: both;"></div>
+							</div>
+						</div>
+					</fieldset>
+					<div class="button_container" style="width: 320px;">
+						<div class="button_sub buttons">
+							<div class="small-button">
+								<a href="#step2" class="button continue" data-bhw="SubscriptionConfirmUser" id="step_two" onclick="return false;">
+									<div class="button_see">
+										<div class="small-left"></div>
+										<div class="small-center">Next</div>
+										<div class="small-right"></div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="step_three form_step" data-bhw="SubscriptionCity">
+				<div class="page_content clearfix">
+					<fieldset>
+						<div class="input_three_steps">
+							<div class="modal-title p_none">
+								<h3 name="step3">Step 3
+									<div class="right"><a class="modal-close" href="#">X</a></div>
+								</h3>
+							</div>
+							<div class="form-global form-reg clearfix">
+								<div class="label"><label for="first_name">First Name:</label></div>
+								<div class="input f_input_big">
+									{{ forms.input('first_name', form.values.first_name) }}
+									{{ forms.errors(form.errors.first_name) }}
+								</div>
+								<div class="clear"></div>
+								<div class="label"><label for="last_name">Last Name:</label></div>
+								<div class="input f_input_big">
+									{{ forms.input('last_name', form.values.last_name) }}
+									{{ forms.errors(form.errors.last_name) }}
+								</div>
+								<div class="clear"></div>
+								<div class="label"><label for="country">Country:</label></div>
+								<div class="input f_input_big">
+									{{ forms.select('country', form.countries.options, form.values.country) }}
+									{{ forms.errors(form.errors.country) }}
+								</div>
+								<div style="clear: both;"></div>
+								<div class="label"><label for="terms"></label></div>
+								<div class="input f_input_big">
+									<input type="checkbox" name="terms" id="terms" style="width: 20px;" value="1" />
+									<a href="/Terms and Conditions.pdf" target="_blank">I agree with the Terms and Conditions</a>
+									{{ forms.errors(form.errors.terms) }}
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</fieldset>
+					<div class="button_container">
+						<div class="button_sub buttons">
+							<div class="small-button">
+								<a href="#step3" onclick="document.forms['frmRegister'].submit();" onclick="return false;">
+									<div class="button_see">
+										<div class="small-left"></div>
+										<div class="small-center">Register</div>
+										<div class="small-right"></div>
+									</div>
+								</a>
+							</div>
+							<input type="submit" style="display: none;"/>
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+			</div>
+		</form>
+		</div>
+	{% endblock content_page_register%}
+		{% block right_side %}
+	<div class="yui3-u-3-5">
+		<div class="p-top">
+			{% if (product) %}
+				<div class="prod-timer clearfix" style="padding:5px;">
+					<div class="center strong cssfonts--20" style="color: #7E7E7E">Deal Ends In</div>
+					{#<div class="p-pbar" id="progressbar"></div>#}
+					<div class="p_timer_content"><span>{{product.endtime|date('Y/m/d H:i')}}</span><span>{{product.starttime|date('Y/m/d H:i')}}</span></div>
+				</div>
+				<div class="discount">
+					<span>Discount</span> 
+					<h5>{{product.ProductPrice.0.discount}}%</h5>
+				</div>
+				<div class="product-content">
+					<div class="blog-right-dwo"><span>Value</span> <p>{{product.ProductPrice.0.suplier_price|currency}}</p></div>
+					<div class="blog-right-dwo"><span>Price</span> <p>{{product.ProductPrice.0.price|currency}}</p></div>
+					<div class="clearfix"></div>
+				</div>
+				{% if product.ProductPrice.0.sold == product.ProductPrice.0.stock %}
+					<div class="blog-right-button">
+						{#<a href="{{router.url_for('@productProfile?user_slug='~product.User.username~'&product_slug='~product.slug~'&options=true')}}" class="modal-pp">#}
+							<div class="button_buy">
+								<div class="blog-right-grey-left"></div>
+								<div class="blog-right-grey-center">Buy</div>
+								<div class="blog-right-grey-right"></div>
+							</div>
+						{#</a>#}
+					</div>
+					<div style="clear: both;"></div>
+					<div style="margin: 0px 25px;padding-top:2px;"><img src="/images/site/gift_grey.png" width="59" height="60" /><div style="cursor: default; line-height:60px;display:block;color:#cccccc;font-weight:bold;font-size: 16px;text-decoration: none;padding-right:5px;" class="right">Buy For A Friend</div></div>
+				{% else %}
+					<div class="blog-right-button">
+						<a href="{{router.url_for('@productProfile?user_slug='~product.User.username~'&product_slug='~product.slug~'&options=true')}}" class="modal-pp">
+							<div class="button_buy">
+								<div class="blog-right-left"></div>
+								<div class="blog-right-center">Buy</div>
+								<div class="blog-right-right"></div>
+							</div>
+						</a>
+					</div>
+					<div style="clear: both;"></div>
+					<div style="margin: 0px 25px;padding-top:2px;"><a href="{{router.url_for('@productProfile?user_slug='~product.User.username~'&product_slug='~product.slug~'&options=true&friend=1')}}" class="modal-pp"><img src="/images/site/gift.png" width="59" height="60" /></a><a style="line-height:60px;display:block;color:#368592;font-weight:bold;font-size: 16px;text-decoration: none;padding-right:5px;" href="{{router.url_for('@productProfile?user_slug='~product.User.username~'&product_slug='~product.slug~'&options=true&friend=1')}}" class="right modal-pp">Buy For A Friend</a></div>
+				{% endif %}
+				<div style="clear: both;"></div>
+				<div class="prod-box-content">
+					{% if product.sold >= 0 %}<div style="padding-top:5px;text-align:center;font-weight:bold;font-size: 17px;color:#A7A7A7">{{product.sold}} Offer(s) Bought</div>{% endif %}
+					{% if product.sold >= product.min_sold %}{# deal is active #}
+						{% set percent = product.ProductPrice.0.sold*100//product.ProductPrice.0.stock %}
+						{% if product.ProductPrice.0.sold*100%product.ProductPrice.0.stock >= 5 %}
+						{% set percent = percent + 1 %}
+						{% endif %}
+						<div style="width: 200px;">
+							<div id="progress1" class="progress">
+								<span style="width: {{percent}}%;">
+									<b>{{percent}}%</b>
+								</span>
+							</div>
+						</div>
+						{% if product.ProductPrice.0.sold == product.ProductPrice.0.stock %}
+							<div style="padding-top:5px;text-align:center;font-weight:bold;font-size: 17px;color:#A7A7A7">Sorry, but that deal offer is already sold out.</div>
+						{% else %}
+							<div style="padding-top:5px;text-align:center;font-weight:bold;font-size: 17px;color:#A7A7A7">Deal is active</div>
+						{% endif %}
+					{% else %}{# deal is not active yet #}
+						{% set percent = product.sold*100//product.min_sold %}
+						{% if product.sold*100%product.min_sold >= 5 %}
+							{% set percent = percent + 1 %}
+						{% endif %}
+						{#% set percent = 100 - percent %#}
+						<div style="width: 200px;">
+							<div id="progress1" class="progress">
+								<span style="width: {{percent}}%;">
+									<b>{{percent}}%</b>
+								</span>
+							</div>
+						</div>
+						<div style="padding-top:5px; width: 230px; margin-left: -15px; text-align:center;font-weight:bold;font-size: 17px;color:#A7A7A7">{{product.min_sold - product.sold}} more and the Deal is ON!</div>
+					{% endif %}
+				</div>
+			{% endif %}
+			{#<div class="yui3-g">
+					<div class="yui3-u-1-3 center strong">${{product.suplier_price}}</div>
+					<div class="yui3-u-1-3 center strong">%{{product.discount}}</div>
+					<div class="yui3-u-1-3 center strong">${{product.money_save}}</div>
+			</div>#}
+		</div>
+		<div class="p-tags">
+			{% for tag in product.ProductTags %}
+				{% if loop.first %}<h3>Tags</h3>{% endif %}
+				{{tag.Tag.name}}{% if loop.last %}{% else %},{% endif %}
+			{% endfor %}
+		</div>
+		<div style="padding-top:10px;padding-left:20px;">
+			<div style="font-weight:bold;font-size: 16px;">Deal's Location</div>
+			<div id="map" align="center" style="width: 210px; height: 200px;margin-top:15px; position: relative;overflow: hidden;padding-left:20px;"></div>
+			<div>Please use the zoom functions to find the deal location.</div>
+			<div style="padding-top:10px;">
+				{{product.ProductAddress.address}}, {{product.ProductAddress.county}}, {{product.ProductAddress.city}}, {{product.ProductAddress.postcode}}<br />
+				{{product.phone}}
+			</div>
+		</div>
+	</div>
+    
+    {#<div class="right-box-top">
+        <div style="color:#fff;font-size: 16px">Other deals</div>
+    </div>
+    <div class="right-box-content">
+        <div>
+            <ul>
+            {% for product in other %}
+                <li style="padding:5px;border-bottom:1px solid #cacaca">
+                <div class="clearfix">
+                    <a href="/{{product.User.username}}/{{product.slug}}.html"><img src="/images/site/price_tag_view.png" alt="Price_tag_view" /></a>
+                    <a href="/{{product.User.username}}/{{product.slug}}.html">{{product.name}}</a>
+                    {% if product.sold > 0 %}<div style="padding-left:20px;padding-top:10px;line-height:20px;height:20px"><img width="17" height="18" title="" src="/images/site/check_mark.png" alt="" /> {{product.sold}} bought</div>{% endif %}
+                </div>
+                </li>
+            {% endfor %}
+            </ul>
+                &nbsp;
+        </div>
+    </div>
+    <div class="right-box-bottom">&nbsp;</div>
+    <div class="right-box-top">
+        <div style="color:#fff;font-size: 16px">Watch Us</div>
+    </div>
+    <div class="right-box-content">
+        <div style="text-align:center">
+            <a href="https://www.youtube.com/watch?v=pMCPHVjKQdE" rel="prettyPhoto" title=""><img src="/images/default.jpg" alt="WinMaWeb" width="240" /></a>
+        </div></div>
+    <div class="right-box-bottom">&nbsp;</div>
+#}
+{% endblock right_side %}
+	{% block js %}
+		<script type="text/javascript">var Wmw = {};</script>
+		<script type="text/javascript" src="js/js_steps/i18n-EWne7wWz.js"></script>
+		<script src="js/js_steps/i18n_url_helper--owO6hBw.js" type="text/javascript"></script>
+		<script src="js/js_steps/en-1RB2ujwY.js" type="text/javascript"></script>
+		<script src="js/js_steps/helpers-ytMZAu_N.js" type="text/javascript"></script>
+		<script type='text/javascript'>
+			//<![CDATA[
+				I18n.defaultLocale = "en";
+				I18n.locale = "en";
+				I18n.availableLocales = ["en"];
+			//]]>
+		</script>
+		<script type='text/javascript'>
+			//<![CDATA[
+			$(document).ready(function() {
+				$("body").addClass("landing");
+//                                $(".modal-close").html('');
+				$(".modal-close").click(function() {
+					$('.video').html('<iframe width="450" height="255" src="https://www.youtube.com/embed/pMCPHVjKQdE?rel=0&autoplay=0" frameborder="0" allowfullscreen></iframe>');
+					//$(this).parent().parent().parent().parent().parent().parent().parent().hide();
+					$('.modal-popup').hide();
+					$('#register-intro').hide();
+					window.location = '/';
+					return false;
+				});
+                $('#email').blur(function() {
+                    var email = $(this).val();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/is-valid-email/',
+                        data: {
+                            'email': email,
+                        },
+                        cache: false,
+                        success: function(response) {
+                          //$('#email').after('<span class="errors clearfix">'+response+'</span>');
+													if (response != '') {
+														$('#email_error').html('<span class="errors clearfix">'+response+'</span>');
+													}
+                        }
+                    });
+                });
+                //$('#email').focus(function() {
+                //    if($('#email .errors').length >= 0) {
+                //        $('.errors').remove();
+                //    }
+                //});
+								
+			});
+				document.body.className += " js_enabled";
+				
+			//]]>
+		</script>
+
+
+
+		{#<script src="js/js_steps/jquery.min.js" type="text/javascript"></script>
+		<script src="js/js_steps/jquery-ui.min.js" type="text/javascript"></script>#}
+		<script src="js/js_steps/subscriptions-R85RwRBP.js" type="text/javascript"></script>
+<script>
+			/*$(document).ready(function() {
+				var step = {{ step }};
+								currentStepIdx = step;
+				switch (step) {
+					case 0:
+						break;
+					case 1:
+						//alert(step);
+						//$('#stepumasii1').css('display', 'none');
+						$('#stepumasii1').hide();
+						//alert($('#stepumasii1'));
+						//$('.js_enabled .step_one').css('display', 'block');
+						$('.step_one').show();
+						break;
+				}
+				}*/
+			</script>
+		<script type='text/javascript'>
+			//<![CDATA[
+				var $IE = false
+			//]]>
+		</script>
+		<script src="js/js_steps/tracker-4k0z9X_b.js" type="text/javascript"></script>
+		<script src="js/js_steps/tracker-Mc5g29dd.js" type="text/javascript"></script>
+	{% endblock js %}
+{%else %}
+	{% block content_page %}
+		<div class="info-blue"><p>Welcome to WinMaWeb. To Register as a new member please fill out this form.
+			<br /><br />
+			Note:  This is the ONLY registration page needed to obtain your membership. (There are no further registration pages beyond this one in order to access the website.)</p>
+		</div>
+		<br />
+		{% if form.errors or form.globalErrors%}
+			<div class="error_box">
+				<strong>Please check if the information you provided was enough. Our Web-Site requires that all fields be completed.</strong>
+				{{ forms.errors(form.globalErrors) }}
+			</div>
+		{% endif %}
+		{% if form.success %}
+			<div class="infotip"><strong>Success</strong>
+				<br /><br />Please go to your E-mail account and open the WinMaWeb E-mail and then click on the link it contains to activate your account.
+				<br/>
+				{#<a href="/user/activate/{{refid}}">/user/activate/{{refid}}</a>#}
+			</div>
+		{% endif %}
+		<form name="frmRegister" enctype="application/x-www-form-urlencoded" action="/request-membership" method="post">
+			<div class="form-global form-reg clearfix">
+				<div class="label"><label for="reg_username">Username:</label></div>
+				<div class="input input_big">
+					{{ forms.input('reg_username', form.values.reg_username) }}
+					{{ forms.errors(form.errors.reg_username) }}
+				</div>
+				<div class="clear"></div>
+				<div class="label"><label for="reg_password">Password:</label></div>
+				<div class="input input_big">
+					{{ forms.input('reg_password', '', 'password') }}
+					{{ forms.errors(form.errors.reg_password) }}
+				</div>
+				<div class="clear"></div>
+				<div class="label"><label for="email">E-mail:</label></div>
+				<div class="input input_big">
+					{{ forms.input('email', form.values.email) }}
+					{{ forms.errors(form.errors.email) }}
+				</div>
+				<div class="clear"></div>
+				<div class="label"><label for="first_name">First Name:</label></div>
+				<div class="input input_big">
+					{{ forms.input('first_name', form.values.first_name) }}
+					{{ forms.errors(form.errors.first_name) }}
+				</div>
+				<div class="clear"></div>
+				<div class="label"><label for="last_name">Last Name:</label></div>
+				<div class="input input_big">
+					{{ forms.input('last_name', form.values.last_name) }}
+					{{ forms.errors(form.errors.last_name) }}
+				</div>
+				<div class="clear"></div>
+				{#
+				<div class="label"><label for="phone">Phone:</label></div>
+					<div class="input input_big">
+						{{ forms.input('phone', form.values.phone) }}
+						{{ forms.errors(form.errors.phone) }}
+					</div>
+					<div class="clear">
+				</div>
+				#}
+			</div>
+			<div class="form-global form-reg clearfix">
+				{#
+				<div class="label"><label for="address">Address:</label></div>
+				<div class="input input_big">
+					{{ forms.input('address', form.values.address) }}
+					{{ forms.errors(form.errors.address) }}
+				</div>
+				<div class="clear"></div>
+				#}
+				{#<div class="label"><label for="city">City:</label></div>
+				<div class="input input_big">
+					{{ forms.input('city', form.values.city) }}
+					{{ forms.errors(form.errors.city) }}
+				</div>
+				<div class="clear"></div>#}
+				{#
+				<div class="label"><label for="county">Province/County:</label></div>
+				<div class="input input_big">
+					{{ forms.input('county', form.values.county) }}
+					{{ forms.errors(form.errors.county) }}
+				</div>
+				<div class="clear"></div>
+				#}
+				{#<div class="label"><label for="postcode">Postal Code:</label></div>
+				<div class="input input_big">
+					{{ forms.input('postcode', form.values.postcode) }}
+					{{ forms.errors(form.errors.postcode) }}
+				</div>
+				<div class="clear"></div>#}
+				<div class="label"><label for="country">Country:</label></div>
+				<div class="input input_big">
+					{{ forms.select('country', form.countries.options, form.values.country) }}
+					{{ forms.errors(form.errors.country) }}
+				</div>
+				<div class="clear"></div>
+				<div class="label"><label for="referral">Referral id:</label></div>
+				<div class="input input_big">
+					{{ forms.input('referral', form.values.referral) }}
+					{{ forms.errors(form.errors.referral) }}
+					<br /><em style="color:#000">You must provide a Referral ID from an existing member in order to register.</em>
+				</div>
+				<div class="clear"></div>
+				<div class="label"><label for="terms"></label></div>
+				<div class="input input_big">
+					<input type="checkbox" name="terms" id="terms" style="width: 20px;" value="1" />
+					<a href="/Terms and Conditions.pdf" target="_blank">I agree with the Terms and Conditions</a>
+					{{ forms.errors(form.errors.terms) }}
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="form-global clearfix">
+				<div class="label"><label>&nbsp;</label></div>
+				<div class="left">
+					{#<input type="submit" class="g-button g-button-mda {% if app.ajax %}modal-submit{% else %}{% endif %}" value="Register" />#}
+					<div class="small-button">
+						<a href="" {% if app.ajax %}{% else %}onclick="document.forms['frmRegister'].submit();{% endif %} return false;" class="{% if app.ajax %}modal-submit{% endif %}">
+							<div class="button_see">
+								<div class="small-left"></div>
+								<div class="small-center">Register</div>
+								<div class="small-right"></div>
+							</div>
+						</a>
+					</div>
+					<input type="submit" style="display: none;" />
+				</div>
+			</div>
+		</form>
+	{% endblock content_page%}
+{% endif %}

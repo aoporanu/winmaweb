@@ -1,0 +1,17 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout_default.twig" %}
+
+{% block page_title %}404 page not found :: DailyDeals{% endblock %}
+
+{% block main_menu %}
+<div class="main_menu_container">
+    <ul class="main_menu">
+        <li><a href="/">Today's Deal</a></li>
+        <li><a href="/all-deals">All Deals</a></li>
+        <li><a href="/recent-deals">Recent Deals</a></li>
+    </ul>
+</div>
+{% endblock main_menu %}
+
+{% block content_page %}
+Sorry, we can't find what you are looking for!
+{% endblock content_page %}

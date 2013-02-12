@@ -1,0 +1,59 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block css %}
+	{% if not app.ajax %}
+		{% include "myaccount/css.twig" %}
+	{% endif %}
+{% endblock css %}
+{% block js %}
+	{% if not app.ajax %}
+		{% include "myaccount/js.twig" %}
+	{% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<h1>Received Messages</h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		<a href="{{router.url_for('@myAccountMyReceivedMessages')}}" class="g-button ajax-link" style="min-width:10px;">My Received Messages</a>
+		<a href="{{router.url_for('@myAccountMySentMessages')}}" class="g-button g-button-submit ajax-link" style="min-width:10px;">My Sent Messages</a>
+		<a href="{{router.url_for('@myAccountMyMessages')}}" class="g-button g-button-submit ajax-link" style="min-width:10px;">Send Message</a>
+		<br />
+		<br />
+		{% if messages %}
+			<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+			<div class="yui3-g" style="font-weight:bold;font-size:16px;border-bottom:1px solid #3079ed">
+				<div class="yui3-u" style="width:80px;">Date</div>
+				<div class="yui3-u" style="width:300px;">Subject</div>
+				<div class="yui3-u" style="width:100px;">From</div>
+				<div class="yui3-u" style="width:50px;">Actions</div>
+			</div>
+			{% for message in messages %}
+				<div class="yui3-g" style="padding:5px 0;margin-bottom:2px;border-bottom:1px solid #3079ed;">
+				<div class="yui3-u" style="width:80px;">{{ message.created }}</div>
+				<div class="yui3-u" style="width:300px;{%if message.read == 0 %} font-weight:600; {% else %} font-weight: 400; {%endif%}"><a href="{{router.url_for('@myAccountGetMessageById?id='~message.id)}}">{% if message.subject %} {{ message.subject }} {% else %} - {%endif%}</a></div>
+				<div class="yui3-u" style="width:100px">{#{ message.sender_id }#}{{ message.User[0].username }}</div>
+				<div class="yui3-u" style="width:90px;">
+					<a href="{{router.url_for('@myAccountReceiverDeleteMessage?id='~message.id)}}"  class="g-button g-button-share modal-normal" title="Delete Message"  style="padding:2px;height:15px;line-height:15px;">Delete</a>
+				</div>
+			</div>
+			{% endfor %}
+			<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+		{% else %}
+			<div class="info-blue">
+				<p>You have no received messages</p>
+			</div>
+		{% endif %}
+       <br />
+       <br />
+	</div>
+	<div style="background: url(/images/site/myaccount_bottom.png) no-repeat scroll 0 0 transparent;height: 9px;width: 623px;"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+	{% if not app.ajax %}
+		{% set ma_menu = 'myMessenger' %}
+		{% include "myaccount/menu.twig" %}
+	{% endif %}
+{% endblock right_side %}

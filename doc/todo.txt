@@ -1,0 +1,5 @@
+1 - set privacy on your profile for the contact information : SHOW/HIDE DONE
+2 - sort ajax search on friend request and send messages
+3 - Add offer for myself if i'm a merchant, same as on agent with the verifying procedure *the ref id input should be on add offer
+4 - On my messages - my received messages should be the 1st tab DONE
+5 - take out questions from deal offer DONE

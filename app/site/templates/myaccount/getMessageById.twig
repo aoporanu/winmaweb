@@ -1,0 +1,46 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+{% block css %}
+	{% if not app.ajax %}
+		{% include "myaccount/css.twig" %}
+	{% endif %}
+{% endblock css %}
+{% block js %}
+	{% if not app.ajax %}
+		{% include "myaccount/js.twig" %}
+	{% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<h1>Viewing Message {{message[0].subject}}</h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		<a href="{{router.url_for('@myAccountMyMessages')}}" class="g-button g-button-submit ajax-link" style="min-width:10px;">Send Message</a>
+		<a href="{{router.url_for('@myAccountMySentMessages')}}" class="g-button g-button-submit ajax-link" style="min-width:10px;">My Sent Messages</a>
+		<a href="{{router.url_for('@myAccountMyReceivedMessages')}}" class="g-button g-button-submit ajax-link" style="min-width:10px;">My Received Messages</a>
+		<br />
+		<br />
+		<div class="yui3-u">
+			<p style="font-size:120%;font-weight:600;"><strong>{{ message[0].subject }}</strong></p>
+		</div>
+		<br />
+		<div class="yui3-u">
+			<h4 style="clear: left;"><em>{{ message[0].created }}</em></h4>
+		</div>
+		<div style="clear: left;"></div>
+		<div class="yui3-u" style="padding-top:5px;">
+			<strong>{{ message[0].body }}</strong>
+		</div>
+		<div style="clear:left"></div>
+		<br />
+		{# we can only delete the message completely at this point, so show the user this option. #}
+		<a href="{{router.url_for('@myAccountDeleteMessage?id='~message.id)}}"  class="g-button g-button-share modal-normal" title="Delete Message"  style="padding:2px;height:15px;line-height:15px;">Delete</a>
+	</div>
+	<div style="background: url(/images/site/myaccount_bottom.png) no-repeat scroll 0 0 transparent;height: 9px;width: 623px;"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+	{% if not app.ajax %}
+		{% include "myaccount/menu.twig" %}
+	{% endif %}
+{% endblock right_side %}

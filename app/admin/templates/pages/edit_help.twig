@@ -1,0 +1,27 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block content %}
+    {% if form.errors %}
+    <div class="error_box"><strong>There were errors - please verify all fields for errors</strong></div>
+    {% endif %}
+    {% if form.success %}
+    <div class="infotip"><strong>Success</strong><br /><br /></div>
+    {% endif %}
+    <form enctype="application/x-www-form-urlencoded" action="{{router.url_for('@helpEdit?id='~page_id)}}" method="post">
+    <div class="form-global">
+        <div class="label_2"><label for="content">Content:</label></div>
+        <div class="input_2">
+            {{ forms.textarea_editor('content', form.values.content) }}
+            {% if form.errors.content %}
+            <ul class="errors">
+            {% for error in form.errors.content %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+        <div class="modal-bottom"><a href="#" class="g-button g-button-submit modal-ajax-submit">Edit</a> <a href="#" class="g-button g-button-white modal-close">Close</a></div>
+    </form>
+{% endblock content %}

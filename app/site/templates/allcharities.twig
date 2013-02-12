@@ -1,0 +1,57 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block page_title %}All deals :: DailyDeals{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="/js/jquery.countdown.min.js"></script>
+		<script type="text/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>
+		<script type="text/javascript" src="/js/slides.min.jquery.js"></script>
+		<script type="text/javascript" src="/js/jquery.prettyPhoto.js"></script>
+		<script type="text/javascript" src="/js/product.js"></script>
+		<script type="text/javascript" src="/js/function.js"></script>
+{% endblock js %}
+		
+{% block css %}
+		<link rel="stylesheet" type="text/css" href="/css/ui-lightness/jquery-ui-1.8.16.custom.css" />
+		<link rel="stylesheet" type="text/css" href="/css/prettyPhoto.css" />
+{% endblock css %}
+    
+{% block main_menu %}
+<div class="main_menu_container">
+    <ul class="main_menu">
+        <li><a href="/">Today's Deal</a></li>
+        <li><a href="/all-deals">All Deals</a></li>
+        <li><a href="/recent-deals">Recent Deals</a></li>
+        <li><a href="/charities" class="active">Charities</a></li>
+				<li><a href="/how-its-working" class="white-button">How Does It Work?</a></li>
+				{% if app.shopCart.product_id %}<li class="h_basket"><a href="{{router.url_for('@paymentShopCart')}}" class="basket">Shopcart</a></li>{% endif %}
+    </ul>
+</div>
+{% endblock main_menu %}
+
+{% block content_page %}
+		<div style="padding: 0px 14px;">
+		{% set i = 0 %}
+		{% for charity in products %}
+			{% set i = i + 1 %}
+			{% include 'inc/charityList.twig' %}
+			{% if i%2 != 0 %}
+			<div class="border-vertical"></div>
+			{% endif %}
+		{% endfor %}
+		</div>
+{% endblock content_page %}
+    
+{% block right_side %}
+                <a title="Help" style="font-size: 11px" class="help-link" href="#">help</a><div class="inv help-message">{{helpObj.getHelp(14).content|raw}}</div>
+<br /><br />
+    <div class="right-box-top">
+        <div style="color:#fff;font-size: 16px">Watch Us</div>
+    </div>
+    <div class="right-box-content">
+        <div style="text-align:center">
+            <a href="https://www.youtube.com/watch?v=pMCPHVjKQdE" rel="prettyPhoto" title=""><img src="/images/default.jpg" alt="WinMaWeb" width="240" /></a>
+        </div></div>
+    <div class="right-box-bottom">&nbsp;</div>
+		
+{% endblock right_side %}

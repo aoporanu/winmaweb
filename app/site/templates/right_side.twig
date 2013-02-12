@@ -1,0 +1,67 @@
+<div class="search_container">
+	<form name="frmSearch" class="search-form" method="get" action="/search" enctype="application/x-www-form-urlencoded">
+		{{ forms.input('term', '') }}
+		<input class="search_button" type="submit" value="Search" />
+	</form>
+</div>
+
+<div class="right-box-top">
+	<div style="color:#fff;font-size: 16px">Other deals</div>
+</div>
+<div class="right-box-content">
+	<div>
+		<ul>
+			{% for product in other %}
+				<li style="padding:10px 5px;border-bottom:1px solid #cacaca">
+					<div class="clearfix">
+						<a href="/{{product.User.username}}/{{product.slug}}.html"><img style="vertical-align: middle;" src="/images/site/price_tag_view.png" alt="Price_tag_view" /></a>
+						<a href="/{{product.User.username}}/{{product.slug}}.html">{{product.name}}</a>
+						{% if product.sold > 0 %}<div style="padding-left:20px;padding-top:10px;line-height:20px;height:20px"><img style="vertical-align: middle;" width="17" height="18" title="" src="/images/site/check_mark.png" alt="" /> {{product.sold}} bought</div>{% endif %}
+					</div>
+				</li>
+			{% endfor %}
+		</ul>
+		&nbsp;
+	</div>
+</div>
+<div class="right-box-bottom">&nbsp;</div>
+
+<div class="right-box-top">
+	<div style="color:#fff;font-size: 16px">Watch Us</div>
+</div>
+
+<div class="right-box-content">
+	<div style="text-align:center">
+		<a href="https://www.youtube.com/watch?v=pMCPHVjKQdE" rel="prettyPhoto" title=""><img src="/images/default.jpg" alt="WinMaWeb" width="240" /></a>
+	</div>
+</div>
+<div class="right-box-bottom">&nbsp;</div>
+
+<div class="right-box-top">
+	<div style="color:#fff;font-size: 16px">Tags</div>
+</div>
+<div class="right-box-content">
+	<div class="tagcloud">
+		{% set max = 0 %}
+		{% set min = 1 %}
+		{% for tag in tags %}
+			{% if tag.nr > max %}
+			{% set max = tag.nr %}
+			{% endif %}
+		{% endfor %}
+		{% for tag in tags %}
+			{% set size = max - min %}
+			{% if size == 0 %}
+			{% set size = 1 %}
+			{% endif%}
+			{% if max < 5 %}
+			{% set size = 14 / (5 - max)  / size %}
+			{% else %}
+			{% set size = 14 / size %}
+			{% endif %}
+			{% set size = 8 + size * (tag.nr - min) %}
+			<a href="/tag/{{ tag.name }}" style="font-size: {{size}}pt;">{{ tag.name }}</a>&nbsp;&nbsp;&nbsp;
+		{% endfor %}
+	</div>
+</div>
+<div class="right-box-bottom">&nbsp;</div>
