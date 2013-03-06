@@ -570,5 +570,11 @@ getMyReferrals:
     action: getMyReferrals
   requirements:
     refid: \d+
+    
+payzaSuccess:
+  url: /payza-success/
+  param:
+    module: payment
+    action: successPayza
 #default:
 #  url:   /:module/:action
