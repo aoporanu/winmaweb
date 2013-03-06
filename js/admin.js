@@ -1270,6 +1270,48 @@ $(function() {
         });
     });
     
+	$('#from_date').live('focusin focusout', function(e){
+        var cur = $(this);
+        
+        var dates = $( '#'+cur.attr('id') ).datepicker({
+            dateFormat: "yy-mm-dd",
+//            changeMonth: true,
+//            changeYear: true,
+            numberOfMonths: 1,
+//            minDate:+0,
+            onSelect: function( selectedDate ) {
+                var option = this.id == "start_date" ? "minDate" : "maxDate",
+                instance = $( this ).data( "datepicker" ),
+                date = $.datepicker.parseDate(
+                instance.settings.dateFormat ||
+                $.datepicker._defaults.dateFormat,
+                selectedDate, instance.settings );
+                dates.not( this ).datepicker( "option", option, date );
+            }
+        });
+    });
+
+	$('#to_date').live('focusin focusout', function(e){
+        var cur = $(this);
+        
+        var dates = $( '#'+cur.attr('id') ).datepicker({
+            dateFormat: "yy-mm-dd",
+//            changeMonth: true,
+//            changeYear: true,
+            numberOfMonths: 1,
+//            minDate:+0,
+            onSelect: function( selectedDate ) {
+                var option = this.id == "start_date" ? "minDate" : "maxDate",
+                instance = $( this ).data( "datepicker" ),
+                date = $.datepicker.parseDate(
+                instance.settings.dateFormat ||
+                $.datepicker._defaults.dateFormat,
+                selectedDate, instance.settings );
+                dates.not( this ).datepicker( "option", option, date );
+            }
+        });
+    });
+    
     $('.remove-price').live('click', function(e){
         e.preventDefault();
         var no = $('.price-box').length;

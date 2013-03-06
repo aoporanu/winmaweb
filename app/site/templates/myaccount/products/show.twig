@@ -72,9 +72,9 @@
                                         {#<li><a href="{{router.url_for('@myProductsEdit?id='~product.id)}}" class="modal-addprod">Edit</a></li>#}
 										{% if product.status != -2 %}<li><a href="{{router.url_for('@myProducts?ac=prices&pid='~product.id)}}" class="modal-normal" title="Prices">Prices</a></li>{% endif %}
 										{% if product.status == 0 %}<li><a href="{{router.url_for('@myProductsDelete?id='~product.id)}}" class="ajax-del" style="color:#992a1b">Delete</a></li>{% endif %}
-										{% if product.status == 1 %}
+										{# {% if product.status == 1 %}
 											<li><a href="{{router.url_for('@myProducts?ac=questions&id='~product.id)}}" class="modal-normal" title="Questions">Questions</a></li>
-										{% endif %}
+										{% endif %} #}
 										
                                         {# doar daca produsul este confirmat si merchant_user_id este egal cu id-ul utilizatorului inregistrat #}
                                         {% if product.status == 1 and date < product.endtime|date('Y-m-d H:i:s') %}

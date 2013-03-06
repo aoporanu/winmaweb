@@ -1,0 +1,482 @@
+{% extends imgajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+{% import "/forms/forms.twig" as forms %}
+
+{% block content_page %}
+{#
+{% if err == 1212 %}
+    <div class="error_box"><strong>You must connect at least one merchant account to your account</strong>
+    </div>
+{% else %}
+#}
+{% if form.errors %}
+	<div class="error_box"><strong>There were errors - please verify all fields for errors</strong>
+		{% if err_img %}<br />{{err_img}}{% endif %}
+	</div>
+{% endif %}
+{% if form.success %}
+	<div class="infotip"><strong>Success</strong><br /><br />Product added successfully<br /><a class="modal-close" href="#">Close</a></div>
+{% else %}
+<script type="text/javascript">
+    document.myForm.remLen2.value = 200 - document.myForm.short_description.value.length;
+    function textCounter(field,cntfield,maxlimit) {
+        if (field.value.length > maxlimit) {// if too long...trim it!
+            field.value = field.value.substring(0, maxlimit);
+        // otherwise, update 'characters left' counter
+        }else{
+            cntfield.value = maxlimit - field.value.length;
+        }
+}
+    function updateMarkerPosition(latLng) {
+      document.getElementById('g_lat').value=latLng.lat();
+      document.getElementById('g_lng').value=latLng.lng();
+    }
+    function initialize() {
+          var latLng = new google.maps.LatLng(1.2940447772307804, 103.830810546875);
+          var mlatLng = {% if form.values.g_lat != 0 or form.values.g_lng != 0 %}new google.maps.LatLng({{form.values.g_lat}}, {{form.values.g_lng}}){%else%}latLng{% endif %}
+
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 5,
+            center: mlatLng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          });
+          
+          {#{% if userObj.hasRole('AGENT') %}#}
+					{% if userObj.hasRole('SHOP') %}
+                {#var mda = $('#merchant_user_id').val();#}
+								var mda = 0;
+                var masa = eval({{for_masa|raw}});
+
+                var mlatLng = new google.maps.LatLng(masa[mda]['CompanyAddress']['latitude'], masa[mda]['CompanyAddress']['longitude'])
+                var marker = new google.maps.Marker({
+                    position: mlatLng,
+                    title: 'Drag to your deal location',
+                    map:map,            
+                    draggable: true
+                });
+                        
+          {% else %}
+          var marker = new google.maps.Marker({
+            position: mlatLng,
+            title: 'Drag to your deal location',
+            {% if form.values.g_lat != 0 or form.values.g_lng != 0 %}
+            map:map,            
+            {% endif %}
+            draggable: true
+          });
+          {% endif %}
+      //var infoWindow = new google.maps.InfoWindow;
+
+      // Update current position info.
+
+      google.maps.event.addListener(map, 'click', function(event) {
+        marker.setMap(map);
+        marker.setPosition(event.latLng);
+        map.setCenter(marker.getPosition());
+        updateMarkerPosition(marker.getPosition());
+      });
+      
+      // Add dragging event listeners.
+      google.maps.event.addListener(marker, 'click', function() {
+
+      });
+
+      google.maps.event.addListener(marker, 'drag', function() {
+      });
+
+      google.maps.event.addListener(marker, 'dragend', function() {
+        map.setCenter(marker.getPosition());
+        updateMarkerPosition(marker.getPosition());
+      });
+    }
+    function loadScript() {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "https://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+      document.body.appendChild(script);
+    }
+  
+    
+    // Onload handler to fire off the app.
+    {% if not imgajax %}
+        window.onload = loadScript;
+    //google.maps.event.addDomListener(window, 'load', initialize);
+    {% else %}
+        $(function() {
+            loadScript();
+            //initialize();
+        });
+    {% endif %}
+	$('.link_after_label:hover').css('text-decoration', 'underline');
+</script>
+<form enctype="multipart/form-data" action="{{router.url_for('@myProductsAdd')}}" method="post" name="myForm">
+	<div class="form-global clearfix">
+		<!--<div class="clearfix">
+			{#<input type='hidden' name='isajaxrequest' id='isajaxrequest' value='0' />#}
+			<div class="label label_big"><label for="contract">Contract: <em>(file need to be in .pdf format)</em></label></div>
+			<div class="input">
+				<input name="contract" type="file" id="contract" />
+				{{ forms.errors(form.errors.contract) }}
+			</div>
+		</div>-->
+		<div class="clearfix">
+			<div class=" label label_big"><label for="name">Name of Deal Offer:</label></div>
+			<div class="input">
+				{{ forms.input('name', form.values.name) }}
+				{{ forms.errors(form.errors.name) }}
+			</div>
+		</div>
+		{#{% if userObj.hasRole('AGENT') %}#}
+		{% if userObj.hasRole('SHOP') %}
+			<script type="text/javascript">
+					$(function() {
+							//var mda = $('#merchant_user_id').val();
+							var mda = 0;
+							var masa = eval({{for_masa|raw}});
+							$('#address').val(masa[mda]['CompanyAddress']['address']);
+							$('#city').val(masa[mda]['CompanyAddress']['city']);
+							$('#county').val(masa[mda]['CompanyAddress']['county']);
+							$('#postcode').val(masa[mda]['CompanyAddress']['postcode']);
+							$('#g_lat').val(masa[mda]['CompanyAddress']['latitude']);
+							$('#g_lng').val(masa[mda]['CompanyAddress']['longitude']);
+							$('#phone').val(masa[mda]['phone']);
+
+							//$('#merchant_user_id').live('change', function(e){
+							//    var oid = $(this).val();
+							//    $('#address').val(masa[oid]['CompanyAddress']['address']);
+							//    $('#city').val(masa[oid]['CompanyAddress']['city']);
+							//    $('#county').val(masa[oid]['CompanyAddress']['county']);
+							//    $('#postcode').val(masa[oid]['CompanyAddress']['postcode']);
+							//    $('#g_lat').val(masa[oid]['CompanyAddress']['latitude']);
+							//    $('#g_lng').val(masa[oid]['CompanyAddress']['longitude']);
+							//    $('#phone').val(masa[oid]['phone']);
+							//})
+					});
+			</script>
+			<div class="clearfix">
+				<div class="label label_big"><label for="merchant_ref_id">Merchant Refferal ID:</label></div>
+				<div class="input">
+					{{ forms.input('merchant_ref_id', app.user.ref_id) }}
+				</div>
+			</div>
+		{% endif %}
+		{% if userObj.hasRole('AGENT') and not userObj.hasRole('SHOP') %}
+		<div class="clearfix">
+			{#<div class=" label label_big"><label for="merchant_user_id">Merchant:</label></div>
+			<div class="input">
+				{% if form.merchant_user_id.options %}
+					{{ forms.select('merchant_user_id', form.merchant_user_id.options, form.values.merchant_user_id) }}
+					{{ forms.errors(form.errors.merchant_user_id) }}
+				{% else %}
+					<a href="{{router.url_for('@addMerchantToAgent')}}" class="g-button g-button-share" style="background-image: -moz-linear-gradient(center top , #426BBB, #426BBB);">Add Merchant</a>
+				{% endif %}
+			</div>#}
+			<div class=" label label_big"><label for="merchant_user_id">Merchant's Referral ID:</label></div>
+			<div class="input">
+				{{ forms.input('merchant_ref_id', form.values.merchant_ref_id) }}
+				{{ forms.errors(form.errors.merchant_ref_id) }}
+			</div>
+		</div>
+		{% endif %}
+		<div class="clearfix">
+			<div class="label label_big"><label for="address">Phone:</label></div>
+			<div class="input">
+				{{ forms.input('phone', form.values.phone) }}
+				{{ forms.errors(form.errors.phone) }}
+			</div>
+		</div>
+		<div class="page_subtitle_wrapper clearfix">
+			<span class="page_subtitle_two">Deal Location</span>
+		</div>
+		<div class="inv">
+			{#<input type="hidden" name="isajaxrequest" value="1" />#}
+			{{ forms.input('g_lat', form.values.g_lat, 'hidden') }}
+			{{ forms.input('g_lng', form.values.g_lng, 'hidden') }}
+		</div>
+		<div style="color:#666">Please provide the exact location of the Deal Offer</div>
+		<div class="clearfix">
+			<div class="label label_big"><label for="address">Address:</label></div>
+			<div class="input">
+				{{ forms.input('address', form.values.address) }}
+				{{ forms.errors(form.errors.address) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class="label label_big"><label for="city">City:</label></div>
+			<div class="input">
+				{{ forms.input('city', form.values.city) }}
+				{{ forms.errors(form.errors.city) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class="label label_big"><label for="county">Province/County:</label></div>
+			<div class="input">
+				{{ forms.input('county', form.values.county) }}
+				{{ forms.errors(form.errors.county) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class="label label_big"><label for="postcode">Postal Code:</label></div>
+			<div class="input">
+				{{ forms.input('postcode', form.values.postcode) }}
+				{{ forms.errors(form.errors.postcode) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class="label label_big"><label for="country">Country:</label></div>
+			<div class="input">
+				{{ forms.select('country', form.countries.options, form.values.country) }}
+				{{ forms.errors(form.errors.country) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div style="width:600px">Add a marker exactly where the deal is located, please zoom in and double click the map where you'd like the marker to be. </div>
+			<div id="map" align="center" style="width: 600px; height: 300px;margin-top:15px; position: relative;overflow: hidden;"></div>
+		</div>
+		<br /><br />
+		<div class="clearfix">
+			<div class=" label label_big"><label for="min_sold">Minimum # Sold:</label></div>
+			<div class="input">
+				{{ forms.input('min_sold', form.values.min_sold) }}
+				{{ forms.errors(form.errors.min_sold) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big"></div>
+			<div class="input">
+				<div style="color:#666">Minimum number of deals needed to be sold before the deal offer is active.</div>
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big"><label for="max_sold">Maximum # Sold per Member:</label></div>
+			<div class="input">
+				{{ forms.input('max_sold', form.values.max_sold) }}
+				{{ forms.errors(form.errors.max_sold) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big"></div>
+			<div class="input">
+				<div style="color:#666">Maximum number of deal offers that a member may buy.</div>
+			</div>
+		</div>
+		<div class="prices-box">
+			{% for x in 1..no %}
+				<div class="price-box">
+					<input type="hidden" name="price[]" id="price" value="1" />
+					<div style="float: right;"><strong>This is the Price #{{x}} of the Deal Offer</strong></div>
+					<div class="clear"></div>
+					<div style="border:1px solid #cacaca;padding:5px;margin:10px 0;">
+						<div class="clearfix">
+							<div class="label label_big"><label for="offer_price_name_{{x}}">Name of Deal Offer #{{x}}:</label></div>
+							<div class="input">
+								{{ forms.input('offer_price_name_'~x, price_form.getValue('offer_price_name_'~x)) }}
+								{{ forms.errors(price_form.getMessages('offer_price_name_'~x)) }}
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class=" label label_big"></div>
+							<div class="input">
+								<div style="color:#666">This is the name of the deal offer under the First Price it will have (This is to allow Merchants to change the pricing on the same deal, but for example at different times)  Eg. A Merchant wishes to sell a vacation package at one price on weekends, another on weekdays.</div>
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class=" label label_big"><label for="producer_price_{{x}}">Original Price:</label></div>
+							<div class="input">
+								{{ forms.input('producer_price_'~x, price_form.getValue('producer_price_'~x)) }}
+								{{ forms.errors(price_form.getMessages('producer_price_'~x)) }}
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class=" label label_big"></div>
+							<div class="input">
+								<div style="color:#666">Note: This is the normal cost of the product or service you are providing through WinMaWeb before any discounts are applied.</div>
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class=" label label_big"><label for="discount_{{x}}">Discount %:</label></div>
+							<div class="input">
+								{{ forms.input('discount_'~x, price_form.getValue('discount_'~x)) }}
+								{{ forms.errors(price_form.getMessages('discount_'~x)) }}
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class=" label label_big"></div>
+							<div class="input">
+								<div style="color:#666">Please only input numbers with no units (no percentages, no currency symbols)</div>
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class=" label label_big"><label>Sale Price on WinMaWeb:</label></div>
+							<div class="input" style="padding:4px;" id="discount_{{x}}_price">$ <span class="s">0</span> <a href="#" class="calc" rel="{{x}}">Calculate</a></div>
+						</div>
+						<div class="clearfix">
+							<div class=" label label_big"></div>
+							<div class="input">
+								<div style="color:#666">This is the sale price that members will see and purchase at on WinMaWeb.</div>
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class=" label label_big"><label for="stock_{{x}}">WinMaWeb Stock:</label></div>
+							<div class="input">
+								{{ forms.input('stock_'~x, price_form.getValue('stock_'~x)) }}
+								{{ forms.errors(price_form.getMessages('stock_'~x)) }}
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class=" label label_big"></div>
+							<div class="input">
+								<div style="color:#666">This is the maximum number of deal offers that WinMaWeb may sell of your product and service.</div>
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class=" label label_big"><label for="expire_{{x}}">Price #{{x}} Expires on:</label></div>
+							<div class="input">
+								{#{{ forms.input('expire_'~x, price_form.getValue('expire_'~x)) }}#}
+								<input type="text" name="{{ 'expire_'~x }}" id="{{ 'expire_'~x }}" value="{{ price_form.getValue('expire_'~x) }}" class="exdate" />
+								{{ forms.errors(price_form.getMessages('expire_'~x)) }}
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class=" label label_big"></div>
+							<div class="input">
+								<div style="color:#666">This is the Voucher expiration date and time.  The Voucher will no longer be redeemable after this date and time.</div>
+							</div>
+						</div>
+						<div class="remove-button">
+							{% if x == no and x > 1 %}
+								<a href="#" class="remove-price">Remove</a>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		<div class="clearfix">
+			<a class="g-button g-button-share add-price" href="#">Add price</a>
+		</div>
+		{#<div class="clearfix">
+			<div class=" label label_big"><label for="category">Category:</label></div>
+			<div class="input">
+				{{ forms.select('category', form.categories.options, form.values.category) }}
+				{{ forms.errors(form.errors.category) }}
+			</div>
+		</div>#}
+		{#<div class="clearfix">
+			<div class=" label label_big"><label for="subcategory">Sub-Category:</label></div>
+			<div class="input">
+				{{ forms.select('subcategory', form.subcategories.options, form.values.subcategory) }}
+				{{ forms.errors(form.errors.subcategory) }}
+			</div>
+		</div>#}
+		{#<div class="clearfix">
+			<div class=" label label_big"></div>
+			<div class="input">
+				<div style="color:#666">Please browse the categories and choose the one that best matches your product or service.</div>
+			</div>
+		</div>#}
+		<div class="clearfix">
+			<div class=" label label_big"><label for="start_time">Start time:</label></div>
+			<div class="input">
+				{{ forms.input('start_time', form.values.start_time) }}
+				{{ forms.errors(form.errors.start_time) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big"></div>
+			<div class="input">
+				<div style="color:#666">Server time is {{now|date()}} if you want to show your product imediately you need to set the start time as the server time</div>
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big"><label for="end_time">End time:</label></div>
+			<div class="input">
+				{{ forms.input('end_time', form.values.end_time) }}
+				{{ forms.errors(form.errors.end_time) }}
+			</div>
+		</div>
+                <div class="clearfix">
+			<div class=" label label_big"></div>
+			<div class="input">
+				<div style="color:#666">This is when the deal offer will stop being sold on WinMaweb.</div>
+			</div>
+		</div>
+		<div class="clearfix">
+			<input type='hidden' name='isajaxrequest' id='isajaxrequest' value='0' />
+			<div class=" label label_big"><label for="photo123">Photo:</label></div>
+			<div class="input">
+				<input name="photo123" type="file" id="photo123" />
+				{{ forms.errors(form.errors.photo123) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big"><label for="tags">Tags:</label></div>
+			<div class="input">
+				{{ forms.input('tags', form.values.tags) }}
+				{{ forms.errors(form.errors.tags) }}
+			</div>
+		</div>
+                <div class="clearfix">
+			<div class=" label label_big"></div>
+			<div class="input">
+				<div style="color:#666">Please be sure to hit the ENTER key after adding a tag. Your tag has not been completed properly until it is outlined with a green background.</div>
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big"><label for="terms">Offer terms:</label></div>
+			<div class="input">
+				{{ forms.textarea('terms', form.values.terms) }}
+				{{ forms.errors(form.errors.terms) }}
+			</div>
+		</div>
+                <div class="clearfix">
+			<div class=" label label_big"></div>
+			<div class="input">
+				<div style="color:#666">Please explain any and all limitations and restrictions here. Some examples are; <br />1) Offer is limited to 1 deal per member. <br />2) 5 Deals must be purchased before the deal is activated. <br />3) Offer is only valid on Tuesdays at the Location on Queens Rd in Queenstown. <br />4)Vouchers must be redeemed between the 4th and 6th of July, 2012. [Please Note- Whatever is written here will also be printed on the bottom of the Vouchers to avoid confusion.]</div>
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big"><label for="short_description">Short description:</label></div>
+			<div class="input">
+				{#{{ forms.textarea('short_description', form.values.short_description) }}#}
+                                <textarea name="short_description" wrap="physical" cols="28" rows="5"
+                                    onKeyDown="textCounter(document.myForm.short_description,document.myForm.remLen2,200)"
+                                    onKeyUp="textCounter(document.myForm.short_description,document.myForm.remLen2,200)">{{form.values.short_description}}</textarea>
+                                    <br>
+                                    <input readonly type="text" name="remLen2" size="3" maxlength="3" value="200">
+                                    characters left
+                                    <br>
+				{{ forms.errors(form.errors.short_description) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big"><label for="description">Description:</label></div>
+			<div class="input">
+				{{ forms.textarea_editor('description', form.values.description) }}
+				{{ forms.errors(form.errors.description) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class=" label label_big">
+				<div style="float: left;">
+					Accept <a href="/Terms and Conditions.pdf" style="color:#2F5BB7;text-decoration:none;" target="_blank" class="link_after_label">terms and conditions</a>
+				</div>
+				<div style="float: right;">
+					<input type="checkbox" name="terms_checkbox" id="terms_checkbox" style="width: 20px;" value="1" />
+				</div>
+				<div class="clear"></div>
+				{{ forms.errors(form.errors.terms_checkbox) }}
+			</div>
+			<div class="input"></div>
+		</div>
+	</div>
+	<div class="form-global clearfix">
+		<div class=" label label_big"><label>&nbsp;</label></div>
+		<div class="left"><input type="submit" class="g-button g-button-submit modal-submit-product" value="Add" /></div>
+	</div>
+</form>
+{% endif %}
+<script type="text/javascript">
+	if($('#terms').val() == '0') { $('#terms').val(''); }
+</script>
+{#{% endif %}#}
+{% endblock content_page %}

@@ -35,6 +35,9 @@
             <li>
                 <a class="nav-top-item{% if adm_menu == 'products' %} current{% endif %}" href="{{router.url_for('@manageProducts')}}" style="padding-right: 15px;">Deal Offers</a>
             </li>
+		<li>
+                <a class="nav-top-item{% if adm_menu == 'reports' %} current{% endif %}" href="{{router.url_for('@reports')}}" style="padding-right: 15px;">Reports</a>
+            </li>
             {#<li>
                 <a class="nav-top-item{% if adm_menu == 'newsletter' %} current{% endif %}" href="{{router.url_for('@newsletter')}}" style="padding-right: 15px;">Newsletter</a>
             </li>#}
@@ -50,5 +53,11 @@
 						<li>
 								<a class="nav-top-item{% if adm_menu == 'my_network' %} current{% endif %}" href="{{router.url_for('@myNetwork')}}" style="padding-right: 15px;">My Network Links</a>
 						</li>
+		{# <li>
+			<a class="nav-top-item{% if adm_menu == 'payment_options' %} current{% endif %}" href="{{router.url_for('@paymentOptions')}}" style="padding-right: 15px;">Payment Options</a>
+		</li> #}
+		{# <li>
+			<a class="nav-top-item{% if adm_menu == 'reports' %} current{% endif %}" href="{{router.url_for('@reports')}}" style="padding-right: 15px;">Reports</a>
+		</li> #}
         </ul>
 </div>

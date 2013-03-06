@@ -1521,7 +1521,6 @@ class myAccountController extends Cms_Controller {
 		$bank_name->addMultiOption('CitiBank', 'CitiBank');
 		$bank_name->addMultiOption('HSBC ', 'HSBC');
 		$bank_name->setRequired();
-		$payza_email = $form->createElement('text', 'payza_email');
 
 
 		$bank_name->addValidator('InArray', false, array(array_keys($bank_name->getMultiOptions()), 'messages' => 'This option it is not in the original select values'));
@@ -1544,8 +1543,7 @@ class myAccountController extends Cms_Controller {
 						->addElement($bank_branch_code)
 						->addElement($bank_account_number)
 						->addElement($bank_name)
-				->addElement($bank_address)
-				->addElement($payza_email);
+						->addElement($bank_address);
 		$form->setDefaults($this->user->getUser()->toArray());
 		$addr = $this->user->getUser()->UserAddress->toArray();
 		$form->setDefaults($addr);
@@ -1554,7 +1552,7 @@ class myAccountController extends Cms_Controller {
 			if ($form->isValid($this->request->getPost())) {
 				$user = $this->user->getUser();
 //				$user->is_private = $form->getValue('is_private');
-				if ($form->getValue('is_private') == '1') {
+				if($form->getValue('is_private') == '1') {
 					$user->is_private = 1;
 				} else {
 					$user->is_private = 0;
@@ -1571,7 +1569,6 @@ class myAccountController extends Cms_Controller {
 				$user->bank_account_number = $form->getValue('bank_account_number');
 				$user->bank_name = $form->getValue('bank_name');
 				$user->bank_address = $form->getValue('bank_address');
-				$user->payza_email = $form->getValue('payza_email');
 				$user->UserAddress->address = $form->getValue('address');
 				$user->UserAddress->city = $form->getValue('city');
 				$user->UserAddress->county = $form->getValue('county');

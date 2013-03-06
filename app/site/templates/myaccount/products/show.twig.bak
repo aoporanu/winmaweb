@@ -1,0 +1,129 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block css %}
+	{% if not app.ajax %}
+		{% include "myaccount/css.twig" %}
+	{% endif %}
+{% endblock css %}
+{% block js %}
+	{% if not app.ajax %}
+		{% include "myaccount/js.twig" %}
+	{% endif %}
+{% endblock js %}
+
+{% block content_page %}
+	<h1>My Deal Offers</h1>
+	<div class="ma_top"></div>
+	<div class="ma_content">
+		<a href="{{router.url_for('@myProductsAdd')}}" class="g-button g-button-share modal-addprod">Add Deal Offer</a>
+		{#<a href="{{cFile}}" class="g-button-red-offers">Download Contract</a>#}
+		{#<a href="http://www.foxitsoftware.com/downloads/" class="g-button" style="border: 1px solid #7C0522;" target="_blank">Download Foxit Reader</a>#}
+		{#{% if userObj.hasRole('AGENT') %}
+			<a href="{{router.url_for('@addMerchantToAgent')}}" class="g-button-blue-offers ajax-link">Add Merchant</a>
+		{% endif %}#}
+		<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+		<ul class="ma_products">
+			{% for product in products %}
+				<li{% if loop.last %} class="last"{% endif %}>
+					<div class="yui3-g">
+						<div class="yui3-u-1-4">
+							{% if product.ProductMedia.0 %}
+								<div style="width:120px;height:67px;"><a href="/{{product.User.username}}/{{product.slug}}.html"><img src="{{product.ProductMedia.0.dir}}/thumb120x67/{{product.ProductMedia.0.file_name}}_{{product.ProductMedia.0.id}}.{{product.ProductMedia.0.ext}}" width="120" height="67" style="border:2px solid #fff;padding:1px;" /></a></div>
+							{% else %}
+								<div style="width:120px;height:67px;border:2px solid #fff;padding:1px;"><a href="/{{product.User.username}}/{{product.slug}}.html">No image</a></div>
+							{% endif %}
+						</div>
+						<div class="yui3-u-3-4">
+							<div class="yui3-g">
+								<div class="yui3-u-3-4" style="width:65%;">
+									<h2>{{product.name}}{% if product.status == -2 %} (Product expired whitout having the minimum bought deals){% endif %}</h2>
+									{#<div style="height:40px;">{{product.short_description}}</div>#}
+									<div style="padding-bottom:10px;">
+										{% if product.starttime|date('Y-m-d H:i:s') > "now"|date('Y-m-d H:i:s') %}Start on: 
+											<span style="font-weight:bold">{{product.starttime|date('Y-m-d H:i:s')}}</span>
+										{% endif %}
+										{% if product.endtime|date('Y-m-d H:i:s') > "now"|date('Y-m-d H:i:s') and product.starttime|date('Y-m-d H:i:s') < "now"|date('Y-m-d H:i:s') %}Expire on: 
+											<span style="font-weight:bold">{{product.endtime|date('Y-m-d H:i:s')}}</span>
+										{% endif %}
+										{% if product.endtime|date('Y-m-d H:i:s') < "now"|date('Y-m-d H:i:s') %}Expired: 
+											<span style="font-weight:bold">{{product.endtime|date('Y-m-d H:i:s')}}</span>
+										{% endif %}
+									</div>
+									<div class="yui3-g">
+										<div class="yui3-u-1-3">
+											<div>
+												<div>Sold: <span style="font-weight:bold;color: #992a1b">{% if product.status == -2 %}-{% else %}{{product.sold}}{% endif %}</span></div>
+											</div>
+										</div>
+										<div class="yui3-u-2-3">
+											<div>
+												Status: 
+												{% if product.status == 0 %}<span style="color:#23A4FF">pending</span>{% endif %}
+												{% if product.status == 1 %}<span style="color:#3d9400">Accepted</span><br/> Merchant Factor: {{100-product.factor}}%{% endif %}
+												{% if product.status == -1 %}<span style="color:#992a1b">Rejected</span>{% endif %}{% if product.status == -2 %}<span style="color:#992a1b">Expired</span>{% endif %}
+												{% if product.status == 2 %}<span style="color:red">Not confirmed</span>{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+                                    <div class="yui3-u-1-4" style="width:35%;">
+									<ul class="ma-product-settings">
+										<li><a href="{{router.url_for('@myProductsGallery?id='~product.id)}}" class="modal-prodgal">Gallery</a></li>
+                                        {#<li><a href="{{router.url_for('@myProductsEdit?id='~product.id)}}" class="modal-addprod">Edit</a></li>#}
+										{% if product.status != -2 %}<li><a href="{{router.url_for('@myProducts?ac=prices&pid='~product.id)}}" class="modal-normal" title="Prices">Prices</a></li>{% endif %}
+										{% if product.status == 0 %}<li><a href="{{router.url_for('@myProductsDelete?id='~product.id)}}" class="ajax-del" style="color:#992a1b">Delete</a></li>{% endif %}
+										{% if product.status == 1 %}
+											<li><a href="{{router.url_for('@myProducts?ac=questions&id='~product.id)}}" class="modal-normal" title="Questions">Questions</a></li>
+										{% endif %}
+										
+                                        {# doar daca produsul este confirmat si merchant_user_id este egal cu id-ul utilizatorului inregistrat #}
+                                        {% if product.status == 1 and date < product.endtime|date('Y-m-d H:i:s') %}
+                                            <li>
+												<form method="post" id="show_on_profile">
+                                                    {% if product.ShowOnProfile.product_id != product.id %}
+
+                                                        <input type="checkbox" class="check_show_on_profile" />&nbsp;Show on profile
+                                                    {% else %}
+                                                        <input type="checkbox" checked="checked" class="check_show_on_profile" />&nbsp;Show on profile
+                                                    {% endif %}
+													<input type="hidden" value="{{ product.id }}" class="product_id_hidden" />
+												</form>
+											</li>
+                                        {% endif %}
+                                            {% if product.status == 2 and product.merchant_user_id == app.user.id %}
+										<span style="padding: 2px 0 2px 10px"><a href="/{{product.User.username}}/{{product.slug}}.html" class="modal-addprod g-button g-button-share">View & Confirm</a></span>
+										{% endif %}
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+			{% else %}
+				<li class="last">You do not have any offers added</li>
+			{% endfor %}
+		</ul>
+		<ul class="pagination clearfix">{{ pagination|raw }}</ul>
+	</div>
+	<!-- trebuie un ajax pentru a bifa checkboxul daca avem show_on_profile -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.check_show_on_profile').click(function() { 
+				$.post('/my-account/show-on-profile/'+$(this).next('.product_id_hidden').val(), function(data) {
+                    alert(data);
+                }); 
+			});
+            $('a[href="/my-account/my-offers/add"]').click(function() {
+                $('.content').css('height', '2935px');
+            });
+		});
+	</script>
+	<div class="ma_bottom"></div>
+{% endblock content_page %}
+
+{% block right_side %}
+	{% if not app.ajax %}
+		{% set ma_menu = 'myproducts' %}
+		{% include "myaccount/menu.twig" %}
+	{% endif %}
+{% endblock right_side %}
