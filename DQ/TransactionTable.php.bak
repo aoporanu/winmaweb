@@ -34,8 +34,7 @@ class TransactionTable extends Doctrine_Table
         'withdraw-giro' => 60,
         'deposit-giro' =>65,
         'deposit-paypal-fee'=> 75,
-        'buy-wmw' => 80,
-		'buy-payza'	=> 85
+        'buy-wmw' => 80
     );
     
     const DEPOSIT = 0;
@@ -202,25 +201,10 @@ class TransactionTable extends Doctrine_Table
                 ->leftJoin('t.Product p')
 								->leftJoin('t.Coupon c')
                 ->addWhere('t.sender_id = ?', $params['sender_id'])
-                ->andWhereIn('t.transaction_type', array(self::$type['product-refund'],self::$type['buy'], self::$type['buy-wmw'], self::$type['merchant-fee'], self::$type['donation'], self::$type['buy-payza']))
+                ->andWhereIn('t.transaction_type', array(self::$type['product-refund'],self::$type['buy'], self::$type['buy-wmw'], self::$type['merchant-fee'], self::$type['donation']))
                 ->orderBy('created_at DESC');
     }
     
-	/**
-	 * Returns all transactions
-	 */
-	public function getAllTransactions($params = array())
-    {
-        return $this->createQuery()
-                ->select('t.*, r.username, r.id, r.ref_id, p.*, c.id as cid')
-                ->from('Transaction t')
-                ->leftJoin('t.Receiver r')
-                ->leftJoin('t.Product p')
-				->leftJoin('t.Coupon c')
-//                ->addWhere('t.sender_id = ?', $params['sender_id'])
-                ->andWhere('t.transaction_type = ?', $params['transaction_type'])
-                ->orderBy('created_at DESC');
-    }
     /*
      * Merchant fee transaction and coupon retrival transaction
      */
@@ -240,25 +224,6 @@ class TransactionTable extends Doctrine_Table
                 ->orderBy('t.created_at DESC');
     }
     
-    /*
-     * Received transactions for admin
-     */
-    
-    public function getReceivedTransactionsAdmin()
-    {
-        return $this->createQuery()
-                ->select('t.*, s.username, s.id, t2.*')
-                ->from('Transaction t')
-                ->leftJoin('t.Sender s')
-                ->addWhere('t.status = ?', self::$status['ok'])
-//                ->addWhere('t.receiver_id = ?', $params['receiver_id'])
-                ->andWhere('t.transaction_type = ?', self::$type['merchant-commission'])
-//                ->orWhere('t.receiver_id = ?', $params['receiver_id'])
-//                ->andWhere('t.transaction_type = ?', self::$type['do-share-do-receive'])
-//                ->andWhere('t.status = ?', self::$status['ok'])
-                ->orderBy('t.created_at DESC');
-    }
-    
     public function getNetworkTransactions($params = array())
     {
         return $this->createQuery()
@@ -267,28 +232,6 @@ class TransactionTable extends Doctrine_Table
                 ->leftJoin('t.Sender s')
                 ->addWhere('t.receiver_id = ?', $params['receiver_id'])
                 ->andWhereIn('t.transaction_type', array(self::$type['level-commission']))
-                ->orderBy('t.created_at DESC');
-    }
-    
-    public function getNetworkTransactionsAdmin()
-    {
-        return $this->createQuery()
-                ->select('t.*, s.username, s.id, t2.*')
-                ->from('Transaction t')
-                ->leftJoin('t.Sender s')
-//                ->addWhere('t.receiver_id = ?', $params['receiver_id'])
-                ->andWhereIn('t.transaction_type', array(self::$type['level-commission']))
-                ->orderBy('t.created_at DESC');
-    }
-    
-    public function getAllNetworkTransactionsAdmin()
-    {
-        return $this->createQuery()
-                ->select('t.*, s.username, s.id, t2.*')
-                ->from('Transaction t')
-                ->leftJoin('t.Sender s')
-//                ->addWhere('t.receiver_id = ?', $params['receiver_id'])
-//                ->andWhereIn('t.transaction_type', array(self::$type['level-commission']))
                 ->orderBy('t.created_at DESC');
     }
     

@@ -26,6 +26,7 @@
     <script type="text/javascript" src="/js/highcharts.js"></script>
     <script src="/js/modules/exporting.js" type="text/javascript"></script>
     <script src="/js/global.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
     {% block js %}
     {% endblock %}
     <script type="text/javascript" src="/js/admin.js"></script>
@@ -103,8 +104,15 @@
                             <a class="nav-top-item{% if adm_menu == 'help' %} current{% endif %}" href="{{router.url_for('@help')}}" style="padding-right: 15px;">Help</a>
                         </li>#}
 												<li>
+                            <a class="nav-top-item{% if adm_menu == 'reports' %} current{% endif %}" href="{{router.url_for('@reports')}}" style="padding-right: 15px;">Reports</a>
+                        </li>
+												<li>
                             <a class="nav-top-item{% if adm_menu == 'my_network' %} current{% endif %}" href="{{router.url_for('@myNetwork')}}" style="padding-right: 15px;">My Network Links</a>
                         </li>
+												
+						{# <li>
+							<a class="nav-top-item{% if adm_menu == 'payment_options' %} current{% endif %}" href="{{router.url_for('@paymentOptions')}}" style="padding-right: 15px;">Payment Options</a>
+						</li> #}
                     </ul>
                     </div>
                 {% endblock left_menu %}

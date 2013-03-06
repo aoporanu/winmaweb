@@ -12,7 +12,8 @@ function initTinymce(){
             // General options
             theme : "advanced",
             mode : "textareas",
-            setup : function(ed) {ed.onPaste.add( function(ed, e, o) {
+		setup : function(ed) {
+			ed.onPaste.add( function(ed, e, o) {
                         // return tinymce.dom.Event.cancel(e);
                                     //tinymce.execCommand('mcePasteText');
                                     } );
@@ -79,7 +80,9 @@ $(function() {
                 $('body').prepend('<div id="hello_bar"><div class="hello-container"><p><span class="loader">please wait</span></p></div></div>');
                 }
                 if($(document).scrollTop() - $('#ajax-content').offset().top > 0 || $(document).scrollTop() - $('#ajax-content').offset().top < 0){
-                $.scrollTo('#ajax-content', {duration:1000});
+					$.scrollTo('#ajax-content', {
+						duration:1000
+					});
                 }
                 m.addClass('over');
                 started = true;
@@ -147,7 +150,10 @@ $(function() {
         stime = new Date($('.p_timer_content span').last().text());
         ntime = new Date($('.p_timer_content span').first().text());
 //        $(this).countdown({until: ntime, onTick: timerPbar, format: 'HMS'});
-				$(this).countdown({until: ntime, onTick: timerPbar});
+		$(this).countdown({
+			until: ntime, 
+			onTick: timerPbar
+		});
     });
     
     
@@ -363,7 +369,9 @@ $(function() {
     $('.modal-submit-product').live('click', function(e){
         e.preventDefault();
         var h = $(this).closest('form').attr('action');
-        var modalOptions = $().modal({'boxType': 'getOptions'});
+		var modalOptions = $().modal({
+			'boxType': 'getOptions'
+		});
 
         var options = { 
             //target: ,   // target element(s) to be updated with server response 
@@ -374,7 +382,9 @@ $(function() {
               
                 var modalId = '#modal-popup-' + modalOptions + ' .modal-title';
                 if($(document).scrollTop() - $(modalId).offset().top > 0 || $(document).scrollTop() - $(modalId).offset().top < 0){
-                $.scrollTo(modalId, {duration:1000});
+					$.scrollTo(modalId, {
+						duration:1000
+					});
                 }
             },
             success: function(response){
@@ -398,7 +408,11 @@ $(function() {
                     if ($().tagsInput) {
                         $('#tags').tagsInput({
                             autocomplete_url: '/get-tags',
-                            autocomplete: {selectFirst:true,width:'100px',autoFill:true}
+							autocomplete: {
+								selectFirst:true,
+								width:'100px',
+								autoFill:true
+							}
                         });
                     }
                     if(window.location.hash != '')
@@ -458,7 +472,9 @@ $(function() {
                 $('body').prepend('<div id="hello_bar"><div class="hello-container"><p><span class="loader">please wait</span></p></div></div>');
                 }
                 if($(document).scrollTop() - $('#ajax-content').offset().top > 0 || $(document).scrollTop() - $('#ajax-content').offset().top < 0){
-                $.scrollTo('#ajax-content', {duration:1000});
+					$.scrollTo('#ajax-content', {
+						duration:1000
+					});
                 }
                 m.addClass('over');
                 started = true;
@@ -514,8 +530,12 @@ $(function() {
     
     function roundNumber2(num, dec) {
       var result = String(Math.round(num*Math.pow(10,dec))/Math.pow(10,dec));
-      if(result.indexOf('.')<0) {result+= '.';}
-      while(result.length- result.indexOf('.')<=dec) {result+= '0';}
+		if(result.indexOf('.')<0) {
+			result+= '.';
+		}
+		while(result.length- result.indexOf('.')<=dec) {
+			result+= '0';
+		}
       return result;
     }
     
@@ -523,16 +543,20 @@ $(function() {
         e.preventDefault();
         var m = $(this);
         var url = m.attr('href');
-        var modalOptions = $().modal({'boxType': 'getOptions'});
+		var modalOptions = $().modal({
+			'boxType': 'getOptions'
+		});
         
-        $.ajax({
-            url: url,
-            beforeSend: function(){
-                $('#modal-popup-' + modalOptions + ' .modal-bg').append('<div class="overlay-fff"><div class="context-loader">Please wait</div></div>');
-                $('.overlay-fff').css('width', $('#modal-popup-' + modalOptions + ' .modal-bg').width()).css('height', $('#modal-popup-' + modalOptions + ' .modal-bg').height())
-                var modalId = '#modal-popup-' + modalOptions + ' .modal-title';
-                if($(document).scrollTop() - $(modalId).offset().top > 0 || $(document).scrollTop() - $(modalId).offset().top < 0){
-                    $.scrollTo(modalId, {duration:1000});
+		$.ajax({
+			url: url,
+			beforeSend: function(){
+				$('#modal-popup-' + modalOptions + ' .modal-bg').append('<div class="overlay-fff"><div class="context-loader">Please wait</div></div>');
+				$('.overlay-fff').css('width', $('#modal-popup-' + modalOptions + ' .modal-bg').width()).css('height', $('#modal-popup-' + modalOptions + ' .modal-bg').height())
+				var modalId = '#modal-popup-' + modalOptions + ' .modal-title';
+				if($(document).scrollTop() - $(modalId).offset().top > 0 || $(document).scrollTop() - $(modalId).offset().top < 0){
+					$.scrollTo(modalId, {
+						duration:1000
+					});
                 }
             },
             success: function(data){
@@ -597,7 +621,9 @@ $(function() {
                                     $('body').prepend('<div id="hello_bar"><div class="hello-container"><p><span class="loader">please wait</span></p></div></div>');
                                 }
                                 if($(document).scrollTop() - $('#ajax-content').offset().top > 0 || $(document).scrollTop() - $('#ajax-content').offset().top < 0){
-                                    $.scrollTo('#ajax-content', {duration:1000});
+							$.scrollTo('#ajax-content', {
+								duration:1000
+							});
                                 }
                                 started = true;
                             },
@@ -661,7 +687,9 @@ $(function() {
                                     $('body').prepend('<div id="hello_bar"><div class="hello-container"><p><span class="loader">please wait</span></p></div></div>');
                                 }
                                 if($(document).scrollTop() - $('#ajax-content').offset().top > 0 || $(document).scrollTop() - $('#ajax-content').offset().top < 0){
-                                    $.scrollTo('#ajax-content', {duration:1000});
+							$.scrollTo('#ajax-content', {
+								duration:1000
+							});
                                 }
                                 started = true;
                             },
@@ -801,8 +829,12 @@ $(function() {
     });
     function roundNumber2(num, dec) {
       var result = String(Math.round(num*Math.pow(10,dec))/Math.pow(10,dec));
-      if(result.indexOf('.')<0) {result+= '.';}
-      while(result.length- result.indexOf('.')<=dec) {result+= '0';}
+		if(result.indexOf('.')<0) {
+			result+= '.';
+		}
+		while(result.length- result.indexOf('.')<=dec) {
+			result+= '0';
+		}
       return result;
     }
     $('.calc').live('click', function(e){
@@ -844,7 +876,9 @@ $(function() {
     $('.modal-ajax-submit-rel').live('click', function(e){
         e.preventDefault();
         var h = $(this).closest('form').attr('action');
-        var modalOptions = $().modal({'boxType': 'getOptions'});
+		var modalOptions = $().modal({
+			'boxType': 'getOptions'
+		});
         var rel =  $(this).closest('form').attr('rel');
         
         var options = { 
@@ -856,7 +890,9 @@ $(function() {
               
                 var modalId = '#modal-popup-' + modalOptions + ' .modal-title';
                 if($(document).scrollTop() - $(modalId).offset().top > 0 || $(document).scrollTop() - $(modalId).offset().top < 0){
-                $.scrollTo(modalId, {duration:1000});
+					$.scrollTo(modalId, {
+						duration:1000
+					});
                 }
             },
             success: function(response){
@@ -948,7 +984,9 @@ $(function() {
     $('.modal-submit-crop').live('click', function(e){
         e.preventDefault();
         var h = $(this).closest('form').attr('action');
-        var modalOptions = $().modal({'boxType': 'getOptions'});
+		var modalOptions = $().modal({
+			'boxType': 'getOptions'
+		});
         var mda = $(this).attr('rel');
         var options = { 
             //target: ,   // target element(s) to be updated with server response 
@@ -959,11 +997,13 @@ $(function() {
               
                 var modalId = '#modal-popup-' + modalOptions + ' .modal-title';
                 if($(document).scrollTop() - $(modalId).offset().top > 0 || $(document).scrollTop() - $(modalId).offset().top < 0){
-                $.scrollTo(modalId, {duration:1000});
+					$.scrollTo(modalId, {
+						duration:1000
+					});
                 }
             },
             success: function(response){
-                
+                //console.info(response);
                 if(response.ajaxRedir) {
                     document.location.href = response.ajaxRedir;
                 } else {
@@ -987,6 +1027,7 @@ $(function() {
                                 $('.overlay').css('width', $('#ajax-content').width()+10).css('height', $('#ajax-content').height()+10)
                             },
                             success: function(data){
+							console.info(data);
                                     $('#ajax-content').html(data);
                                     window.location.hash = h;
                             },
@@ -1008,6 +1049,7 @@ $(function() {
                     });
                     started = false;
                 }
+				$('#modal-popup-2 .modal-close').click();
             },
             statusCode: {
                 404: function() {
@@ -1023,9 +1065,12 @@ $(function() {
 
         // bind form using 'ajaxForm' 
         $(this).closest('form').ajaxSubmit(options);
-        return false;
-    });
-	if($('#terms').val() == '0') { $('#terms').val(''); }
+		
+		return false;
+	});
+	if($('#terms').val() == '0') {
+		$('#terms').val('');
+	}
 	$('a[href="/my-account/my-offers/add"]').click(function() {
 	    $('.content').css('height', '2935px');
 	});

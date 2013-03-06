@@ -7,9 +7,9 @@
             bgColor:     'black',
             bgOpacity:   .4,
             //setSelect:   [ 100, 100, 50, 50 ],
-            //aspectRatio: 1,
+            aspectRatio: 61/29,
             minSize: [610, 290],
-            maxSize: [610, 290],
+            maxSize: 0,
             onSelect: updateCoords
         });
         function updateCoords(c)
@@ -39,7 +39,7 @@
     <input id="h" type="hidden" name="h" value="">
     <div class="form-global clearfix">
         <div class="label"><label>&nbsp;</label></div>
-        <div class="left"><input type="submit" class="g-button g-button-submit modal-submit-crop" value="Crop Image" rel="{{router.url_for('@myProductsGallery?id='~prod_id)}}" /></div>
+        <div class="left"><input type="submit" class="g-button g-button-submit modal-submit-crop" value="Save & Close" rel="{{router.url_for('@myProductsGallery?id='~prod_id)}}" /></div>
     </div>
 </form>
 <br />

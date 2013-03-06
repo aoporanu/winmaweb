@@ -3,39 +3,107 @@
 {% block content %}
 <h1>Reports</h1>
 <div class="ma_content">
-        <a href="{{router.url_for('@reports')}}" class="g-button {% if show == '' %}g-button-submit {% endif %}ajax-link">Merchants</a>
-        <a href="{{router.url_for('@reports?show=agents')}}" class="g-button {% if show == 'agents' %}g-button-submit {% endif %}ajax-link">Agents</a>
-        <a href="{{router.url_for('@reports?show=users')}}" class="g-button {% if show == 'users' %}g-button-submit {% endif %}ajax-link">Users</a>
-        <a href="{{router.url_for('@reports?show=products')}}" class="g-button {% if show == 'products' %}g-button-submit {% endif %}ajax-link">Deals</a>
-        <a href="{{router.url_for('@reportsAllAgents')}}" class="g-button g-button-share modal-reports" title="Agents Transactions">All Agents</a>
-        <a href="{{router.url_for('@reportsAllMerchants')}}" class="g-button g-button-share modal-reports" title="Merchants Transactions">All Merchants</a>
-        <a href="{{router.url_for('@reportsBank')}}" class="g-button g-button-share modal-reports" title="Bank Transactions">Bank</a>
-        <ul class="pagination clearfix">{{ pagination|raw }}</ul>
-        {% if show == 'products' %}
-        <table>
-            <tr style="border-bottom:2px dashed #0000ff;">
-                <th style="width:300px;">{% if show == 'products' %}Products{% else %}Username{% endif %}</th>
-                <th style="width:300px;">{% if show == 'products' %}{% else %}Name{% endif %}</th>
-                <th style="width:100px;">Actions</th>
-            </tr>
-            {% for merchant in merchants %}
-            <tr style="border-bottom:1px solid #cacaca;">
-                <td style="padding:10px 0;">{{merchant.name}}</td>
-                <td></td>
-                <td>
-                    {% if show == 'products' %}<a href="{{router.url_for('@reportsProduct?id='~merchant.id)}}" class="g-button modal-reports" title="Reports {{merchant.name}}">reports</a>{% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+	{# <a href="{{ router.url_for('@reports') }}" class="g-button {% if show == 'deals' %} g-button-submit {% endif %} ajax-link">Users</a>
+	<a href="{{ router.url_for('@reports?show=deal') }}" class="g-button {% if show != 'deal' %} g-button-submit {% endif %} ajax-link">Deals</a> #}
+	<div class="clearfix"></div>
+        {% if show == 'deal' %}
         {% else %}
-        <table>
-            <tr style="border-bottom:2px dashed #0000ff;">
-                <th style="width:300px;">{% if show == 'products' %}Products{% else %}Username{% endif %}</th>
-                <th style="width:300px;">{% if show == 'products' %}{% else %}Name{% endif %}</th>
-                <th style="width:100px;">Actions</th>
-            </tr>
+		<form style="padding-top: 10px;" action="{{ router.url_for('@reports?search=1') }}" method="post" class="form-global">
+			<div class="form-global clearfix">
+				<!--<div class="clearfix">-->
+				<div class="label" style="width: 50px;"><label for="from_date">From</label></div>
+				<div class="input">
+					<input type="text" name="from_date" id="from_date" />
+				</div>
+				<div class="label" style="width: 50px;"><label for="to_date">To</label></div>
+				<div class="input">
+					<input type="text" name="to_date" id="to_date" />
+				</div>
+				
+				<div class="clearfix">
+					<br /><br /><br /><div class="label" style="width: 50px;"><label for="search_username">Search</label></div>
+					<div class="input">
+						<input type="text" name="search_username" id="search_username" value="{{sq}}" />
+					</div>
+				</div>
+				{# <div class="clearfix">
+				<div class="label" style="width: 50px;"><label for="deal">Search Deal</label></div>
+				<div class="input">
+					<input type="text" name="deal_search" id="deal_search" />
+				</div>
+				</div> #}
+				<select name="usertype" onchange="switchUser(this)">
+					<option value="">None</option>
+					<option value="all_users"{% if show == 'all_users' %} selected {% endif %}>All</option>
+					<option value="normal_users"{% if show == 'normal_users' %} selected {% endif %}>Normal</option>
+					<option value="agent_users"{% if show == 'agent_users' %} selected {% endif %}>Agent</option>
+					<option value="merchant_users"{% if show == 'merchant_users' %} selected {% endif %}>Merchant</option>
+				</select>
+				<select name="commissions" onchange="switchUser(this)">
+					<option value="">None</option>
+					<option value="all_transactions"{% if show == 'all_transactions' %} selected {% endif %}>All</option>
+					<option value="net-transactions"{% if show == 'net-transactions' %} selected {% endif %}>Network</option>
+					<option value="ag-transactions"{% if show == 'ag-transactions' %} selected {% endif %}>Agent</option>
+				</select>
+				<select name="share" onchange="switchUser(this)">
+					<option value="">None</option>
+						<option value="all_share"{% if show == 'all_share' %} selected {% endif %}>All</option>
+					<option value="wmw_share"{% if show == 'wmw_share' %} selected {% endif %}>WMW share</option>
+					<option value="merc_share"{% if show == 'merc_share' %} selected {% endif %}>Merchant share</option>
+				</select>
+				<select name="payout_stat" onchange="switchUser(this)">
+					<option value="">None</option>
+					<option value="all_payout"{% if show == 'all_payout' %} selected {% endif %}>All</option>
+					<option value="pending-payout"{% if show == 'pending-payout' %} selected {% endif %}>Pending</option>
+					<option value="paid-payout"{% if show == 'paid-payout' %} selected {% endif %}>Paid out</option>
+				</select>
+				<select name="method" onchange="switchUser(this)">
+					<option value="">None</option>
+					<option value="all_payment"{% if show == 'all_payment' %} selected {% endif %}>All</option>
+					{# <option value="cc-payment">Credit card</option> #}
+					<option value="my_money-payment"{% if show == 'my_money-payment' %} selected {% endif %}>My money</option>
+					<option value="credit-payment"{% if show == 'credit-payment' %} selected {% endif %}>WMW credit</option>
+					<option value="payza-payment"{% if show == 'payza-payment' %} selected {% endif %}>Payza</option>
+				</select>
+				<input type="submit" class="g-button g-button-submit ajax-search-submit" value="Search" />
+			</div>
+		</form>
+		<br />
+			{# <ul class="pagination clearfix">{{ pagination|raw }}</ul> #}
+		<div style="text-align: right;"><a href="/admin/reports?show={{ show }}&export=1" class="g-button g-button-submit ajax-link" style="line-height: 17px; height: 17px;">Export to CSV</a>{#&nbsp;&nbsp;{% if show != 'unset' %}<a href="/admin/reports?show={{ show }}&export=2" class="g-button g-button-submit ajax-link" style="line-height: 17px; height: 17px;">Export to PDF</a>{% endif %} #}</div>
+		<div class="clearfix"></div>
+		<div class="yui3-g" style="font-weight: bold; font-size: 16px; border-bottom: 1px solid #3079ed;">
+			<div class="yui3-u" style="width:100px; text-align: center; ">Date</div>
+			<div class="yui3-u" style="width:100px; text-align: center;">User</div>
+			<div class="yui3-u" style="width:100px; text-align: center;">User<br />Referral</div>
+			<div class="yui3-u" style="width:100px; text-align: center;">User Type</div>
+			<div class="yui3-u" style="width:120px; text-align: center;">Commissions</div>
+			{# <div class="yui3-u" style="width:70px; text-align: center; ">Share</div> #}
+			<div class="yui3-u" style="width:100px; text-align: center;">Payout<br /> Status</div>
+			<div class="yui3-u" style="width:100px; text-align: center;">Payment Method</div>
+			<div class="yui3-u" style="width:150px; text-align: center;">Balance</div>
+			<div class="yui3-u" style="width:60px; text-align: center;">Withdraw</div>
+
+		</div>
+				{% if message %}
+		<p align="center" style="padding-top: 10px; padding-bottom: 10px;">{{ message }}</p>
+				{% endif %}
             {% for merchant in merchants %}
+		<div style="padding:10px 0;margin-bottom:0;border:1px solid #3079ed;background:#DDDDDD;" class="yui3-g">
+			<div class="yui3-u" style="width: 100px; text-align: center;">{{ merchant.created_at }}</div>
+			<div class="yui3-u" style="width: 100px; text-align: center;">{{ merchant.username }} {{ merchant.Receiver.username }}, {{ merchant.ref_id }} {{ merchant.Receiver.ref_id  }}</div>
+			<div class="yui3-u" style="width: 100px; text-align: center;">{{ merchant.ref_id }} {{ merchant.Receiver.ref_id  }}</div>
+			<div class="yui3-u" style="width: 100px; text-align: center;">{% if merchant.is_do == 0 %}Agent{% elseif merchant.is_do == 1 %}Merchant{% else %}User{% endif %}</div>
+				<div class="yui3-u" style="width: 120px; text-align: center;">{{ merchant.full_payment }}$ {% if merchant.transaction_type == '9' %} Agent Comission {% elseif merchant.transaction_type == '10' %} Merchant Comission {% elseif merchant.transaction_type == '11' %} Bank Comission {% endif %} </div>
+				{# <div class="yui3-u" style="width: 70px; text-align: center;">{% if merchant.transaction_type == 4 %} Merchant Share {{ merchant.full_payment }} {% elseif merchant.transaction_type == 11 or merchant.transaction_type == 1 %} Bank Share {{ merchant.full_payment }} {% endif %}</div> #}
+				<div class="yui3-u" style="width: 100px; text-align: center;">{% if merchant.status == 0 %} OK {% elseif merchant.status == 1 %} Pending {% elseif merchant.status == 2 %} Accepted {% endif %} </div>
+				<div class="yui3-u" style="width: 100px; text-align: center;">{% if merchant.transaction_type == '80' %} WMW-Credits {% elseif merchant.transaction_type == '85' %} Payza {% elseif merchant.transaction_type == 1 %} Deal<br />Purchase {% endif %}</div>
+				<div class="yui3-u" style="width: 150px; text-align: center;">{{ merchant.full_payment|currency }}</div>
+				<div class="yui3-u" style="width: 60px; text-align: center;"> - </div>
+			</div>
+					{% endfor %}
+		</div>
+{#            {% for merchant in merchants %}
             <tr style="border-bottom:1px solid #cacaca;">
                 <td style="padding:10px 0;">{{merchant.username}}</td>
                 <td>{{merchant.first_name}} {{merchant.last_name}}</td>
@@ -46,11 +114,79 @@
                     {% if show == 'products' %}<a href="{{router.url_for('@reportsProducts?id='~merchant.id)}}" class="g-button modal-reports" title="Reports {{merchant.name}}">reports</a>{% endif %}
                 </td>
             </tr>
-            {% endfor %}
-        </table>
-        {% endif %}
+            {% endfor %} #}
         <ul class="pagination clearfix">{{ pagination|raw }}</ul>
-    </div>
+        {% endif %}
+
+		<script type="text/javascript">
+			function switchUser(selectname) {
+				var val = selectname.value;
+				switch(val) {
+					case 'all_users':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=all_users';
+						break;
+					case 'agent_users':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=agent_users';
+						break;
+					case 'normal_users':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=normal_users';
+						break;
+					case 'merchant_users':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=merchant_users';
+						break;
+					case 'ag':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=ag-transactions';
+						break;
+					case 'net':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=network-comissions';
+						break;
+					case 'all_transactions':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=all_transactions';
+						break;
+					case 'net-transactions':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=net-transactions';
+						break;
+					case 'ag-transactions':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=ag-transactions';
+						break;
+					case 'all_share':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=all_share';
+						break;
+					case 'wmw_share':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=wmw_share';
+						break;
+					case 'merc_share':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=merc_share';
+						break;
+					case 'all_payout':
+						window.location.href= 'http://82.77.174.213:97/admin/reports?show=all_payout';
+						break;
+					case 'pending-payout':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=pending-payout';
+						break;
+					case 'paid-payout':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=paid-payout';
+						break;
+					case 'paid':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=accepted';
+						break;
+					case 'payza-payment':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=payza-payment';
+						break;
+					case 'credit-payment':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=credit-payment';
+						break;
+					case 'my_money-payment':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=my_money-payment';
+						break;
+					case 'all_payment':
+						window.location.href = 'http://82.77.174.213:97/admin/reports?show=all_payment';
+						break;
+				}
+				// $.get('http://82.77.174.213:97/admin/reports?show=agents');
+			}
+			$('#search_username').autocomplete("/my-account/autocomplete-user");
+			</script>
 {% endblock content %}
 {% block left_menu %}
     {% if not app.ajax %}

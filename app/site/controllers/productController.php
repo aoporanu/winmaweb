@@ -304,10 +304,6 @@ class productController extends Cms_Controller
             $is_ajax = $this->request->isXmlHttpRequest();
         }
         
-//        if(!$is_ajax) {
-//            return $this->notFoundAction();
-//        }
-        
         $this->setTemplate('myaccount/products/add.twig');
         
 				$user = $this->user->getUser();
@@ -342,33 +338,6 @@ class productController extends Cms_Controller
         
         $tags = $form->createElement('text', 'tags');
         $tags->setRequired();
-        
-//        $treeObject = Doctrine_Core::getTable('Category')->find(1);
-//        $tree = $treeObject->getNode()->getChildren();
-//        $category = $form->createElement('select', 'category');
-//        $subcategory = $form->createElement('select', 'subcategory');
-
-//        $to_check = array();
-//        $category->setRequired();
-//        $subcategory->setRequired();
-//        $category->addMultiOption('', '');
-//        $subcategory->addMultiOption('', 'Please selected a category first');
-
-//        foreach ($tree as $node) {
-//            $category->addMultiOption($node['id'], $node['name']);
-//            $children = $node->getNode()->getChildren();
-//            foreach($children as $child) {
-//                $to_check[$child['id']] = '';
-//                $subc[$node['id']][$child['id']] = $child['name'];
-//                if($this->request->getParam('category') == $node['id']) {
-//                    $subcategory->addMultiOption($child['id'], $child['name']);
-//                } 
-//            }
-//        }
-        
-//        $category->addValidator('InArray', false, array(array_keys($category->getMultiOptions()), 'messages' =>'This category it is not in the original select values'));
-//        $subcategory->addValidator('InArray', false, array(array_keys($to_check), 'messages' =>'This subcategory it is not in the original select values'));
-        
         $start_time = $form->createElement('text', 'start_time');
 //        $start_time->addValidator('Date', true, array('yyyy-MM-DD H:m'))
 				$start_time->addValidator('Date', true, array('yyyy-MM-DD'))
@@ -379,11 +348,6 @@ class productController extends Cms_Controller
                    //->addValidator('date', true, array('format' => 'yyyy-MM-DD H:m'))
 								->addValidator('date', true, array('format' => 'yyyy-MM-DD'))
                    ->setRequired();
-        
-        //$photo = new Zend_Form_Element_File('photo');
-        //$photo->addValidator('Extension', false, 'jpg,png,gif');
-        //$form->addElement($photo, 'photo');
-        
         //dynamic price
         $priceForm = new Zend_Form;
         
@@ -401,7 +365,6 @@ class productController extends Cms_Controller
                        ->setRequired(true);
 
             $discount[$x] = $priceForm->createElement('text', 'discount_'.$x);
-//            $discount[$x]->addValidator('Int', true)
 						$discount[$x]->addValidator('Float', true, array('locale' => 'en_US'))
                        ->addValidator('GreaterThan', true, array('min' => 0, 'messages' => 'Discount must be higher than 0'))
                        ->addValidator('Between', true, array('min' => 1, 'max' => 99))
@@ -422,58 +385,6 @@ class productController extends Cms_Controller
                 ->addElement($price_name[$x])
                 ->addElement($expire[$x]);
         }
-        //company
-//        $companies = Doctrine_Query::create()
-//                        ->from('Company')
-//                        ->select('id, name')
-//                        ->addOrderBy('name ASC')
-//                        ->addWhere('user_id = ?', $this->user->getUser()->get('id'))
-//                        ->execute(array(), DOCTRINE::HYDRATE_ARRAY);
-//
-//        $company = $form->createElement('select', 'company');
-//        $company->setRequired(true);
-//        foreach($companies AS $c){
-//            $company->addMultiOption($c['id'], $c['name']);
-//        }
-//        $company->addValidator('InArray', false, array(array_keys($company->getMultiOptions()), 'messages' =>'This company it is not in the original select values'));
-        
-//				$merchant_user_id = $form->createElement('select', 'merchant_user_id');
-//				$m2a_users = Doctrine_Query::create()
-//									->select('u.*, c.*, ca.*')
-//									->from('User u')
-//                                                                        ->leftJoin('u.Company c')
-//                                                                        ->leftJoin('c.CompanyAddress ca')
-//									->innerJoin('u.MerchantToAgent m2a ON m2a.merchant_user_id = u.id')
-//									->where('u.is_active = 1')
-//                                                                        ->where('c.company_type = 1')
-//									->addWhere('m2a.agent_user_id = ?', $this->user->getUser()->get('id'))
-//									->fetchArray();
-//                                if (count($m2a_users) == 0 && $user->is_do == 0) {
-//                                    return array('err' => 1212, 'imgajax' => $is_ajax);
-//                                }
-//                                if($user->is_do == 1) {
-//                                    $merchant_user_id->addMultiOption('0', '-- Myself --');
-//                                }
-//                                
-//				foreach ($m2a_users AS $u)	{
-//                                    $forMASA[$u['id']] = $u['Company'][0];
-//                                    //print_r($u['Company'][0]);
-//					$option_name = '';
-//					if ($u['first_name'] != '' || $u['last_name'] != '') {
-//						$option_name .= '(';
-//						if ($u['first_name'] != '') {
-//							$option_name .= $u['first_name'];
-//						}
-//						if ($u['last_name'] != '') {
-//							if ($u['first_name'] != '') $option_name .= ' ';
-//							$option_name .= $u['last_name'];
-//						}
-//						$option_name .= ')';
-//					}
-//					$merchant_user_id->addMultiOption($u['id'], $u['username'] . $option_name);
-//				}
-//				$merchant_user_id->addValidator('InArray', false, array(array_keys($merchant_user_id->getMultiOptions()), 'messages' =>'This user it is not in the original select values'));
-        //
 				$merchant_ref_id = $form->createElement('text', 'merchant_ref_id');
 				$merchant_ref_id->setRequired(true);
 				
@@ -531,9 +442,6 @@ class productController extends Cms_Controller
         
         $phone = $form->createElement('text', 'phone');
         $phone->setRequired(true);
-        //$wmw_section = $form->createElement('text', 'wmw_section');
-        //$wmw_section->setRequired(true);
-        
         if($user->is_do == 1) {
             if($user->Company[0]->company_type == 1) {
                 $address->setValue($user->Company[0]->CompanyAddress->address);
@@ -560,8 +468,6 @@ class productController extends Cms_Controller
 
                 $phone->setValue($user->Company[1]->phone);
                 $forMASA[0] = $user->Company[1]->toArray();
-                //$forMASA[0]['latitude'] = $user->Company[1]->CompanyAddress->latitude;
-                //$forMASA[0]['longitude'] = $user->Company[1]->CompanyAddress->longitude;
             }
         } else {
 					$phone->setValue($user->phone);
@@ -582,11 +488,6 @@ class productController extends Cms_Controller
                  ->addElement($g_lat)
                  ->addElement($g_lng)
                 ->addElement($phone);
-                //->addElement($wmw_section);
-                                
-                                
-                                
-                                
         $min_sold = $form->createElement('text', 'min_sold');
         $min_sold->addValidator('Int', true)
                    ->addValidator('GreaterThan', true, array('min' => 0, 'messages' => 'Minimum sold deals need to be at least 1'))
@@ -605,27 +506,19 @@ class productController extends Cms_Controller
                 ->addElement($description)
                 ->addElement($terms)
                 ->addElement($short_description)
-//                ->addElement($category)
-//                ->addElement($subcategory)
                 ->addElement($start_time)
                 ->addElement($end_time)
                 ->addElement($min_sold)
                 ->addElement($max_sold);
-//                ->addElement($company);
         
         if( $this->request->getPost() ) {
             if ($form->isValid($this->request->getPost())) {
-							//if ($form->contract->receive()) {
-//								if ($fileName == 'contract-'.$user->id.'.pdf') {
                 if($photo->isValid()) {
                     $product = new Product();
                     $product->name = $form->getValue('name');
                     $product->short_description = $form->getValue('short_description');
                     $product->description = $form->getValue('description');
                     $product->terms = $form->getValue('terms');
-                    //$product->suplier_price = $form->getValue('producer_price');
-                    //$product->discount = $form->getValue('discount');
-                    //$product->stock = $form->getValue('stock');
 										$product->status = '2';
                     $product->starttime = $form->getValue('start_time');
                     $product->endtime = $form->getValue('end_time');
@@ -635,27 +528,6 @@ class productController extends Cms_Controller
                     $product->min_sold = $form->getValue('min_sold');
                     $product->max_buy = $form->getValue('max_sold');
 
-                    //$product->money_save = ($form->getValue('producer_price')*$form->getValue('discount')/100);
-                    //$product->price = $form->getValue('producer_price') - ($form->getValue('producer_price')*$form->getValue('discount')/100);
-//                    $cid = Doctrine_Query::create()
-//                                            ->select('u.*, c.*')
-//                                            ->from('User u')
-//                                            ->leftJoin('u.Company c')
-//                                            ->addWhere('u.id = ?', $form->getValue('merchant_user_id'))
-//                                            ->addWhere('c.company_type = 1')
-//                                            ->fetchOne(array(), Doctrine::HYDRATE_ARRAY);
-//                    if($form->getValue('merchant_user_id') == 0) {
-//                        if($user->Company[0]->company_type == 1) {
-//                            $product->company_id = $user->Company[0]->id;
-//                        }
-//                        if($user->Company[1]->company_type == 1) {
-//                            $product->company_id = $user->Company[1]->id;
-//                        }
-//                    } else {
-//                        $product->company_id = $cid['Company'][0]['id'];
-//                    }
-                    
-										
                     $product->phone = $form->getValue('phone');
                     //$product->wmw_section = $form->getValue('wmw_section');
                     $product->ProductAddress->address = $form->getValue('address');
@@ -677,15 +549,15 @@ class productController extends Cms_Controller
                     $link = "winmaweb.com/my-account/get-my-deals";
                     $contactMessage = 'A new offer was added by one of your agents. To view and confirm the offer please follow this link:<br /><br /><a href="http://'.
                         $link.'">Confirm</a>';
-                    /*require_once 'Swift/swift_required.php';
+                    require_once 'Swift/swift_required.php';
                     $transport = Swift_SendmailTransport::newInstance('/usr/sbin/sendmail -bs');
                     $mailer = Swift_Mailer::newInstance($transport);
                     //Create a message
-                    /*$message = Swift_Message::newInstance('A new offer was added by one of your agents.')
+                    $message = Swift_Message::newInstance('A new offer was added by one of your agents.')
                       ->setFrom(array('office@winmaweb.com' => 'winmaweb'))
                       ->setBody($contactMessage, 'text/html');
                         $message->setTo($usr->email);
-                        $mailer->send($message);*/
+                        $mailer->send($message);
                     $product->save();
 										
                     if($product->id) {
@@ -772,32 +644,20 @@ class productController extends Cms_Controller
                     }
                 
                 $form->reset();
-                //$form->addElement($category)
-                //    ->addElement($subcategory);
                 $success = true;
                 } else {
                     $form->addError('Invalid image');
                     $success = false;
                     $err_img = 'Invalid image type.';
                 }
-//								} else {
-//									$contract->addError('Please upload the contract with the same name of the file you downloaded');
-//								}
-						/*} else {
-							$contract->addError('Something went wrong uploading the file, please try again!');
-            }*/
-					}
+			}
         }
-        //print_r($form->getErrors());
         
         return array(
                 'form' => array(
                         'values' => $form->getValues(),
                         'errors' => $form->getMessages(),
-//                        'categories' => $form->category,
-//                        'subcategories' => $form->subcategory,
                     'countries' => $form->country,
-//                        'companies' => $form->company,
 												'merchant_user_id' => $form->merchant_user_id,
                         'success' => (isset($success) ? $success : false)
                     ),

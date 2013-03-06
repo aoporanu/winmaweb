@@ -118,6 +118,7 @@
 				{{ forms.errors(form.errors.contract) }}
 			</div>
 		</div>-->
+		<div id="step1">
 		<div class="clearfix">
 			<div class=" label label_big"><label for="name">Name of Deal Offer:</label></div>
 			<div class="input">
@@ -125,11 +126,10 @@
 				{{ forms.errors(form.errors.name) }}
 			</div>
 		</div>
-		{#{% if userObj.hasRole('AGENT') %}#}
+				
 		{% if userObj.hasRole('SHOP') %}
 			<script type="text/javascript">
 					$(function() {
-							//var mda = $('#merchant_user_id').val();
 							var mda = 0;
 							var masa = eval({{for_masa|raw}});
 							$('#address').val(masa[mda]['CompanyAddress']['address']);
@@ -139,17 +139,76 @@
 							$('#g_lat').val(masa[mda]['CompanyAddress']['latitude']);
 							$('#g_lng').val(masa[mda]['CompanyAddress']['longitude']);
 							$('#phone').val(masa[mda]['phone']);
-
-							//$('#merchant_user_id').live('change', function(e){
-							//    var oid = $(this).val();
-							//    $('#address').val(masa[oid]['CompanyAddress']['address']);
-							//    $('#city').val(masa[oid]['CompanyAddress']['city']);
-							//    $('#county').val(masa[oid]['CompanyAddress']['county']);
-							//    $('#postcode').val(masa[oid]['CompanyAddress']['postcode']);
-							//    $('#g_lat').val(masa[oid]['CompanyAddress']['latitude']);
-							//    $('#g_lng').val(masa[oid]['CompanyAddress']['longitude']);
-							//    $('#phone').val(masa[oid]['phone']);
-							//})
+							$('#step2').hide();
+							$('#step3').hide();
+							$('#submit1').click(function(event) {
+								event.preventDefault();
+								var name = $('#name').val();
+								var merchant_ref_id = $('#merchant_ref_id').val();
+								var min_sold = $('#min_sold').val();
+								var max_sold = $('#max_sold').val();
+								var offer_price_name_1 = $('#offer_price_name_1').val();
+								var producer_price_1 = $('#producer_price_1').val();
+								var discount_1 = $('#discount_1').val();
+								var stock_1 = $('#stock_1').val();
+								var expire_1 = $('#expire_1').val();
+								if(name == '' || merchant_ref_id == '' || min_sold == '' || max_sold == '' || offer_price_name_1 == '' || producer_price_1 == '' || discount_1 == '' || stock_1 == '' || expire_1 == '' ) {
+									var error = '<div class="error_box">You forgot to fill in one of the required fields. Please remember all fields are required.</div>';
+									$(this).parent().parent().before(error);
+								} else {
+									$('#step1').fadeOut();
+									$('#step2').fadeIn();
+								}
+							});
+							$('#submit2').click(function(event) {
+								event.preventDefault();
+								var start_time = $('#start_time').val();
+								var end_time = $('#end_time').val();
+								var photo123 = $('#photo123').val();
+								var tag = $('.tag span').text();
+								var terms = $('#terms').val();
+								var short_description = $('textarea[name=short_description]').val();
+								var description = $('#description').val();
+								if($('#terms_checkbox').is(':checked')) {
+									var terms_checkbox = 1;
+								} else {
+									var terms_checkbox = 0;
+								}
+								if(start_time == '' || end_time == '' || photo123 == '' || tag == '' || terms == '' || short_description == '' || description == '' || terms_checkbox == 0) {
+									var error = '<div class="error_box">You forgot to fill in one of the required fields. Please remember all fields are required.</div>';
+									$(this).parent().parent().before(error);
+								} else {
+									$('#step1').hide();
+									$('#step2').fadeOut();
+									$('#step3').fadeIn();
+								}
+							});
+							/*if($('#step3').is(':visible')) {
+								var phone = $('#phone').val();
+								var address = $('#address').val();
+								var city = $('#city').val();
+								var county = $('#county').val();
+								var postcode = $('#postcode').val();
+								var country = $('#country').val();
+								if(phone == '' || address == '' || city == '' || county == '' || postcode == '' || country == '') {
+									$('input[type=submit]').hide();
+								} else {
+									$('input[type=submit]').show();
+								}
+							}*/
+							$('#phone').change(function() {
+								var phone = $(this).val();
+								var address = $('#address').val();
+								var city = $('#city').val();
+								var county = $('#county').val();
+								var postcode = $('#postcode').val();
+								var country = $('#country').val();
+								if(phone == '' || address == '' || city == '' || county == '' || postcode == '' || country == '') {
+									$('input[type=submit]').hide();
+								} else {
+									$('input[type=submit]').show();
+								}
+							});
 					});
 			</script>
 			<div class="clearfix">
@@ -177,62 +236,6 @@
 			</div>
 		</div>
 		{% endif %}
-		<div class="clearfix">
-			<div class="label label_big"><label for="address">Phone:</label></div>
-			<div class="input">
-				{{ forms.input('phone', form.values.phone) }}
-				{{ forms.errors(form.errors.phone) }}
-			</div>
-		</div>
-		<div class="page_subtitle_wrapper clearfix">
-			<span class="page_subtitle_two">Deal Location</span>
-		</div>
-		<div class="inv">
-			{#<input type="hidden" name="isajaxrequest" value="1" />#}
-			{{ forms.input('g_lat', form.values.g_lat, 'hidden') }}
-			{{ forms.input('g_lng', form.values.g_lng, 'hidden') }}
-		</div>
-		<div style="color:#666">Please provide the exact location of the Deal Offer</div>
-		<div class="clearfix">
-			<div class="label label_big"><label for="address">Address:</label></div>
-			<div class="input">
-				{{ forms.input('address', form.values.address) }}
-				{{ forms.errors(form.errors.address) }}
-			</div>
-		</div>
-		<div class="clearfix">
-			<div class="label label_big"><label for="city">City:</label></div>
-			<div class="input">
-				{{ forms.input('city', form.values.city) }}
-				{{ forms.errors(form.errors.city) }}
-			</div>
-		</div>
-		<div class="clearfix">
-			<div class="label label_big"><label for="county">Province/County:</label></div>
-			<div class="input">
-				{{ forms.input('county', form.values.county) }}
-				{{ forms.errors(form.errors.county) }}
-			</div>
-		</div>
-		<div class="clearfix">
-			<div class="label label_big"><label for="postcode">Postal Code:</label></div>
-			<div class="input">
-				{{ forms.input('postcode', form.values.postcode) }}
-				{{ forms.errors(form.errors.postcode) }}
-			</div>
-		</div>
-		<div class="clearfix">
-			<div class="label label_big"><label for="country">Country:</label></div>
-			<div class="input">
-				{{ forms.select('country', form.countries.options, form.values.country) }}
-				{{ forms.errors(form.errors.country) }}
-			</div>
-		</div>
-		<div class="clearfix">
-			<div style="width:600px">Add a marker exactly where the deal is located, please zoom in and double click the map where you'd like the marker to be. </div>
-			<div id="map" align="center" style="width: 600px; height: 300px;margin-top:15px; position: relative;overflow: hidden;"></div>
-		</div>
-		<br /><br />
 		<div class="clearfix">
 			<div class=" label label_big"><label for="min_sold">Minimum # Sold:</label></div>
 			<div class="input">
@@ -352,28 +355,12 @@
 			{% endfor %}
 		</div>
 		<div class="clearfix">
-			<a class="g-button g-button-share add-price" href="#">Add price</a>
+			<a class="g-button g-button-share add-price" href="#">Add price</a><input type="submit" id="submit1" style="vertical-align: middle; float: right;" class="g-button g-button-share" value="Next Step" />
 		</div>
-		{#<div class="clearfix">
-			<div class=" label label_big"><label for="category">Category:</label></div>
-			<div class="input">
-				{{ forms.select('category', form.categories.options, form.values.category) }}
-				{{ forms.errors(form.errors.category) }}
-			</div>
-		</div>#}
-		{#<div class="clearfix">
-			<div class=" label label_big"><label for="subcategory">Sub-Category:</label></div>
-			<div class="input">
-				{{ forms.select('subcategory', form.subcategories.options, form.values.subcategory) }}
-				{{ forms.errors(form.errors.subcategory) }}
-			</div>
-		</div>#}
-		{#<div class="clearfix">
-			<div class=" label label_big"></div>
-			<div class="input">
-				<div style="color:#666">Please browse the categories and choose the one that best matches your product or service.</div>
-			</div>
-		</div>#}
+			
+		</div>
+		<div id="step2">
+		
 		<div class="clearfix">
 			<div class=" label label_big"><label for="start_time">Start time:</label></div>
 			<div class="input">
@@ -468,11 +455,96 @@
 			</div>
 			<div class="input"></div>
 		</div>
-	</div>
+			<input type="submit" id="submit2" style="vertical-align: middle; float: right;" class="g-button g-button-share" value="Next Step" />
+		</div><!-- STEP 2 END -->
+		
+		{#{% if userObj.hasRole('AGENT') %}#}
+		<div id="step3">
+		<div class="clearfix">
+			<div class="label label_big"><label for="address">Phone:</label></div>
+			<div class="input">
+				{{ forms.input('phone', form.values.phone) }}
+				{{ forms.errors(form.errors.phone) }}
+			</div>
+		</div>
+		<div class="page_subtitle_wrapper clearfix">
+			<span class="page_subtitle_two">Deal Location</span>
+		</div>
+		<div class="inv">
+			{#<input type="hidden" name="isajaxrequest" value="1" />#}
+			{{ forms.input('g_lat', form.values.g_lat, 'hidden') }}
+			{{ forms.input('g_lng', form.values.g_lng, 'hidden') }}
+		</div>
+		<div style="color:#666">Please provide the exact location of the Deal Offer</div>
+		<div class="clearfix">
+			<div class="label label_big"><label for="address">Address:</label></div>
+			<div class="input">
+				{{ forms.input('address', form.values.address) }}
+				{{ forms.errors(form.errors.address) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class="label label_big"><label for="city">City:</label></div>
+			<div class="input">
+				{{ forms.input('city', form.values.city) }}
+				{{ forms.errors(form.errors.city) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class="label label_big"><label for="county">Province/County:</label></div>
+			<div class="input">
+				{{ forms.input('county', form.values.county) }}
+				{{ forms.errors(form.errors.county) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class="label label_big"><label for="postcode">Postal Code:</label></div>
+			<div class="input">
+				{{ forms.input('postcode', form.values.postcode) }}
+				{{ forms.errors(form.errors.postcode) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div class="label label_big"><label for="country">Country:</label></div>
+			<div class="input">
+				{{ forms.select('country', form.countries.options, form.values.country) }}
+				{{ forms.errors(form.errors.country) }}
+			</div>
+		</div>
+		<div class="clearfix">
+			<div style="width:600px">Add a marker exactly where the deal is located, please zoom in and double click the map where you'd like the marker to be. </div>
+			<div id="map" align="center" style="width: 600px; height: 300px;margin-top:15px; position: relative;overflow: hidden;"></div>
+		</div>
+		<br /><br />
+		
+		
+		{#<div class="clearfix">
+			<div class=" label label_big"><label for="category">Category:</label></div>
+			<div class="input">
+				{{ forms.select('category', form.categories.options, form.values.category) }}
+				{{ forms.errors(form.errors.category) }}
+			</div>
+		</div>#}
+		{#<div class="clearfix">
+			<div class=" label label_big"><label for="subcategory">Sub-Category:</label></div>
+			<div class="input">
+				{{ forms.select('subcategory', form.subcategories.options, form.values.subcategory) }}
+				{{ forms.errors(form.errors.subcategory) }}
+			</div>
+		</div>#}
+		{#<div class="clearfix">
+			<div class=" label label_big"></div>
+			<div class="input">
+				<div style="color:#666">Please browse the categories and choose the one that best matches your product or service.</div>
+			</div>
+		</div>#}
 	<div class="form-global clearfix">
 		<div class=" label label_big"><label>&nbsp;</label></div>
 		<div class="left"><input type="submit" class="g-button g-button-submit modal-submit-product" value="Add" /></div>
 	</div>
+	</div>
+	
+		</div>
 </form>
 {% endif %}
 <script type="text/javascript">

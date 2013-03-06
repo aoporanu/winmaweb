@@ -104,7 +104,7 @@
   <body>
     <div class="vMain">
 			<div class="logo">
-				<img src="../winmaweb/images/site/header-logo-box2.png" width="100px" height="70px" style="padding-top: 5px;" />
+				<img src="<?php echo ROOT_PATH; ?>/images/site/header-logo-box2.png" width="100px" height="70px" style="padding-top: 5px;" />
 				<span class="title">WMW Voucher</span>
 			</div>
       <div class="content">
@@ -129,33 +129,33 @@
 								</tr>
 
 								<tr>
-									<td align="center">
-<!--										<table style="border-bottom: 1px solid #ccc;" width="100%;" height="10px">
+<!--									<td align="center">
+										<table style="border-bottom: 1px solid #ccc;" width="100%;" height="10px">
 											<tr>
 												<td style="font-size: 10px; color: #fff;">a</td>
 											</tr>
 										</table>
 										<table width="100%">
 
-										</table>-->
+										</table>
 										<div style="width: 100%; border-bottom: 1px solid #ccc; height: 15px;"></div>
-									</td>
-									<td align="center" width="50px">
-										<p style="margin: 0 auto; width: 50px;">
-											<span><img src="../winmaweb/images/site/header-logo-box2.png" width="50px" height="50px" /></span>
+									</td>-->
+									<td align="center" colspan="3">
+										<p style="margin: 0 auto; width: 100%;">
+											<img src="<?php echo ROOT_PATH; ?>/images/voucher_image.png" height="70px" width="700mm" /></span>
 										</p>
 									</td>
-									<td align="center">
-<!--										<table style="border-bottom: 1px solid #ccc;" width="100%;" height="10px">
+<!--									<td align="center">
+										<table style="border-bottom: 1px solid #ccc;" width="100%;" height="10px">
 											<tr>
 												<td style="font-size: 10px; color: #fff;">a</td>
 											</tr>
 										</table>
 										<table width="100%">
 
-										</table>-->
+										</table>
 										<div style="width: 100%; border-bottom: 1px solid #ccc; height: 15px;"></div>
-									</td>
+									</td>-->
 								</tr>
 								<tr>
 									<td style="font-size: 12px; color: #318794" valign="top">
@@ -165,7 +165,7 @@
 											</tr>
 											<tr>
 												<td>
-													<img src="../winmaweb/images/barcode.JPG" width="130px" height="70px" />
+													<img src="<?php echo ROOT_PATH; ?>/images/barcode.JPG" width="130px" height="70px" />
 												</td>
 											</tr>
 											<tr>
@@ -173,8 +173,8 @@
 											</tr>
 										</table>
 									</td>
-									<td style="font-size: 10px; color: #318794; width: 25%;">&nbsp;</td>
-									<td valign="top" rowspan="2" style="color: #318794; font-size: 14px;"><div style="border-left: 1px solid #333; padding-left: 3px;">The following are your terms and conditions<br />1. Print voucher.<br />2. Present voucher to the merchant.<br />3. Tip generously on the full bill amount!</div></td>
+									<td style="font-size: 10px; color: #318794; width: 3%;">&nbsp;</td>
+									<td valign="top" rowspan="2" style="color: #318794; font-size: 10px;"><div style="border-left: 1px solid #333; padding-left: 3px; margin-left: -113px;">The following are your terms and conditions<br />1. Print voucher.<br />2. Present voucher to the merchant.<br />3. Tip generously on the full bill amount!</div></td>
 								</tr>
                 <tr>
 									<td style="font-size: 10px; color: #318794" valign="top">&nbsp;</td>

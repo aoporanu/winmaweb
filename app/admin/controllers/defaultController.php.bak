@@ -1,8 +1,8 @@
 <?php
-
-class PagerLayoutWithArrows extends Doctrine_Pager_Layout {
-
-	public function display($options = array(), $return = false) {
+class PagerLayoutWithArrows extends Doctrine_Pager_Layout
+{
+    public function display($options = array(), $return = false)
+    {
         $pager = $this->getPager();
         $str = '';
 
@@ -33,7 +33,7 @@ class PagerLayoutWithArrows extends Doctrine_Pager_Layout {
         // No
         $this->addMaskReplacement('page', 'All pages:', true);
         
-		$str .= '<li class="all">Total: ' . $pager->getNumResults() . '</li>';
+        $str .= '<li class="all">Total: '.$pager->getNumResults().'</li>';
         
         // Possible wish to return value instead of print it on screen
         if ($return) {
@@ -42,18 +42,18 @@ class PagerLayoutWithArrows extends Doctrine_Pager_Layout {
 
         echo $str;
     }
-
 }
 
-class defaultController extends Cms_Controller {
-
-	public function init() {
+class defaultController extends Cms_Controller
+{
+    public function init()
+    {
         if (!$this->user->hasRole('ADMIN')) {
             $this->redirect('/');
         }
     }
-
-	public function indexAction() {
+    public function indexAction()
+    {
         $this->setTemplate('index.twig');
         
         $acl = new Zend_Acl();
@@ -64,12 +64,13 @@ class defaultController extends Cms_Controller {
         return array('asd' => 1);
     }
     
-	public function getSubcategoryAction() {
+    public function getSubcategoryAction()
+    {
         $id = $this->getParam('id');
         
         $treeObject = Doctrine_Core::getTable('Category')->find($id);
         $tree = array();
-		if ($treeObject) {
+        if($treeObject) {
             $tree = $treeObject->getNode()->getChildren()->toArray();
         }
         $this->setTemplate('default/subcategories.twig');
@@ -89,7 +90,7 @@ class defaultController extends Cms_Controller {
 			
 			$action = $this->getParam('ac');
             
-		switch ($action) {
+			switch($action) {
 //					case 'edit':
 //									$this->_editMedia();
 //							break;
@@ -112,7 +113,7 @@ class defaultController extends Cms_Controller {
                       new Doctrine_Pager_Range_Sliding(array(
                             'chunk' => 5
                       )),
-						'/admin/my-network?page={%page_number}&show=' . $show . $searchP
+                '/admin/my-network?page={%page_number}&show='.$show.$searchP
             );
         $pagerLayout->setTemplate('<li><a href="{%url}">{%page}</a></li>');
         $pagerLayout->setSelectedTemplate('<li class="selected">{%page}</li>');
@@ -139,7 +140,7 @@ class defaultController extends Cms_Controller {
         }
         
         private function _editMedia() {
-		if (!$this->request->isXmlHttpRequest()) {
+            if(!$this->request->isXmlHttpRequest()) {
                 return $this->notFoundAction();
             }
 
@@ -148,7 +149,7 @@ class defaultController extends Cms_Controller {
                         ->from('MyNetwork p')
                         ->addWhere('p.id = ?', $id)
                         ->fetchOne();
-		if (!$product->id) {
+            if(!$product->id) {
                 $this->forbiddenAction('You dont have acces to this media file');
             }
             
@@ -165,15 +166,15 @@ class defaultController extends Cms_Controller {
             $photo->addValidator('Extension', false, 'ppt,pptx,pptm,ppsx,ppsm,sldx,sldm,avi,mpeg,wmv,mp4');
             $form->addElement($photo);
             $uploadDir = '/uploads/mynetwork';
-		if ($this->request->getPost()) {
+            if( $this->request->getPost() ) {
                 if ($form->isValid($this->request->getPost())) {
-				if (!$photo->isReceived()) {
+                    if(!$photo->isReceived()) {
                         $product->title = $form->getValue('title');
                         $product->file_name = $form->getValue('file_name');
                         $product->save();
                     } else {
-					if ($photo->isValid()) {
-						if ($_FILES['photo123']['tmp_name']) {
+                        if($photo->isValid()) {
+                            if($_FILES['photo123']['tmp_name']) {
                                 $tmp_name = $_FILES['photo123']['tmp_name'];
                                 $name = $form->getValue('file_name');
                                 move_uploaded_file($tmp_name, $uploadDir);
@@ -206,7 +207,7 @@ class defaultController extends Cms_Controller {
             
             $is_ajax = $this->request->getParam('isajaxrequest');
 
-		if (!$is_ajax) {
+            if(!$is_ajax) {
                 $is_ajax = $this->request->isXmlHttpRequest();
             }
             
@@ -220,12 +221,13 @@ class defaultController extends Cms_Controller {
 						$uploadDir = '/uploads/mynetwork';
             $file->addValidator('Extension', false, 'pdf,ppt,pptx,pptm,ppsx,ppsm,sldx,sldm,avi,mpeg,wmv,mp4')
 										->setRequired()
-				->addFilter('Rename', array('target' => ROOT_PATH . $uploadDir . '/' . $fileName)
+										->addFilter('Rename',
+														array('target' => ROOT_PATH . $uploadDir . '/' . $fileName)
 														);
 						$form->addElement($file, 'file');
             
-		if ($this->request->getPost()) {
-			if ($form->isValid($this->request->getPost())) {
+            if($this->request->getPost()) {
+                if($form->isValid($this->request->getPost())) {
 //                    if($file->isValid()) {
 										if ($form->file->receive()) {
                         $network = new MyNetwork();
@@ -254,10 +256,4 @@ class defaultController extends Cms_Controller {
                 )
             );
         }
-	
-	public function paymentOptionsAction()
-	{
-		$this->setTemplate('default/payment_options.twig');
-		return array();
-	}
 }

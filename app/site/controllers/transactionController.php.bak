@@ -582,6 +582,7 @@ class transactionController extends Cms_Controller {
                         'id' => $id,
                         'owner_id' => $this->user->getUser()->get('id')
                     ))->fetchOne(array(), Doctrine::HYDRATE_ARRAY);
+
             if (!$coupon['id']) {
                 $coupon = CouponTable::getInstance()->getRedeemedCouponDetails(array(
                             'id' => $id,
@@ -609,6 +610,7 @@ class transactionController extends Cms_Controller {
             $voucher_content = ob_get_contents();
 						print_r($voucher_content);
             ob_end_clean();
+
             include_once ROOT_PATH . '/lib/dompdf/dompdf_config.inc.php';
             $dompdf = new DOMPDF();
             $dompdf->set_paper('a4', 'portrait');

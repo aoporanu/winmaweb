@@ -129,6 +129,14 @@
                     {{ forms.input('bank_address', form.values.bank_address) }}
                     {{ forms.errors(form.errors.bank_address) }}
                 </div>
+				{# the payza email field will only be visible to merchants #}
+				{% if userObj.hasRole('SHOP') %}
+				<div class="label"><label for="payza_email">Payza Email:</label></div>
+				<div class="input input_big">
+					{{ forms.input('payza_email', form.values.payza_email) }}
+					{{ forms.errors(form.errors.payza_email) }}
+				</div>
+				{% endif %}
                 <div class="label"><label>&nbsp;</label></div>
                 <div class="left"><input type="submit" class="g-button g-button-submit ajax-submit" value="Change" /></div>
             </div>

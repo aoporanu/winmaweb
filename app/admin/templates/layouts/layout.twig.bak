@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>{% block page_title %}Control panel{% endblock %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    {% block seo %}
+    <meta name="description" content="Administration" />
+    <meta name="keywords" content="Administration" />
+    {% endblock %}
+    <meta name="robots" content="INDEX,FOLLOW" />
+    <link rel="stylesheet" type="text/css" href="/css/global.css" />
+    <link rel="stylesheet" type="text/css" href="/css/ui-lightness/jquery-ui-1.8.16.custom.css" />
+    <link rel="stylesheet" type="text/css" href="/css/timepicker.css" />
+    <link rel="stylesheet" type="text/css" href="/css/jquery.tagsinput.css" />
+    <link rel="stylesheet" type="text/css" href="/css/admin/style.css" />
+    {% block css %}
+    {% endblock %}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.js"></script>
+    <script type="text/javascript" src="/js/jquery.form.js"></script>
+    <script type="text/javascript" src="/js/jquery.scrollTo-1.4.2-min.js"></script>
+    <script type="text/javascript" src="/js/jquery.modal.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.timepicker.js"></script>
+    <script type="text/javascript" src="/js/jquery.tagsinput.js"></script>
+    <script type="text/javascript" src="/tiny_mce/jquery.tinymce.js"></script>
+    <script type="text/javascript" src="/js/highcharts.js"></script>
+    <script src="/js/modules/exporting.js" type="text/javascript"></script>
+    <script src="/js/global.js" type="text/javascript"></script>
+    {% block js %}
+    {% endblock %}
+    <script type="text/javascript" src="/js/admin.js"></script>
+    <script type="text/javascript">
+        $('a[href="/admin/users/actions/8?tab=edit"]').click(function() {
+            $('.container').css('height', '841px');
+        });
+    </script>
+</head>
+<body>
+    <div id="modal-popup" class="modal-popup">
+        <div class="modal-overlay"></div>
+        <div class="modal-fix">
+            <div class="modal-container">
+                <div class="modal-bg">
+
+                    <div class="context-loader">Please wait</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="yui3-g">
+            <div class="yui3-u">
+                <div class="left-menu">
+                {% block left_menu %}
+                    <div class="acc_info">
+                    <ul>
+                        <li>Welcome, Admin</li>
+                        <li><a href="/" target="_blank">Go to site</a></li>
+                        {#<li><a href="{{router.url_for('@changePassword')}}">Change password</a></li>#}
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                    </div>
+                    <div id="sidebar" class="profile_actions">
+                    <ul id="main-nav">  <!-- Accordion Menu -->
+                        <li>
+                            <a class="nav-top-item no-submenu{% if adm_menu == 'users' %} current{% endif %}" href="{{router.url_for('@manageUsers')}}" style="padding-right: 15px;">Manage Users</a>
+                        </li>
+                        <li>
+                            <a class="nav-top-item no-submenu{% if adm_menu == 'merchants' %} current{% endif %}" href="{{router.url_for('@manageMerchants')}}" style="padding-right: 15px;">Agents/Merchants</a>
+                        </li>
+                        <li>
+                            <a class="nav-top-item no-submenu{% if adm_menu == 'commission' %} current{% endif %}" href="{{router.url_for('@manageCommissions')}}" style="padding-right: 15px;">Manage Commissions</a>
+                        </li>
+                        {#<li>
+                            <a class="nav-top-item{% if adm_menu == 'pages' %} current{% endif %}" href="{{router.url_for('@managePages')}}" style="padding-right: 15px;">Manage Pages</a>
+                        </li>#}
+                        <li>
+                            <a class="nav-top-item{% if adm_menu == 'transactions' %} current{% endif %}" href="{{router.url_for('@manageTransactions')}}" style="padding-right: 15px;">Manage Transactions</a>
+                        </li>
+                        {#<li>
+                            <a class="nav-top-item{% if adm_menu == 'statistics' %} current{% endif %}" href="{{router.url_for('@manageStatistics')}}" style="padding-right: 15px;">Manage Statistics</a>
+                        </li>#}
+                        <li>
+                            <a class="nav-top-item{% if adm_menu == 'bank' %} current{% endif %}" href="{{router.url_for('@manageBank')}}" style="padding-right: 15px;">Manage Bank</a>
+                        </li>
+                        {#<li>
+                            <a class="nav-top-item{% if adm_menu == 'category' %} current{% endif %}" href="{{router.url_for('@manageCategory')}}" style="padding-right: 15px;">Manage Categories</a>
+                        </li>#}
+                        <li>
+                            <a class="nav-top-item{% if adm_menu == 'products' %} current{% endif %}" href="{{router.url_for('@manageProducts')}}" style="padding-right: 15px;">Deal Offers</a>
+                        </li>
+                        {#<li>
+                            <a class="nav-top-item{% if adm_menu == 'newsletter' %} current{% endif %}" href="{{router.url_for('@newsletter')}}" style="padding-right: 15px;">Newsletter</a>
+                        </li>#}
+                        {#<li>
+                            <a class="nav-top-item{% if adm_menu == 'charity' %} current{% endif %}" href="{{router.url_for('@charity')}}" style="padding-right: 15px;">Charity Deals</a>
+                        </li>#}
+                        {#<li>
+                            <a class="nav-top-item{% if adm_menu == 'reports' %} current{% endif %}" href="{{router.url_for('@reports')}}" style="padding-right: 15px;">Reports</a>
+                        </li>#}
+                        {#<li>
+                            <a class="nav-top-item{% if adm_menu == 'help' %} current{% endif %}" href="{{router.url_for('@help')}}" style="padding-right: 15px;">Help</a>
+                        </li>#}
+												<li>
+                            <a class="nav-top-item{% if adm_menu == 'my_network' %} current{% endif %}" href="{{router.url_for('@myNetwork')}}" style="padding-right: 15px;">My Network Links</a>
+                        </li>
+                    </ul>
+                    </div>
+                {% endblock left_menu %}
+                </div>
+            </div>
+            <div class="yui3-u">
+                <div class="content" id="ajax-content">
+                    {% block content %}{% endblock content %}
+                </div>
+            </div>
+        </div>
+        <div id="footer"></div>
+    </div>
+</body>
+</html>

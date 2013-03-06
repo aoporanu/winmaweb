@@ -1,0 +1,60 @@
+{% extends app.ajax ? "layouts/ajax.twig" :  "layouts/layout.twig" %}
+
+{% block content %}
+<h1>Reports</h1>
+<div class="ma_content">
+        <a href="{{router.url_for('@reports')}}" class="g-button {% if show == '' %}g-button-submit {% endif %}ajax-link">Merchants</a>
+        <a href="{{router.url_for('@reports?show=agents')}}" class="g-button {% if show == 'agents' %}g-button-submit {% endif %}ajax-link">Agents</a>
+        <a href="{{router.url_for('@reports?show=users')}}" class="g-button {% if show == 'users' %}g-button-submit {% endif %}ajax-link">Users</a>
+        <a href="{{router.url_for('@reports?show=products')}}" class="g-button {% if show == 'products' %}g-button-submit {% endif %}ajax-link">Deals</a>
+        <a href="{{router.url_for('@reportsAllAgents')}}" class="g-button g-button-share modal-reports" title="Agents Transactions">All Agents</a>
+        <a href="{{router.url_for('@reportsAllMerchants')}}" class="g-button g-button-share modal-reports" title="Merchants Transactions">All Merchants</a>
+        <a href="{{router.url_for('@reportsBank')}}" class="g-button g-button-share modal-reports" title="Bank Transactions">Bank</a>
+        <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+        {% if show == 'products' %}
+        <table>
+            <tr style="border-bottom:2px dashed #0000ff;">
+                <th style="width:300px;">{% if show == 'products' %}Products{% else %}Username{% endif %}</th>
+                <th style="width:300px;">{% if show == 'products' %}{% else %}Name{% endif %}</th>
+                <th style="width:100px;">Actions</th>
+            </tr>
+            {% for merchant in merchants %}
+            <tr style="border-bottom:1px solid #cacaca;">
+                <td style="padding:10px 0;">{{merchant.name}}</td>
+                <td></td>
+                <td>
+                    {% if show == 'products' %}<a href="{{router.url_for('@reportsProduct?id='~merchant.id)}}" class="g-button modal-reports" title="Reports {{merchant.name}}">reports</a>{% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <table>
+            <tr style="border-bottom:2px dashed #0000ff;">
+                <th style="width:300px;">{% if show == 'products' %}Products{% else %}Username{% endif %}</th>
+                <th style="width:300px;">{% if show == 'products' %}{% else %}Name{% endif %}</th>
+                <th style="width:100px;">Actions</th>
+            </tr>
+            {% for merchant in merchants %}
+            <tr style="border-bottom:1px solid #cacaca;">
+                <td style="padding:10px 0;">{{merchant.username}}</td>
+                <td>{{merchant.first_name}} {{merchant.last_name}}</td>
+                <td>
+                    {% if show == '' %}<a href="{{router.url_for('@reportsMerchant?id='~merchant.id)}}" class="g-button modal-reports" title="Reports {{merchant.username}}">reports</a>{% endif %}
+                    {% if show == 'agents' %}<a href="{{router.url_for('@reportsAgent?id='~merchant.id)}}" class="g-button modal-reports" title="Reports {{merchant.username}}">reports</a>{% endif %}
+                    {% if show == 'users' %}<a href="{{router.url_for('@reportsUser?id='~merchant.id)}}" class="g-button modal-reports" title="Reports {{merchant.username}}">reports</a>{% endif %}
+                    {% if show == 'products' %}<a href="{{router.url_for('@reportsProducts?id='~merchant.id)}}" class="g-button modal-reports" title="Reports {{merchant.name}}">reports</a>{% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+        <ul class="pagination clearfix">{{ pagination|raw }}</ul>
+    </div>
+{% endblock content %}
+{% block left_menu %}
+    {% if not app.ajax %}
+        {% set adm_menu = 'reports' %}
+        {% include "inc/leftSide.twig" %}
+    {% endif %}
+{% endblock left_menu %}

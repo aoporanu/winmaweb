@@ -49,7 +49,7 @@
                 </ul>
             </div>
         {% endif %}
-        <form action="{{router.url_for('@paymentShopCart')}}" method="post">
+        <form action="{{router.url_for('@paymentShopCart')}}" method="post" id="shopping_form">
         <div class="yui3-g" style="border-bottom:1px solid #EDB4C4;padding-bottom:10px;margin-bottom:10px;">
             <div class="yui3-u" style="font-weight:bold;width:550px;">Product</div>
             <div class="yui3-u" style="font-weight:bold;width:100px;text-align:center">Price</div>
@@ -223,18 +223,32 @@
                 <legend>Payment Options</legend>
                 <input type="radio" name="kkt" value="1" checked="checked" /> My Money<br/>
                 <input type="radio" name="kkt" value="2" /> WMW Credits<br/>
-                <input type="radio" name="kkt" onclick="window.location = '/my-account/deposit?m={{sub_total}}'" /> PayPal<br/>
+													<!--<input type="radio" name="kkt" onclick="window.location = '/my-account/deposit?m={{sub_total}}'" /> PayPal<br/>-->
+													<input type="radio" name="kkt" value="3" id="payza" /> PayZa<br/>
                 <input type="radio" name="kkt" disabled="disabled" /> <span style="color:#cacaca">Credit Card/ Debit Card</span>
             </fieldset>
         </div>
                     <div style="padding:30px 0;text-align:right">
-                        <input type="submit" name="submit" value="Save And Continue shopping!" class="button-buy" /> {#<a href="/all-deals" value="Buy now!" class="button-buy" >Continue Shopping</a>#} <input type="submit" name="submit" value="Buy now!" class="button-buy" />
+												<input type="submit" name="submit" value="Save And Continue shopping!" class="button-buy" id="save_and_continue"/> <input type="submit" name="submit" value="Buy now!" class="button-buy" />
                     </div>
                 {% endif %}
                 {#{% endif %}#}
             {% endif %}
             
         </form>
+										<script type="text/javascript">
+											$('#payza').change(function() {
+												var total = $('#cart_total').text().replace('$', '');
+												$('#shopping_form').attr('action', 'https://sandbox.Payza.com/sandbox/payprocess.aspx');
+												$('#shopping_form').append('<input type="hidden" name="ap_purchasetype" value="item-goods" />');
+												$('#shopping_form').append('<input type="hidden" name="ap_currency" value="USD" />');
+												$('#shopping_form').append('<input type="hidden" name="ap_merchant" value="seller_1_aoporanu@gmail.com" />');
+												$('#shopping_form').append('<input type="hidden" name="ap_itemname" value="WMW shopping cart" />');
+												$('#shopping_form').append('<input type="hidden" name="ap_amount" value=' + $('#cart_total').text().replace('$', '') +' />');
+												$('#shopping_form').append('<input type="hidden" name="ap_returnurl" value="http://82.77.174.213:97/payza-success/" />');
+												$('#save_and_continue').remove();
+											});
+											</script>
         {% endif %}
     </div>
     

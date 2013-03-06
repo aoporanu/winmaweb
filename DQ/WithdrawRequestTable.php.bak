@@ -51,14 +51,4 @@ class WithdrawRequestTable extends Doctrine_Table
                 ->addWhere('wr.status = ?', self::$status['accepted'])
                 ->orderBy('wr.created_at DESC');
     }
-    
-	public function getAllRequests()
-    {
-        return $this->createQuery()
-                ->from('WithdrawRequest wr')
-                ->leftJoin('wr.User u')
-//                ->addWhere('wr.status = ?', self::$status['accepted'])
-				->andWhereIn('wr.status', array(self::$status['pending'],self::$status['accepted'], self::$status['rejected']))
-                ->orderBy('wr.created_at DESC');
-    }
 }
